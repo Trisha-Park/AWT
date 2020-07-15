@@ -27,7 +27,7 @@
 # 🛩 About Team
 
 ## 🌿 박나영
-<div align="center">
+<div>
 <img width=200 src="https://user-images.githubusercontent.com/61039975/86037840-f193e780-ba7a-11ea-99c8-697e4152dbfb.jpg">
 </div>
 
@@ -51,9 +51,9 @@
 
 
 ## 🌿 허지성
-<div align="center">
+<div align>
 <img width=180 src ="https://img1.daumcdn.net/thumb/C428x428/?scode=mtistory2&fname=https%3A%2F%2Ftistory2.daumcdn.net%2Ftistory%2F3810709%2Fattach%2F31d458b15a464f96a3db02028490061c">
-<div>
+</div>
 
 **Team members, BackEnd**  
 📧 Gmail : heojiseong0811@gmail.com  
