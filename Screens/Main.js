@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, View, Text } from 'react-native';
+import CheckList from '../CheckList';
 
 // react navigation 적용시 서치바를 스택 네비게이션의 상단 바로 어떻게 빼야 할 지 생각해보기
 const Main = () => {
@@ -10,7 +11,9 @@ const Main = () => {
 				<Text style={styles.logoText}>A Week Trip</Text>
 				<FontAwesome name='search' size={24} color='black' />
 			</View>
-			<View style={styles.plans}></View>
+			<View style={styles.plans}>
+				<CheckList />
+			</View>
 			<View style={styles.regions}></View>
 			<View style={styles.courses}></View>
 		</>
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
 	plans: {
 		flex: 4,
 		backgroundColor: 'yellow',
+		alignSelf: 'stretch',
 	},
 	regions: {
 		flex: 2,
