@@ -16,7 +16,7 @@ const CheckListContent = ({ toDo }) => {
 						: setToggleCheckBox(true)
 				}
 			/>
-			<Text style={styles.defaultTextSetting}>{toDo}</Text>
+			<Text>{toDo}</Text>
 		</View>
 	);
 };
