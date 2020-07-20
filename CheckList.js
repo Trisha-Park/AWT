@@ -1,25 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { Card, CardItem } from 'native-base';
 import CheckListContent from './CheckListContent';
 
-const dummy = {
-	day: 1,
-	region: '서울',
-	toDos: ['일어나기', '집에가기', '저녁먹기'],
-};
-
-const CheckList = () => {
+const CheckList = ({ dummy }) => {
 	return (
-		<>
-			<View style={styles.titles}>
-				<Text style={styles.defaultTextSetting}>
-					{dummy.day ? `${dummy.day}일차` : null}
-				</Text>
-				<Text style={styles.defaultTextSetting}>
+		<Card style={styles.card}>
+			<CardItem style={styles.titles}>
+				<Text>{dummy.day ? `${dummy.day}일차` : null}</Text>
+				<Text>
 					{dummy.region ? dummy.region : '내일로를 시작하시나요?'}
 				</Text>
-			</View>
-			<View style={styles.container}>
+			</CardItem>
+			<CardItem style={styles.items}>
 				{dummy.toDos ? (
 					dummy.toDos.map((toDo, idx) => (
 						<CheckListContent toDo={toDo} key={idx} />
@@ -27,21 +20,23 @@ const CheckList = () => {
 				) : (
 					<CheckListContent toDo='계획을 설정해 보세요!' />
 				)}
-			</View>
-		</>
+			</CardItem>
+		</Card>
 	);
 };
 
 const styles = StyleSheet.create({
-	titles: {
+	card: {
 		flex: 1,
+		borderRadius: 10,
+	},
+	titles: {
+		flexDirection: 'column',
 		alignItems: 'flex-start',
 	},
-	container: {
-		flex: 3,
-	},
-	defaultTextSetting: {
-		fontFamily: '',
+	items: {
+		flexDirection: 'column',
+		alignItems: 'flex-start',
 	},
 });
 
