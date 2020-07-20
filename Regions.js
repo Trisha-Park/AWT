@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
+// 추천지역 그거입니다 더미데이터
 const dummy = ['서울', '단양', '대구', '부산', '전주'];
 
 const Regions = () => {

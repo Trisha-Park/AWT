@@ -2,7 +2,10 @@ import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, View, Text } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+
 import CheckList from '../CheckList';
+import Regions from '../Regions';
+import Courses from '../Courses';
 
 // 계획이 있을 때의 테스트를 위한 더미데이터입니다.
 const planDummy = [
@@ -32,7 +35,6 @@ const noPlanDummy = [
 	},
 ];
 
-// react navigation 적용시 서치바를 스택 네비게이션의 상단 바로 어떻게 빼야 할 지 생각해보기
 const Main = () => {
 	return (
 		<>
@@ -47,8 +49,12 @@ const Main = () => {
 					))}
 				</ViewPager>
 			</View>
-			<View style={styles.regions}></View>
-			<View style={styles.courses}></View>
+			<View style={styles.regions}>
+				<Regions />
+			</View>
+			<View style={styles.courses}>
+				<Courses />
+			</View>
 		</>
 	);
 };
