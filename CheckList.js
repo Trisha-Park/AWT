@@ -7,19 +7,13 @@ const CheckList = ({ dummy }) => {
 	return (
 		<Card style={styles.card}>
 			<CardItem style={styles.titles}>
-				<Text>{dummy.day ? `${dummy.day}일차` : null}</Text>
-				<Text>
-					{dummy.region ? dummy.region : '내일로를 시작하시나요?'}
-				</Text>
+				<Text>{dummy.day}일차</Text>
+				<Text>{dummy.region}</Text>
 			</CardItem>
 			<CardItem style={styles.items}>
-				{dummy.toDos ? (
-					dummy.toDos.map((toDo, idx) => (
-						<CheckListContent toDo={toDo} key={idx} />
-					))
-				) : (
-					<CheckListContent toDo='계획을 설정해 보세요!' />
-				)}
+				{dummy.toDos.map((toDo, idx) => (
+					<CheckListContent toDo={toDo} key={idx} />
+				))}
 			</CardItem>
 		</Card>
 	);
