@@ -10,14 +10,17 @@
   "dependencies": {
     "@expo/vector-icons": "^10.2.0",
     "@react-native-community/checkbox": "^0.4.2",
+    "@react-native-community/datetimepicker": "2.4.0",
+    "@react-native-community/viewpager": "3.3.0",
+    "dayjs": "^1.8.29",
     "expo": "~38.0.8",
     "expo-status-bar": "^1.0.2",
     "native-base": "^2.13.12",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
-    "react-native-web": "~0.11.7",
-    "@react-native-community/viewpager": "3.3.0"
+    "react-native-calendars": "^1.300.0",
+    "react-native-web": "~0.11.7"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
