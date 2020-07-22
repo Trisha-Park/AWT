@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Left, ListItem, Right, Body } from 'native-base';
+import { Left, ListItem, Right} from 'native-base';
 
 const Articles = ({ article }) => {
     const { author, date, title } = article;
@@ -22,6 +22,7 @@ const Articles = ({ article }) => {
 const styles = StyleSheet.create({
     article: {
         height: 70,
+        width : 400
     },
 });
 
