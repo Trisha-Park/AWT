@@ -1,59 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 
 import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
 
-// 계획이 있을 때의 테스트를 위한 더미데이터입니다.
-const planDummy = [
-    {
-        day: 1,
-        region: '서울',
-        toDos: ['일어나기', '집에가기', '저녁먹기'],
-    },
-    {
-        day: 2,
-        region: '영지',
-        toDos: ['다키스트던전 하기', '골드 파밍하기'],
-    },
-    {
-        day: 3,
-        region: '로드란',
-        toDos: ['다크소울 하기', '몬스터잡기'],
-    },
-];
-
-// 계획의 없을 때의 테스트를 위한 더미데이터입니다.
-const noPlanDummy = [
-    {
-        day: null,
-        region: '내일로를 시작하세요',
-        toDos: ['계획을 설정해 보세요!'],
-    },
-];
+import {
+    planDummy,
+    noPlanDummy,
+    regionDummy,
+    courseDummy,
+} from '../../FakeData/mainData';
 
 const Main = () => {
+    const [plans, setPlans] = useState([...planDummy]); // 메인 화면의 계획 체크리스트입니다
+    const [regions, setRegions] = useState([...regionDummy]); // 메인 화면의 추천지역입니다
+    const [courses, setCourses] = useState([...courseDummy]); // 메인 화면의 추천코스입니다
+    const [course, setCourse] = useState(''); // 클릭된 코스 저장
+
+    // 클릭된 코스를 저장합니다
+    const setClickedCourse = (course) => {
+        setCourse(course);
+    };
+
+    // 서치 아이콘에 onPress 이벤트를 걸고 -> 리액트 네비게이터로 Select 창으로 이동
     return (
         <>
             <View style={styles.searchBar}>
                 <Text>A Week Trip</Text>
-                <FontAwesome name='search' size={24} color='black' />
+                <TouchableOpacity>
+                    <FontAwesome name='search' size={24} color='black' />
+                </TouchableOpacity>
             </View>
             <View style={styles.plans}>
                 <ViewPager style={styles.viewPager}>
-                    {planDummy.map((plan, idx) => (
+                    {plans.map((plan, idx) => (
                         <CheckList dummy={plan} key={idx} />
                     ))}
                 </ViewPager>
             </View>
             <View style={styles.regions}>
-                <Regions />
+                <Regions regions={regions} />
             </View>
             <View style={styles.courses}>
-                <Courses />
+                <Courses
+                    courses={courses}
+                    setClickedCourse={setClickedCourse}
+                />
             </View>
         </>
     );

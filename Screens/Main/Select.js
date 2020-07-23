@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, ScrollView, View } from 'react-native';
 import Constants from 'expo-constants';
-
-const dummy = {
-    currentSelected: ['서울', '여수엑스포', '광주'],
-    allResult: ['우분투', '조아', '절대', '우분투', '해'],
-};
+import { stationDummy } from '../../FakeData/mainData';
 
 const Select = () => {
+    const [currentStations, setCurrentStations] = useState([
+        ...stationDummy.currentSelected,
+    ]);
+    const [stations, setStaions] = useState([...stationDummy.allResult]);
+
+    // 클릭된 항목에 onPress 걸어서 네비게이션으로 정보 전달
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -17,13 +19,13 @@ const Select = () => {
                 <View style={styles.currentSelected}>
                     <Text style={styles.currentSelectedText}>최근검색</Text>
                     <View>
-                        {dummy.currentSelected.map((region, idx) => (
+                        {currentStations.map((region, idx) => (
                             <Text key={idx}>{region}</Text>
                         ))}
                     </View>
                 </View>
                 <View style={styles.allResult}>
-                    {dummy.allResult.map((region, idx) => (
+                    {stations.map((region, idx) => (
                         <Text key={idx}>{region}</Text>
                     ))}
                 </View>
