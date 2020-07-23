@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Card, CardItem } from 'native-base';
 
-const CourseCard = ({ hashTags }) => {
+// TouchableOpacity로 감싸주고 onPress 이벤트에 메소드 적용
+const CourseCard = ({ hashTags, setClickedCourse }) => {
     return (
         <Card style={styles.card}>
             <CardItem>
