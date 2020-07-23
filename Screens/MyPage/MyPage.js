@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Card, List, ListItem } from 'native-base';
 
+import { userInfo } from '../../FakeData/userData';
+
 const MyPage = () => {
+    const [userName, setUserName] = useState(userInfo.userName);
+    const [userId, setUserId] = useState(userInfo.userId);
+
+    // TODO: 유저 정보를 useEffect, axios를 이용해서 받아와야 합니다.
+    // TODO: 내가 쓴 게시글을 클릭했을 때 리액트 네비게이터를 이용해 유저 id 정보를 넘겨주고, 페이지를 이동해 주세요.
+
     return (
         <View>
             <Card style={styles.userCard}>
                 <Card style={styles.nameCard}>
-                    <Text>Trisha 님</Text>
+                    <Text>{userName} 님</Text>
                 </Card>
             </Card>
             <List style={styles.allList}>

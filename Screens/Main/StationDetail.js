@@ -1,18 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 
 import StationDetailSlider from '../../Component/Main/StationDetailSlider';
-
-const dummy = {
-    sookBak: ['숙박1', '숙박2', '숙박3'],
-    gwanGwang: ['관광1', '관광2', '관광3'],
-    foods: ['마싯는거', '먹고싶어요', '짱마싯는거'],
-};
+import { staitonDetailDummy } from '../../FakeData/mainData';
 
 // 뒤로가기 있는 헤더는 스택 네비게이터를 적용시키면 자동으로 생길 예정입니다
 const StationDetail = () => {
-    const { sookBak, gwanGwang, foods } = dummy;
+    const [stationDetail, setStationDetail] = useState([...staitonDetailDummy]);
+    const { sookBak, gwanGwang, foods } = stationDetail;
 
     return (
         <View style={styles.container}>

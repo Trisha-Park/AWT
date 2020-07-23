@@ -1,15 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-// 추천지역 그거입니다 더미데이터
-const dummy = ['서울', '단양', '대구', '부산', '전주'];
-
-const Regions = () => {
+const Regions = ({ regions }) => {
     return (
         <>
             <Text>추천 지역</Text>
             <View style={styles.container}>
-                {dummy.map((region, idx) => (
+                {regions.map((region, idx) => (
                     <View key={idx} style={styles.card}>
                         <Text>{region}</Text>
                     </View>
