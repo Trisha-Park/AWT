@@ -1,30 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { List, Card } from 'native-base';
-import Articles from '../../Component/Community/Articles';
 
-const dummy = [
-    {
-        title: 'H ㅏ... 살려줘라',
-        author: 'Trisha',
-        date: '2020.07.21',
-        data: '낵아 웨 후론투웬드를 간닥오 핵아직오',
-    },
-    {
-        title: '번개 ㄱ?',
-        author: '번개러버',
-        date: '2020.07.21',
-        data: '서울역 노숙 번개 구함',
-    },
-    {
-        title: '젲쭈또에써 여낀안또ㅒ요',
-        author: '까찌마쪠빨',
-        date: '2020.07.21',
-        data: '않이 진짜 여긴 안또ㅒ',
-    },
-];
+import Articles from '../../Component/Community/Articles';
+import { userArticles } from '../../FakeData/userData';
 
 const MyArticle = () => {
+    const [articles, setArticles] = useState([...userArticles]);
+
+    // TODO: 서버로부터 articles 정보를 props로 받아온 유저id, useEffect, setArticles, Axios를 이용해 받아와야 합니다.
+
     return (
         <View>
             <View style={styles.myArticle}>
@@ -34,7 +19,7 @@ const MyArticle = () => {
             </View>
             <View style={styles.article}>
                 <List>
-                    {dummy.map((data, idx) => (
+                    {articles.map((data, idx) => (
                         <Articles key={idx} article={data}></Articles>
                     ))}
                 </List>
