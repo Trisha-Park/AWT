@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         top: 280,
         height: 60,
-        alignSelf : "stretch",
+        alignSelf: 'stretch',
         backgroundColor: 'lavender',
-        padding : 10
+        padding: 10,
     },
     inputText: {
         width: 340,

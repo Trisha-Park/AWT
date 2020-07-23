@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { List } from 'native-base';
-import Articles from '../Articles';
+import Articles from '../../Component/Community/Articles';
 
 const dummy = [
     {

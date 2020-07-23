@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+} from 'react-native';
 import {} from 'native-base';
 
 const CreateArticle = () => {
@@ -17,7 +23,7 @@ const CreateArticle = () => {
                 <TouchableOpacity>
                     <Text>글쓰기</Text>
                 </TouchableOpacity>
-                </View>
+            </View>
         </View>
     );
 };
@@ -38,20 +44,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'olive',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        padding : 10,
-        marginTop : 10
-
+        padding: 10,
+        marginTop: 10,
     },
-    button : {
-        backgroundColor : "pink",
-        width : 400,
-        height : 50,
+    button: {
+        backgroundColor: 'pink',
+        width: 400,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        padding : 5,
-        marginTop : 300
-
-    }
+        padding: 5,
+        marginTop: 300,
+    },
 });
 
 export default CreateArticle;

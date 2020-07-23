@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 
-import PlanRegionCard from '../PlanRegionCard';
-import PlanCardPlus from '../PlanCardPlus';
+import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
+import PlanCardPlus from '../../Component/Plan/PlanCardPlus';
 import { Button } from 'native-base';
 
 const PlanInfoDetail = () => {

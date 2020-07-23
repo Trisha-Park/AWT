@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { List, Card } from 'native-base';
-import Articles from '../Articles';
+import Articles from '../../Component/Community/Articles';
 
 const dummy = [
     {
@@ -28,7 +28,7 @@ const MyArticle = () => {
     return (
         <View>
             <View style={styles.myArticle}>
-                <Card style= {styles.card}>
+                <Card style={styles.card}>
                     <Text>내가 쓴 게시글</Text>
                 </Card>
             </View>
@@ -46,11 +46,11 @@ const MyArticle = () => {
 const styles = StyleSheet.create({
     myArticle: {
         position: 'relative',
-        marginTop : -300,
-        justifyContent : "center",
-        alignItems : "center"
+        marginTop: -300,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    card : {
+    card: {
         position: 'relative',
         height: 80,
         width: 150,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     article: {
         position: 'relative',
-        marginTop : 10,
+        marginTop: 10,
     },
 });
 
