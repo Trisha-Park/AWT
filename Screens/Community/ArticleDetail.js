@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { CardItem, Card, ListItem, Left } from 'native-base';
 
+// TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
 const ArticleDetail = () => {
     return (
         <View>
