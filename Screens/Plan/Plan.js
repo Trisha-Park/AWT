@@ -10,6 +10,8 @@ import { makeCurrentDate, transferMonth } from '../../helper/Helpers';
 // 기본값을 3으로 셋팅했음
 const days = [3, 5, 7];
 
+// 내가필요한거: 1 ~n일차까지의 날짜와 n일차 매칭된 데이타, 전체 플랜 데이터를 합친거 -> 요놈은 플랜인포디테일거를 플랜인포로 끌어올려서 보내야합니다
+// state를 배열로 만들어서 거기에 또 nested Array / Obj 형태로 넣어야 합니다
 const Plan = () => {
     const [selectedDay, setSelectedDay] = useState(days[0]);
     const [modalVisible, setModalVisible] = useState(false);

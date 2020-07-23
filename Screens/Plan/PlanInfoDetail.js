@@ -11,6 +11,7 @@ const PlanInfoDetail = () => {
 
     const addRegionCard = () => {
         setRegions((prevState) => [...prevState, '']);
+        // 전체 플랜 state 배열에 하나 공간 더 만드는게 필요합니다
     };
 
     return (
