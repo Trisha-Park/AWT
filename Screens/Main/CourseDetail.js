@@ -5,7 +5,8 @@ import Constants from 'expo-constants';
 import CourseDetailCard from '../../Component/Main/CourseDetailCard';
 import { courseDetailDummy } from '../../FakeData/mainData';
 
-const CourseDetail = () => {
+const CourseDetail = ({ route }) => {
+    console.log(route.params);
     const [couresDetail, setCourseDetail] = useState([...courseDetailDummy]);
 
     return (

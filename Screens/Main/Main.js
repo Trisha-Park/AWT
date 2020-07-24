@@ -14,23 +14,21 @@ import {
     courseDummy,
 } from '../../FakeData/mainData';
 
-const Main = () => {
+const Main = ({ navigation }) => {
     const [plans, setPlans] = useState([...planDummy]); // 메인 화면의 계획 체크리스트입니다
     const [regions, setRegions] = useState([...regionDummy]); // 메인 화면의 추천지역입니다
     const [courses, setCourses] = useState([...courseDummy]); // 메인 화면의 추천코스입니다
-    const [course, setCourse] = useState(''); // 클릭된 코스 저장
-
-    // 클릭된 코스를 저장합니다
-    const setClickedCourse = (course) => {
-        setCourse(course);
-    };
 
     // 서치 아이콘에 onPress 이벤트를 걸고 -> 리액트 네비게이터로 Select 창으로 이동
     return (
         <>
             <View style={styles.searchBar}>
                 <Text>A Week Trip</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('Select');
+                    }}
+                >
                     <FontAwesome name='search' size={24} color='black' />
                 </TouchableOpacity>
             </View>
@@ -45,10 +43,7 @@ const Main = () => {
                 <Regions regions={regions} />
             </View>
             <View style={styles.courses}>
-                <Courses
-                    courses={courses}
-                    setClickedCourse={setClickedCourse}
-                />
+                <Courses courses={courses} navigation={navigation} />
             </View>
         </>
     );

@@ -6,15 +6,20 @@ import StationDetailSlider from '../../Component/Main/StationDetailSlider';
 import { staitonDetailDummy } from '../../FakeData/mainData';
 
 // 뒤로가기 있는 헤더는 스택 네비게이터를 적용시키면 자동으로 생길 예정입니다
-const StationDetail = () => {
-    const [stationDetail, setStationDetail] = useState([...staitonDetailDummy]);
+const StationDetail = ({ route }) => {
+    const [stationDetail, setStationDetail] = useState({
+        ...staitonDetailDummy,
+    });
+    const {
+        params: { region },
+    } = route;
     const { sookBak, gwanGwang, foods } = stationDetail;
 
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerTitle}>안동</Text>
-                <Text>안동조아 우분투조아</Text>
+                <Text style={styles.headerTitle}>{region}</Text>
+                <Text>{region}조아 우분투조아</Text>
             </View>
             <StationDetailSlider detailInfo={sookBak} />
             <StationDetailSlider detailInfo={gwanGwang} />

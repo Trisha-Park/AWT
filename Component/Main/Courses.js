@@ -5,16 +5,16 @@ import ViewPager from '@react-native-community/viewpager';
 import CourseCard from './CourseCard';
 
 // 여기에 슬라이더 적용
-const Courses = ({ courses, setClickedCourse }) => {
+const Courses = ({ courses, navigation }) => {
     return (
         <>
             <Text style={styles.title}>추천 코스</Text>
             <ViewPager style={styles.viewPager}>
                 {courses.map((course, idx) => (
                     <CourseCard
-                        hashTags={course.hashTag}
+                        course={course}
+                        navigation={navigation}
                         key={idx}
-                        setClickedCourse={setClickedCourse}
                     />
                 ))}
             </ViewPager>
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     viewPager: {
         flex: 0.8,
         alignSelf: 'stretch',
-        marginHorizontal: 10,
     },
 });
 

@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, ScrollView, View } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    SafeAreaView,
+    ScrollView,
+    View,
+    TouchableOpacity,
+} from 'react-native';
 import Constants from 'expo-constants';
 import { stationDummy } from '../../FakeData/mainData';
 
-const Select = () => {
+const Select = ({ navigation }) => {
     const [currentStations, setCurrentStations] = useState([
         ...stationDummy.currentSelected,
     ]);
@@ -20,13 +27,31 @@ const Select = () => {
                     <Text style={styles.currentSelectedText}>최근검색</Text>
                     <View>
                         {currentStations.map((region, idx) => (
-                            <Text key={idx}>{region}</Text>
+                            <TouchableOpacity
+                                key={idx}
+                                onPress={() => {
+                                    navigation.navigate('StationDetail', {
+                                        region,
+                                    });
+                                }}
+                            >
+                                <Text>{region}</Text>
+                            </TouchableOpacity>
                         ))}
                     </View>
                 </View>
                 <View style={styles.allResult}>
                     {stations.map((region, idx) => (
-                        <Text key={idx}>{region}</Text>
+                        <TouchableOpacity
+                            key={idx}
+                            onPress={() => {
+                                navigation.navigate('StationDetail', {
+                                    region,
+                                });
+                            }}
+                        >
+                            <Text>{region}</Text>
+                        </TouchableOpacity>
                     ))}
                 </View>
             </ScrollView>
