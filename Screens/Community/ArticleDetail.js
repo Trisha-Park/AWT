@@ -10,23 +10,22 @@ import { CardItem, Card, ListItem, Left } from 'native-base';
 
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
 const ArticleDetail = () => {
+    const [articleDetail, setArticleDetail] = useState([...articleDummy]);
+    const { title, author, date, data, visit } = articleDetail;
     return (
         <View>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>Everybody Talking about Jamie!</Text>
+                    <Text>{title}</Text>
                     <CardItem style={styles.cardVisit}>
-                        <Text>100</Text>
+                        <Text>{visit}</Text>
                     </CardItem>
                 </CardItem>
                 <CardItem style={styles.cardAuthor}>
-                    <Text>Trisha</Text>
+                    <Text>{author}</Text>
                 </CardItem>
                 <CardItem style={styles.cardItem}>
-                    <Text>
-                        당신은 사랑 받기 위해 태어난 사람 모두가 말해! 제이미에
-                        대해!
-                    </Text>
+                    <Text>{data}</Text>
                 </CardItem>
             </Card>
             <TouchableOpacity>
