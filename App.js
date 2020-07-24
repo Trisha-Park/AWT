@@ -1,11 +1,14 @@
 import React from 'react';
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Main from './Screens/Main/Main';
+
+import Main from './Routes/MainStackNavigator';
 import Station from './Screens/Station/Station';
-import Plan from './Screens/Plan/Plan';
-import Community from './Screens/Community/Community';
-import MyPage from './Screens/MyPage/MyPage';
+import Plan from './Routes/PlanStackNavigator';
+import Community from './Routes/CommunityStackNavigator';
+import MyPage from './Routes/MyPageStackNavigator';
+
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -19,7 +22,6 @@ export default function App() {
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ color, size }) => {
-                        let iconName;
                         if (route.name === 'Main') {
                             return (
                                 <Fontisto
