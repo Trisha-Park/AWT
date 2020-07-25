@@ -6,35 +6,37 @@ import {
     FlatList,
     TouchableOpacity,
 } from 'react-native';
-import { Card, Button } from 'native-base';
+import { Card } from 'native-base';
 
-import { dateDummy } from '../../FakeData/planData';
+const PlanInfo = ({ route, navigation }) => {
+    const {
+        params: { fullDates },
+    } = route;
 
-const Item = ({ day, date }) => (
-    <Card style={styles.card}>
-        <Text style={styles.day}>{day}</Text>
-        <Text>{date}</Text>
-    </Card>
-);
-
-const PlanInfo = () => {
     const renderItem = ({ item }) => (
-        <TouchableOpacity>
-            <Item day={item.day} date={item.date} />
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate('PlanInfoDetail', {
+                    day: item.day,
+                    date: item.date,
+                });
+            }}
+        >
+            <Card style={styles.card}>
+                <Text style={styles.day}>{item.day}</Text>
+                <Text>{item.date}</Text>
+            </Card>
         </TouchableOpacity>
     );
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                data={dateDummy}
+                data={fullDates}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.day}
                 contentContainerStyle={{}}
             />
-            <Button block>
-                <Text>다음으로</Text>
-            </Button>
         </SafeAreaView>
     );
 };

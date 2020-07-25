@@ -33,13 +33,22 @@ const Plan = ({ navigation }) => {
         setFullDates([
             ...Array(selectedDay)
                 .fill('')
-                .map((day, idx) => dayjs(dateString).add(idx + 1, 'day')),
+                .map((day, idx) => {
+                    return {
+                        day: `day 0${idx + 1}`,
+                        date: dayjs(dateString)
+                            .add(idx + 1, 'day')
+                            .utc()
+                            .format('YYYY-MM-DD'),
+                    };
+                }),
         ]);
         setStartDate(dateString);
         setEndDate(
             dayjs(dateString).add(selectedDay, 'day').utc().format('YYYY-MM-DD')
         );
     };
+    // console.log(typeof fullDates[0]); // 각 요소 타입 찾아보고 포맷 설정, endDate 타입도 체크
 
     return (
         <View style={styles.container}>
