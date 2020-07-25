@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    SafeAreaView,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Card } from 'native-base';
 
 const PlanInfo = ({ route, navigation }) => {
@@ -30,26 +24,22 @@ const PlanInfo = ({ route, navigation }) => {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                data={fullDates}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.day}
-                contentContainerStyle={{}}
-            />
-        </SafeAreaView>
+        <FlatList
+            data={fullDates}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.day}
+            style={styles.container}
+        />
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
-        marginTop: 50,
-        alignItems: 'center',
+        paddingTop: 20,
+        paddingHorizontal: 20,
     },
     card: {
-        width: 300,
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',

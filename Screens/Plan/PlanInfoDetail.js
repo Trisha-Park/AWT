@@ -34,6 +34,7 @@ const PlanInfoDetail = ({ navigation }) => {
                     // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
 
                     navigation.dispatch(StackActions.popToTop());
+                    navigation.navigate('Main');
                 }}
             >
                 <Text style={styles.btnTitle}>저장</Text>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Button } from 'native-base';
 import Constants from 'expo-constants';
 
 import dayjs from 'dayjs';
@@ -48,7 +47,6 @@ const Plan = ({ navigation }) => {
             dayjs(dateString).add(selectedDay, 'day').utc().format('YYYY-MM-DD')
         );
     };
-    // console.log(typeof fullDates[0]); // 각 요소 타입 찾아보고 포맷 설정, endDate 타입도 체크
 
     return (
         <View style={styles.container}>
@@ -58,7 +56,11 @@ const Plan = ({ navigation }) => {
                     {days.map((day, idx) => (
                         <TouchableOpacity
                             key={idx}
-                            style={styles.startButton}
+                            style={{
+                                ...styles.startButton,
+                                backgroundColor:
+                                    day === selectedDay ? 'red' : 'white',
+                            }}
                             onPress={() => {
                                 setSelectedDay(day);
                             }}
@@ -97,19 +99,26 @@ const Plan = ({ navigation }) => {
             </View>
             <View style={styles.dayContainer}>
                 <Text style={styles.title}>도착 날짜</Text>
-                <Text>{endDate}</Text>
+                <View
+                    style={{ alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <Text>{endDate}</Text>
+                </View>
             </View>
-            <Button
-                block
-                info
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('PlanInfo', {
                         fullDates,
                     });
                 }}
+                disabled={startDate === endDate ? true : false}
+                style={{
+                    ...styles.passButton,
+                    backgroundColor: startDate === endDate ? 'grey' : 'yellow',
+                }}
             >
                 <Text>다음으로 넘어가기</Text>
-            </Button>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -165,6 +174,14 @@ const styles = StyleSheet.create({
     date: {
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    passButton: {
+        backgroundColor: 'yellow',
+        width: 100,
+        height: 35,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
     },
 });
 
