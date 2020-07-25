@@ -7,12 +7,7 @@ import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
 
-import {
-    planDummy,
-    noPlanDummy,
-    regionDummy,
-    courseDummy,
-} from '../../FakeData/mainData';
+import { planDummy, regionDummy, courseDummy } from '../../FakeData/mainData';
 
 const Main = () => {
     const [plans, setPlans] = useState([...planDummy]); // 메인 화면의 계획 체크리스트입니다
