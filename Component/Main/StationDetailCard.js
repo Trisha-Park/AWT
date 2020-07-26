@@ -4,18 +4,14 @@ import { Card, CardItem } from 'native-base';
 
 const StationDetailCard = ({ info }) => {
     return (
-        <Card style={styles.card}>
-            <CardItem style={styles.titles}>
+        <Card>
+            <CardItem>
                 <Text>{info}</Text>
             </CardItem>
         </Card>
     );
 };
 
-const styles = StyleSheet.create({
-    card: {
-        borderRadius: 10,
-    },
-});
+const styles = StyleSheet.create({});
 
 export default StationDetailCard;

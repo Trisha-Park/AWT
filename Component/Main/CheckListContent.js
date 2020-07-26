@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    defaultTextSetting: {
-        fontFamily: '',
-    },
 });
 
 export default CheckListContent;
