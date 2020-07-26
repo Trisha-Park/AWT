@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    ToastAndroid,
+} from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
-import { StackActions } from '@react-navigation/native';
 
 import { AntDesign } from '@expo/vector-icons';
 import { Card } from 'native-base';
@@ -16,6 +21,14 @@ const PlanInfoDetail = ({ navigation }) => {
         // 전체 플랜 state 배열에 하나 공간 더 만드는게 필요합니다
     };
 
+    const showToast = () => {
+        ToastAndroid.show(
+            '지역 카드가 추가되었습니다.',
+            ToastAndroid.BOTTOM,
+            ToastAndroid.LONG
+        );
+    };
+
     return (
         <View style={styles.container}>
             <ViewPager style={styles.slider}>
@@ -23,7 +36,12 @@ const PlanInfoDetail = ({ navigation }) => {
                     <PlanRegionCard key={idx} />
                 ))}
                 <Card style={styles.card}>
-                    <TouchableOpacity onPress={addRegionCard}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            addRegionCard();
+                            showToast();
+                        }}
+                    >
                         <AntDesign name='pluscircleo' size={24} color='black' />
                     </TouchableOpacity>
                 </Card>
@@ -33,8 +51,7 @@ const PlanInfoDetail = ({ navigation }) => {
                 onPress={() => {
                     // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
 
-                    navigation.dispatch(StackActions.popToTop());
-                    navigation.navigate('Main');
+                    navigation.navigate('PlanInfo');
                 }}
             >
                 <Text style={styles.btnTitle}>저장</Text>
