@@ -1,57 +1,72 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    SafeAreaView,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native';
-import { Card, Button } from 'native-base';
+import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import { Card } from 'native-base';
+import { StackActions } from '@react-navigation/native';
 
-import { dateDummy } from '../../FakeData/planData';
+const PlanInfo = ({ route, navigation }) => {
+    const {
+        params: { fullDates },
+    } = route;
 
-const Item = ({ day, date }) => (
-    <Card style={styles.card}>
-        <Text style={styles.day}>{day}</Text>
-        <Text>{date}</Text>
-    </Card>
-);
-
-const PlanInfo = () => {
     const renderItem = ({ item }) => (
-        <TouchableOpacity>
-            <Item day={item.day} date={item.date} />
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate('PlanInfoDetail', {
+                    day: item.day,
+                    date: item.date,
+                });
+            }}
+        >
+            <Card style={styles.card}>
+                <Text style={styles.day}>{item.day}</Text>
+                <Text>{item.date}</Text>
+            </Card>
         </TouchableOpacity>
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             <FlatList
-                data={dateDummy}
+                data={fullDates}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.day}
-                contentContainerStyle={{}}
+                style={styles.container}
             />
-            <Button block>
-                <Text>다음으로</Text>
-            </Button>
-        </SafeAreaView>
+            <TouchableOpacity
+                style={styles.saveBtn}
+                onPress={() => {
+                    // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
+                    // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
+                    navigation.dispatch(StackActions.popToTop());
+                    navigation.navigate('Main');
+                }}
+            >
+                <Text style={styles.btnTitle}>모든 계획 저장하기</Text>
+            </TouchableOpacity>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
-        marginTop: 50,
-        alignItems: 'center',
+        paddingTop: 20,
+        paddingHorizontal: 20,
     },
     card: {
-        width: 300,
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+    },
+    saveBtn: {
+        backgroundColor: 'blue',
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btnTitle: {
+        color: 'white',
     },
 });
 

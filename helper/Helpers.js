@@ -51,5 +51,3 @@ export const makeCurrentDate = () => {
               }`
     }`;
 };
-
-makeCurrentDate();
