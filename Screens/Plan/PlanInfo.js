@@ -71,17 +71,3 @@ const styles = StyleSheet.create({
 });
 
 export default PlanInfo;
-
-{
-    /* <TouchableOpacity
-style={styles.saveBtn}
-onPress={() => {
-    // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
-    // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
-    navigation.dispatch(StackActions.popToTop());
-    navigation.navigate('Main');
-}}
->
-<Text style={styles.btnTitle}>저장</Text>
-</TouchableOpacity> */
-}
