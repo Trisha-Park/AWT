@@ -8,17 +8,39 @@ import {
 } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 
-import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { Card } from 'native-base';
 
 import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
 
-const PlanInfoDetail = ({ navigation }) => {
-    const [regions, setRegions] = useState(['']);
+const PlanInfoDetail = ({ navigation, route }) => {
+    // plan이 있다면 인자로 plan을 받을것임.. 그래서 그걸 regions의 초기값으로 해줄거야
+    const {
+        params: { date, day },
+    } = route;
+
+    const index = Number(day.split('')[4]) - 1;
+
+    const [regions, setRegions] = useState([{ region: '', toDos: [] }]);
 
     const addRegionCard = () => {
-        setRegions((prevState) => [...prevState, '']);
-        // 전체 플랜 state 배열에 하나 공간 더 만드는게 필요합니다
+        setRegions((prevState) => [...prevState, { region: '', toDos: [] }]);
+    };
+
+    const deleteRegionCard = (idx) => {
+        setRegions((prevState) => [
+            ...prevState.slice(0, idx),
+            ...prevState.slice(idx + 1),
+        ]);
+        navigation.navigate('PlanInfoDetail');
+    };
+
+    const setRegionPlan = (idx, region, toDos) => {
+        setRegions((prevState) => [
+            ...prevState.slice(0, idx),
+            { region, toDos: [...toDos] },
+            ...prevState.slice(idx + 1),
+        ]);
     };
 
     const showToast = () => {
@@ -32,8 +54,14 @@ const PlanInfoDetail = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ViewPager style={styles.slider}>
-                {regions.map((region, idx) => (
-                    <PlanRegionCard key={idx} />
+                {regions.map((regionInfo, idx) => (
+                    <PlanRegionCard
+                        key={idx}
+                        index={idx}
+                        regionInfo={regionInfo}
+                        deleteRegionCard={deleteRegionCard}
+                        setRegionPlan={setRegionPlan}
+                    />
                 ))}
                 <Card style={styles.card}>
                     <TouchableOpacity
@@ -42,16 +70,28 @@ const PlanInfoDetail = ({ navigation }) => {
                             showToast();
                         }}
                     >
-                        <AntDesign name='pluscircleo' size={24} color='black' />
+                        <Entypo name='plus' size={100} color='black' />
                     </TouchableOpacity>
                 </Card>
             </ViewPager>
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
+                    const object = regions.reduce((obj, area) => {
+                        obj[area.region] = [...area.toDos];
+                        return obj;
+                    }, {});
 
-                    navigation.navigate('PlanInfo');
+                    object.date = date;
+
+                    navigation.navigate('PlanInfo', {
+                        dailyPlan: {
+                            [day]: {
+                                ...object,
+                            },
+                        },
+                        index,
+                    });
                 }}
             >
                 <Text style={styles.btnTitle}>저장</Text>

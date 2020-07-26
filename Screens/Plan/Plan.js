@@ -33,7 +33,7 @@ const Plan = ({ navigation }) => {
                 .fill('')
                 .map((day, idx) => {
                     return {
-                        day: `day 0${idx + 1}`,
+                        day: `day0${idx + 1}`,
                         date: dayjs(dateString)
                             .add(idx + 1, 'day')
                             .utc()

@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Card } from 'native-base';
-import { StackActions } from '@react-navigation/native';
+import { StackActions, useIsFocused } from '@react-navigation/native';
 
 const PlanInfo = ({ route, navigation }) => {
     const {
-        params: { fullDates },
+        params: { fullDates, dailyPlan, index },
     } = route;
+
+    const [plans, setPlans] = useState([...Array(fullDates.length).fill('')]);
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        if (isFocused) {
+            if (dailyPlan) {
+                setPlans((prevState) => [
+                    ...prevState.slice(0, index),
+                    dailyPlan,
+                    ...prevState.slice(index + 1),
+                ]);
+            }
+        }
+    }, [isFocused]);
+
+    // 이미 plan 있는경우: asyncStorage에 저장된걸 꺼내오자 -> 꺼내와서 날짜, plan 정보를 셋팅 -> 더미데이터를 만들어서 체크하기
 
     const renderItem = ({ item }) => (
         <TouchableOpacity
@@ -35,7 +52,7 @@ const PlanInfo = ({ route, navigation }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    // TODO: 여기에서 저장된 내용들을 state에 넣어 올려주기
+                    // TODO: plans를 axios post 요청
                     // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
                     navigation.dispatch(StackActions.popToTop());
                     navigation.navigate('Main');
