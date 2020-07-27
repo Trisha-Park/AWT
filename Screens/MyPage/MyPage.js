@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Card, List, ListItem } from 'native-base';
 
 import { userInfo } from '../../FakeData/userData';
 
-const MyPage = () => {
+
+const MyPage = ({ navigation }) => {
     const [userName, setUserName] = useState(userInfo.userName);
     const [userId, setUserId] = useState(userInfo.userId);
 
@@ -18,11 +19,17 @@ const MyPage = () => {
                     <Text>{userName} 님</Text>
                 </Card>
             </Card>
-            <List style={styles.allList}>
+            <View style={styles.allList}>
                 <Card>
-                    <ListItem>
-                        <Text>내가 쓴 게시글</Text>
-                    </ListItem>
+                    <List>
+                        <ListItem
+                            onPress={() => {
+                                navigation.navigate('MyArticle');
+                            }}
+                        >
+                            <Text>내가 쓴 게시글</Text>
+                        </ListItem>
+                    </List>
                 </Card>
                 <Card>
                     <ListItem>
@@ -43,7 +50,7 @@ const MyPage = () => {
                         <Text>리뷰쓰기</Text>
                     </ListItem>
                 </Card>
-            </List>
+            </View>
         </View>
     );
 };
