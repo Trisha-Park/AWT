@@ -5,7 +5,7 @@ import MyArticle from '../Screens/MyPage/MyArticle';
 
 const MyPageStack = createStackNavigator();
 
-const MyPageStackNavigator = ({navigation, route}) => {
+const MyPageStackNavigator = ({ navigation, route }) => {
     if (route.state) {
         if (route.state.index === 0) {
             navigation.setOptions({ tabBarVisible: true });
@@ -14,11 +14,10 @@ const MyPageStackNavigator = ({navigation, route}) => {
         }
     }
     return (
-
         <MyPageStack.Navigator
-            initialRouteName='Community'
+            initialRouteName='MyPage'
             screenOptions={({ route }) => {
-                if (route.name === 'Community') {
+                if (route.name === 'MyPage') {
                     return {
                         headerShown: false,
                     };
