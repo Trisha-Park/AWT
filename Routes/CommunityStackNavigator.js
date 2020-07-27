@@ -6,7 +6,14 @@ import CreateArticle from '../Screens/Community/CreateArticle';
 
 const CommunityStack = createStackNavigator();
 
-const CommunityStackNavigator = () => {
+const CommunityStackNavigator = ({ navigation, route }) => {
+    if (route.state) {
+        if (route.state.index === 0) {
+            navigation.setOptions({ tabBarVisible: true });
+        } else {
+            navigation.setOptions({ tabBarVisible: false });
+        }
+    }
     return (
         <CommunityStack.Navigator
             initialRouteName='Community'
