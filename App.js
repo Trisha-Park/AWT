@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import Station from './Screens/Station/Station';
 import Plan from './Routes/PlanStackNavigator';
 import Community from './Routes/CommunityStackNavigator';
 import MyPage from './Routes/MyPageStackNavigator';
+import SignIn from './Screens/SignIn';
 
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,7 +19,10 @@ import { FontAwesome } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+    const [isLogin, setIsLogin] = useState(false);
+
     return (
+        isLogin ? 
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
             <Tab.Navigator
@@ -74,6 +78,7 @@ export default function App() {
                 <Tab.Screen name='Community' component={Community} />
                 <Tab.Screen name='MyPage' component={MyPage} />
             </Tab.Navigator>
-        </NavigationContainer>
+        </NavigationContainer>  
+        : <SignIn isLogin={isLogin} setIsLogin={setIsLogin}/>
     );
 }
