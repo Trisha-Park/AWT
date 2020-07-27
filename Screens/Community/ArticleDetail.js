@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -8,10 +8,20 @@ import {
 } from 'react-native';
 import { CardItem, Card, ListItem, Left } from 'native-base';
 
+import Comments from '../../Component/Community/Comments';
+
+import { articleDummy } from '../../FakeData/communityData';
+import { commentDummy } from '../../FakeData/commentData';
+
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const ArticleDetail = () => {
-    const [articleDetail, setArticleDetail] = useState([...articleDummy]);
+const ArticleDetail = ({ route }) => {
+    const [articleDetail, setArticleDetail] = useState({
+        ...articleDummy[route.params.id],
+    });
+    const [comments, setComment] = useState([...commentDummy]);
     const { title, author, date, data, visit } = articleDetail;
+    const [commentValue, setCommentValue] = useState('');
+
     return (
         <View>
             <Card style={styles.card}>
@@ -28,19 +38,24 @@ const ArticleDetail = () => {
                     <Text>{data}</Text>
                 </CardItem>
             </Card>
-            <TouchableOpacity>
-                <TouchableOpacity style={styles.comment}>
-                    <ListItem>
-                        <Left>
-                            <Text>
-                                Out of Darkness!~ In to the Spotlight~!!
-                            </Text>
-                        </Left>
-                    </ListItem>
-                </TouchableOpacity>
-            </TouchableOpacity>
+            <View>
+                {comments.map((comment, idx) => (
+                    <TouchableOpacity key={idx}>
+                        <Comments
+                            comments={comment}
+                            onChangeText={(text) => {
+                                setCommentValue(text);
+                            }}
+                        />
+                    </TouchableOpacity>
+                ))}
+            </View>
             <View style={styles.input}>
-                <TextInput style={styles.inputText}></TextInput>
+                <TextInput
+                    style={styles.inputText}
+                    value={commentValue}
+                    on
+                ></TextInput>
                 <TouchableOpacity sytle={styles.button}>
                     <Text> 댓글쓰기</Text>
                 </TouchableOpacity>
@@ -52,7 +67,7 @@ const ArticleDetail = () => {
 const styles = StyleSheet.create({
     card: {
         position: 'relative',
-        marginTop: -190,
+        marginTop: 30,
         width: 395,
         backgroundColor: 'lavender',
         height: 300,
@@ -74,12 +89,7 @@ const styles = StyleSheet.create({
         marginLeft: 2,
         backgroundColor: 'lavender',
     },
-    comment: {
-        width: 395,
-        position: 'relative',
-        marginTop: 5,
-        justifyContent: 'center',
-    },
+
     input: {
         position: 'relative',
         flexDirection: 'row',
