@@ -23,8 +23,6 @@ const PlanInfo = ({ route, navigation }) => {
         }
     }, [isFocused]);
 
-    // 이미 plan 있는경우: asyncStorage에 저장된걸 꺼내오자 -> 꺼내와서 날짜, plan 정보를 셋팅 -> 더미데이터를 만들어서 체크하기
-
     const renderItem = ({ item }) => (
         <TouchableOpacity
             onPress={() => {
@@ -55,7 +53,7 @@ const PlanInfo = ({ route, navigation }) => {
                     // TODO: plans를 axios post 요청
                     // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
                     navigation.dispatch(StackActions.popToTop());
-                    navigation.navigate('Main');
+                    navigation.navigate('PlanEdit');
                 }}
             >
                 <Text style={styles.btnTitle}>모든 계획 저장하기</Text>

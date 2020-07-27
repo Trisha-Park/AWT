@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -14,17 +14,16 @@ import { Card } from 'native-base';
 import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
 
 const PlanInfoDetail = ({ navigation, route }) => {
-    // plan이 있다면 인자로 plan을 받을것임.. 그래서 그걸 regions의 초기값으로 해줄거야
     const {
         params: { date, day },
     } = route;
 
     const index = Number(day.split('')[4]) - 1;
 
-    const [regions, setRegions] = useState([{ region: '', toDos: [] }]);
+    const [regions, setRegions] = useState([{ region: '', toDos: [''] }]);
 
     const addRegionCard = () => {
-        setRegions((prevState) => [...prevState, { region: '', toDos: [] }]);
+        setRegions((prevState) => [...prevState, { region: '', toDos: [''] }]);
     };
 
     const deleteRegionCard = (idx) => {
@@ -77,17 +76,11 @@ const PlanInfoDetail = ({ navigation, route }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    const object = regions.reduce((obj, area) => {
-                        obj[area.region] = [...area.toDos];
-                        return obj;
-                    }, {});
-
-                    object.date = date;
-
                     navigation.navigate('PlanInfo', {
                         dailyPlan: {
                             [day]: {
-                                ...object,
+                                date: date,
+                                plans: [...regions],
                             },
                         },
                         index,
