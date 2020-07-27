@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        paddingVertical: 50,
+        paddingVertical: 45,
     },
 });
 

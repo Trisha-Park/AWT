@@ -1,15 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-const Regions = ({ regions }) => {
+const Regions = ({ regions, navigation }) => {
     return (
         <>
-            <Text>추천 지역</Text>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>추천 지역</Text>
             <View style={styles.container}>
                 {regions.map((region, idx) => (
-                    <View key={idx} style={styles.card}>
+                    <TouchableOpacity
+                        key={idx}
+                        style={styles.card}
+                        onPress={() => {
+                            navigation.navigate('StationDetail', {
+                                region,
+                            });
+                        }}
+                    >
                         <Text>{region}</Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </>

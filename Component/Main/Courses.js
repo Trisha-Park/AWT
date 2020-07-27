@@ -24,7 +24,9 @@ const Courses = ({ courses, navigation }) => {
 
 const styles = StyleSheet.create({
     title: {
-        marginBottom: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 15,
     },
     viewPager: {
         flex: 0.8,

@@ -3,7 +3,7 @@ export const planDummy = [
     {
         day: 1,
         region: '서울',
-        toDos: ['일어나기', '집에가기', '저녁먹기'],
+        toDos: ['일어나기', '집에가기', '저녁먹기', '잠자기', '밥먹기'],
     },
     {
         day: 2,

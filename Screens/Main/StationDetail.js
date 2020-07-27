@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Constants from 'expo-constants';
 
 import StationDetailSlider from '../../Component/Main/StationDetailSlider';
 import { staitonDetailDummy } from '../../FakeData/mainData';
 
-// 뒤로가기 있는 헤더는 스택 네비게이터를 적용시키면 자동으로 생길 예정입니다
 const StationDetail = ({ route }) => {
     const [stationDetail, setStationDetail] = useState({
         ...staitonDetailDummy,
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight,
+        backgroundColor: 'white',
     },
     headerContainer: {
         marginLeft: 20,

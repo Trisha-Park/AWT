@@ -16,7 +16,7 @@ const Main = ({ navigation }) => {
 
     // 서치 아이콘에 onPress 이벤트를 걸고 -> 리액트 네비게이터로 Select 창으로 이동
     return (
-        <>
+        <View style={styles.container}>
             <View style={styles.searchBar}>
                 <Text>A Week Trip</Text>
                 <TouchableOpacity
@@ -35,16 +35,22 @@ const Main = ({ navigation }) => {
                 </ViewPager>
             </View>
             <View style={styles.regions}>
-                <Regions regions={regions} />
+                <Regions regions={regions} navigation={navigation} />
             </View>
             <View style={styles.courses}>
                 <Courses courses={courses} navigation={navigation} />
             </View>
-        </>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        backgroundColor: 'red',
+    },
     searchBar: {
         flex: 1,
         flexDirection: 'row',
@@ -52,21 +58,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f5f6fa',
         alignSelf: 'stretch',
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
     },
     plans: {
         flex: 4,
-        backgroundColor: 'yellow',
         alignItems: 'center',
         justifyContent: 'center',
     },
     regions: {
         flex: 2,
-        backgroundColor: 'red',
+        paddingHorizontal: 15,
     },
     courses: {
         flex: 3,
-        backgroundColor: 'blue',
+        paddingHorizontal: 15,
     },
     viewPager: {
         flex: 0.8,
