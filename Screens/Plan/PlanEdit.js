@@ -1,19 +1,43 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+    StyleSheet,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    ToastAndroid,
+} from 'react-native';
 import { Card } from 'native-base';
-import { StackActions, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
-const PlanInfo = ({ route, navigation }) => {
-    const {
-        params: { fullDates, dailyPlan, index },
-    } = route;
+import { fullPlan } from '../../FakeData/planData';
 
-    const [plans, setPlans] = useState([...Array(fullDates.length).fill('')]);
+const PlanEdit = ({ route, navigation }) => {
+    const [plans, setPlans] = useState([...fullPlan]);
+    const [fullDates, setFullDates] = useState([
+        ...fullPlan.map((plan, idx) => {
+            return {
+                date: plan[`day0${idx + 1}`]['date'],
+                day: `day0${idx + 1}`,
+            };
+        }),
+    ]);
+
+    const showToast = () => {
+        ToastAndroid.show(
+            '계획이 업데이트되었습니다.',
+            ToastAndroid.CENTER,
+            ToastAndroid.LONG
+        );
+    };
+
     const isFocused = useIsFocused();
 
     useEffect(() => {
         if (isFocused) {
-            if (dailyPlan) {
+            if (route.params) {
+                const {
+                    params: { dailyPlan, index },
+                } = route;
                 setPlans((prevState) => [
                     ...prevState.slice(0, index),
                     dailyPlan,
@@ -26,9 +50,12 @@ const PlanInfo = ({ route, navigation }) => {
     const renderItem = ({ item }) => (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate('PlanInfoDetail', {
+                const index = Number(item.day.split('')[4]);
+                console.log(plans[index - 1][`day0${index}`]['tasks']);
+                navigation.navigate('PlanEditDetail', {
                     day: item.day,
                     date: item.date,
+                    tasksInfo: plans[index - 1][`day0${index}`]['tasks'],
                 });
             }}
         >
@@ -52,8 +79,7 @@ const PlanInfo = ({ route, navigation }) => {
                 onPress={() => {
                     // TODO: plans를 axios post 요청
                     // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
-                    navigation.dispatch(StackActions.popToTop());
-                    navigation.navigate('PlanEdit');
+                    showToast();
                 }}
             >
                 <Text style={styles.btnTitle}>모든 계획 저장하기</Text>
@@ -85,4 +111,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanInfo;
+export default PlanEdit;

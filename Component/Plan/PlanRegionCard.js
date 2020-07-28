@@ -19,10 +19,9 @@ const PlanRegionCard = ({
     deleteRegionCard,
     setRegionPlan,
 }) => {
-    const [count, setCount] = useState(1);
     // set toDo
     const [isClickedTodos, setIsClickedTodos] = useState([false]);
-    const [toDos, setToDos] = useState(regionInfo.toDos);
+    const [toDos, setToDos] = useState([...regionInfo.toDos]);
 
     // set region
     const [isClickedRegion, setIsClickedRegion] = useState(false);
@@ -95,86 +94,83 @@ const PlanRegionCard = ({
                     )}
                 </CardItem>
                 <CardItem style={styles.toDoView}>
-                    {Array(count)
-                        .fill(0)
-                        .map((toDo, idx) => {
-                            return isClickedTodos[idx] ? (
-                                <View
-                                    key={idx}
-                                    style={{
-                                        ...styles.regionInput,
-                                        ...styles.boxShadow,
-                                    }}
-                                >
-                                    <TextInput
-                                        style={styles.toDoInput}
-                                        value={toDos[idx]}
-                                        onChangeText={(text) => {
-                                            setToDos((prevState) => [
-                                                ...prevState.slice(0, idx),
-                                                text,
-                                                ...prevState.slice(idx + 1),
-                                            ]);
-                                        }}
-                                        style={{
-                                            fontSize: 18,
-                                            paddingRight: 55,
-                                        }}
-                                    />
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            setIsClickedTodos((prevState) => [
-                                                ...prevState.slice(0, idx),
-                                                false,
-                                                ...prevState.slice(idx + 1),
-                                            ]);
-                                            setRegionPlan(
-                                                index,
-                                                regionValue,
-                                                toDos
-                                            );
-                                        }}
-                                    >
-                                        <MaterialCommunityIcons
-                                            name='grease-pencil'
-                                            size={24}
-                                            color='black'
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            ) : (
-                                <TouchableOpacity
-                                    key={idx}
-                                    onPress={() => {
-                                        setIsClickedTodos((prevState) => [
+                    {toDos.map((toDo, idx) => {
+                        return isClickedTodos[idx] ? (
+                            <View
+                                key={idx}
+                                style={{
+                                    ...styles.regionInput,
+                                    ...styles.boxShadow,
+                                }}
+                            >
+                                <TextInput
+                                    style={styles.toDoInput}
+                                    value={toDos[idx]}
+                                    onChangeText={(text) => {
+                                        setToDos((prevState) => [
                                             ...prevState.slice(0, idx),
-                                            true,
+                                            text,
                                             ...prevState.slice(idx + 1),
                                         ]);
                                     }}
                                     style={{
-                                        ...styles.regionText,
-                                        ...styles.boxShadow,
+                                        fontSize: 18,
+                                        paddingRight: 55,
+                                    }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setIsClickedTodos((prevState) => [
+                                            ...prevState.slice(0, idx),
+                                            false,
+                                            ...prevState.slice(idx + 1),
+                                        ]);
+                                        setRegionPlan(
+                                            index,
+                                            regionValue,
+                                            toDos
+                                        );
                                     }}
                                 >
-                                    <Text
-                                        style={{
-                                            color: '#7C859A',
-                                            fontWeight: 'bold',
-                                            fontSize: 16,
-                                        }}
-                                    >
-                                        {toDos[idx] === ''
-                                            ? '터치해서 새 계획을 만들어 보세요!'
-                                            : toDos[idx]}
-                                    </Text>
+                                    <MaterialCommunityIcons
+                                        name='grease-pencil'
+                                        size={24}
+                                        color='black'
+                                    />
                                 </TouchableOpacity>
-                            );
-                        })}
+                            </View>
+                        ) : (
+                            <TouchableOpacity
+                                key={idx}
+                                onPress={() => {
+                                    setIsClickedTodos((prevState) => [
+                                        ...prevState.slice(0, idx),
+                                        true,
+                                        ...prevState.slice(idx + 1),
+                                    ]);
+                                }}
+                                style={{
+                                    ...styles.regionText,
+                                    ...styles.boxShadow,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: '#7C859A',
+                                        fontWeight: 'bold',
+                                        fontSize: 16,
+                                    }}
+                                >
+                                    {toDos[idx] === ''
+                                        ? '터치해서 새 계획을 만들어 보세요!'
+                                        : toDos[idx]}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    })}
                     <TouchableOpacity
                         style={styles.addButton}
                         onPress={() => {
-                            setCount((prevState) => prevState + 1);
                             setToDos((prevState) => [...prevState, '']);
                             setIsClickedTodos((prevState) => [
                                 ...prevState,

@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Plan from '../Screens/Plan/Plan';
 import PlanInfo from '../Screens/Plan/PlanInfo';
 import PlanInfoDetail from '../Screens/Plan/PlanInfoDetail';
-import { floor } from 'react-native-reanimated';
+import PlanEdit from '../Screens/Plan/PlanEdit';
+import PlanEditDetail from '../Screens/Plan/PlanEditDetail';
 
 const PlanStack = createStackNavigator();
 
@@ -21,9 +22,9 @@ const PlanStackNavigator = ({ navigation, route }) => {
 
     return (
         <PlanStack.Navigator
-            initialRouteName={isPlan ? 'PlanInfo' : 'Plan'}
+            initialRouteName={isPlan ? 'PlanEdit' : 'Plan'}
             screenOptions={({ route }) => {
-                if (route.name === 'Plan') {
+                if (route.name === 'Plan' || route.name === 'PlanEdit') {
                     return {
                         headerShown: false,
                     };
@@ -35,6 +36,11 @@ const PlanStackNavigator = ({ navigation, route }) => {
             <PlanStack.Screen
                 name='PlanInfoDetail'
                 component={PlanInfoDetail}
+            />
+            <PlanStack.Screen name='PlanEdit' component={PlanEdit} />
+            <PlanStack.Screen
+                name='PlanEditDetail'
+                component={PlanEditDetail}
             />
         </PlanStack.Navigator>
     );

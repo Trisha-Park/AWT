@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -13,25 +13,25 @@ import { Card } from 'native-base';
 
 import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
 
-const PlanInfoDetail = ({ navigation, route }) => {
+const PlanEditDetail = ({ navigation, route }) => {
     const {
-        params: { date, day },
+        params: { date, day, tasksInfo },
     } = route;
 
     const index = Number(day.split('')[4]) - 1;
 
-    const [regions, setRegions] = useState([{ region: '', toDos: [''] }]);
+    const [regions, setRegions] = useState([...tasksInfo]);
 
     const addRegionCard = () => {
-        setRegions((prevState) => [...prevState, { region: '', toDos: [''] }]);
+        setRegions((prevState) => [...prevState, { region: '', toDos: [] }]);
     };
 
     const deleteRegionCard = (idx) => {
-        setRegions((prevState) => [
-            ...prevState.slice(0, idx),
-            ...prevState.slice(idx + 1),
-        ]);
-        navigation.navigate('PlanInfoDetail');
+        setRegions((prevState) => {
+            return prevState.length === 1
+                ? ['']
+                : [...prevState.slice(0, idx), ...prevState.slice(idx + 1)];
+        });
     };
 
     const setRegionPlan = (idx, region, toDos) => {
@@ -76,7 +76,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    navigation.navigate('PlanInfo', {
+                    navigation.navigate('PlanEdit', {
                         dailyPlan: {
                             [day]: {
                                 date: date,
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanInfoDetail;
+export default PlanEditDetail;
