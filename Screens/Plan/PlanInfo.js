@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Card } from 'native-base';
 import { StackActions, useIsFocused } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { postPlans } from '../../Actions/PlanActions';
 
 const PlanInfo = ({ route, navigation }) => {
     const {
@@ -85,4 +86,17 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanInfo;
+const mapStateToProps = (state, owmProps) => {
+    console.log(state);
+    // return {
+    //     deleteToDos: (idx) => dispatch(deleteToDos(idx)),
+    // };
+};
+
+const mapDispatchToProps = (dispatch, owmProps) => {
+    return {
+        postPlans: (plans, planId) => dispatch(postPlans(plans, planId)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlanInfo);
