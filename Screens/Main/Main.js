@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
@@ -7,14 +7,39 @@ import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
 
-import { planDummy, regionDummy, courseDummy } from '../../FakeData/mainData';
+import { regionDummy, courseDummy, noPlanDummy } from '../../FakeData/mainData';
+import { connect } from 'react-redux';
 
-const Main = ({ navigation }) => {
-    const [plans, setPlans] = useState([...planDummy]); // 메인 화면의 계획 체크리스트입니다
-    const [regions, setRegions] = useState([...regionDummy]); // 메인 화면의 추천지역입니다
-    const [courses, setCourses] = useState([...courseDummy]); // 메인 화면의 추천코스입니다
+const Main = ({ navigation, plan, isPlanExist }) => {
+    const [plans, setPlans] = useState(
+        isPlanExist
+            ? [
+                  ...plan.list.reduce((arr, item, idx) => {
+                      item[`day0${idx + 1}`]['tasks'].forEach((task) => {
+                          arr.push({ day: `day0${idx + 1}`, ...task });
+                      });
+                      return arr;
+                  }, []),
+              ]
+            : [...noPlanDummy]
+    );
+    const [regions, setRegions] = useState([...regionDummy]);
+    const [courses, setCourses] = useState([...courseDummy]);
 
-    // 서치 아이콘에 onPress 이벤트를 걸고 -> 리액트 네비게이터로 Select 창으로 이동
+    useEffect(() => {
+        // 수정된경우를 고려 이거 focus 이벤트로? 아님 replace?
+        if (isPlanExist) {
+            setPlans([
+                ...plan.list.reduce((arr, item, idx) => {
+                    item[`day0${idx + 1}`]['tasks'].forEach((task) => {
+                        arr.push({ day: `day0${idx + 1}`, ...task });
+                    });
+                    return arr;
+                }, []),
+            ]);
+        }
+    });
+
     return (
         <View style={styles.container}>
             <View style={styles.searchBar}>
@@ -29,8 +54,8 @@ const Main = ({ navigation }) => {
             </View>
             <View style={styles.plans}>
                 <ViewPager style={styles.viewPager}>
-                    {plans.map((plan, idx) => (
-                        <CheckList dummy={plan} key={idx} />
+                    {plans.map((planItem, idx) => (
+                        <CheckList planItem={planItem} key={idx} />
                     ))}
                 </ViewPager>
             </View>
@@ -80,4 +105,11 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Main;
+const mapStateToProps = (state) => {
+    return {
+        plan: state.planReducer.plan,
+        isPlanExist: state.planReducer.isPlanExist,
+    };
+};
+
+export default connect(mapStateToProps)(Main);
