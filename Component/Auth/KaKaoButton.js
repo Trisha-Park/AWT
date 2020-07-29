@@ -1,7 +1,8 @@
 import React from 'react';
+import { Button } from 'react-native';
 
 const KaKaoButton = () => {
-    return <Button color='gold' style={styles.kakao} title='카카오' />;
+    return <Button color='gold' title='카카오' />;
 };
 
 export default KaKaoButton;
