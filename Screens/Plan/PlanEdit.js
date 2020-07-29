@@ -6,21 +6,51 @@ import {
     TouchableOpacity,
     ToastAndroid,
 } from 'react-native';
-import { Card } from 'native-base';
+import { Card, View } from 'native-base';
 import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 
 import { fullPlan } from '../../FakeData/planData';
 
-const PlanEdit = ({ route, navigation }) => {
-    const [plans, setPlans] = useState([...fullPlan]);
-    const [fullDates, setFullDates] = useState([
-        ...fullPlan.map((plan, idx) => {
-            return {
-                date: plan[`day0${idx + 1}`]['date'],
-                day: `day0${idx + 1}`,
-            };
-        }),
-    ]);
+import { connect } from 'react-redux';
+
+const PlanEdit = ({ route, navigation, plan }) => {
+    const [plans, setPlans] = useState(
+        !plan._id ? [...fullPlan] : [...plan.list]
+    );
+    const [fullDates, setFullDates] = useState(
+        !plan._id
+            ? [
+                  ...fullPlan.map((toDo, idx) => {
+                      return {
+                          date: toDo[`day0${idx + 1}`]['date'],
+                          day: `day0${idx + 1}`,
+                      };
+                  }),
+              ]
+            : [
+                  ...plan.list.map((toDo, idx) => {
+                      return {
+                          date: toDo[`day0${idx + 1}`]['date'],
+                          day: `day0${idx + 1}`,
+                      };
+                  }),
+              ]
+    );
+
+    useEffect(() => {
+        if (plan._id) {
+            setPlans([...plan.list]);
+            setFullDates([
+                ...plan.list.map((toDo, idx) => {
+                    return {
+                        date: toDo[`day0${idx + 1}`]['date'],
+                        day: `day0${idx + 1}`,
+                    };
+                }),
+            ]);
+        }
+    }, []);
 
     const showToast = () => {
         ToastAndroid.show(
@@ -47,6 +77,21 @@ const PlanEdit = ({ route, navigation }) => {
         }
     }, [isFocused]);
 
+    const editPlanData = async () => {
+        try {
+            const { data } = await axios.put(
+                `http://192.168.0.40:5050/plan/${plan._id}`,
+                {
+                    userId: 1,
+                    list: plans,
+                }
+            );
+            storePlans(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const renderItem = ({ item }) => (
         <TouchableOpacity
             onPress={() => {
@@ -66,7 +111,9 @@ const PlanEdit = ({ route, navigation }) => {
         </TouchableOpacity>
     );
 
-    return (
+    return !plan._id ? (
+        <View />
+    ) : (
         <>
             <FlatList
                 data={fullDates}
@@ -77,8 +124,7 @@ const PlanEdit = ({ route, navigation }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    // TODO: plans를 axios post 요청
-                    // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
+                    editPlanData();
                     showToast();
                 }}
             >
@@ -111,4 +157,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanEdit;
+const mapStateToProps = (state) => {
+    return {
+        plan: state.planReducer.plan,
+    };
+};
+
+export default connect(mapStateToProps, null)(PlanEdit);
