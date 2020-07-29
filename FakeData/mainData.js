@@ -17,6 +17,59 @@ export const planDummy = [
     },
 ];
 
+export const plansData = {
+    userId: 1,
+    list: [
+        {
+            day01: {
+                date: '2020-07-31',
+                tasks: [
+                    {
+                        region: '서울',
+                        toDos: [
+                            '일어나기',
+                            '집에가기',
+                            '저녁먹기',
+                            '잠자기',
+                            '밥먹기',
+                        ],
+                    },
+                    {
+                        region: '부산',
+                        toDos: ['숙소가기', '밥먹기', '택시타기'],
+                    },
+                ],
+            },
+        },
+        {
+            day02: {
+                date: '2020-08-01',
+                tasks: [
+                    {
+                        region: '부산',
+                        toDos: ['기차타기'],
+                    },
+                    {
+                        region: '서울',
+                        toDos: ['기차내리기', '집에가기'],
+                    },
+                ],
+            },
+        },
+        {
+            day03: {
+                date: '2020-08-02',
+                tasks: [
+                    {
+                        region: '우리집',
+                        toDos: ['궤에에엑'],
+                    },
+                ],
+            },
+        },
+    ],
+};
+
 // 계획의 없을 때의 테스트를 위한 더미데이터입니다.
 export const noPlanDummy = [
     {
