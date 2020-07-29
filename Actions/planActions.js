@@ -3,21 +3,31 @@ export const PLAN_LOADING_START = 'PLAN_LOADING_START';
 export const PLAN_LOADING_END = 'PLAN_LOADING_END';
 
 // plan 저장
-export const POST_PLANS = 'POST_PLANS';
+export const STORE_PLANS = 'STORE_PLANS';
+export const DELETE_PLANS = 'DELETE_PLANS';
+export const CHECK_PLAN = 'CHECK_PLAN';
 
 export const planLoadingStart = (isPlanLoading) => ({
     type: PLAN_LOADING_START,
     isPlanLoading,
 });
 
-export const planLoadingEnd = (isPlanLoading, plans) => ({
+export const planLoadingEnd = (isPlanLoading, plan) => ({
     type: PLAN_LOADING_END,
     isPlanLoading,
-    plans,
+    plan,
 });
 
-export const postPlans = (plans, planId) => ({
-    type: POST_PLANS,
-    plans,
-    planId,
+export const storePlans = (plan) => ({
+    type: STORE_PLANS,
+    plan,
+});
+
+export const checkPlan = (isPlanExist) => ({
+    type: CHECK_PLAN,
+    isPlanExist,
+});
+
+export const deletePlans = () => ({
+    type: DELETE_PLANS,
 });

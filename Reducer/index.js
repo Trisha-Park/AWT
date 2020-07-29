@@ -1,6 +1,6 @@
-import { postPlanReducer } from './planReducer';
+import { planReducer } from './planReducer';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-    postPlanReducer,
+    planReducer,
 });
