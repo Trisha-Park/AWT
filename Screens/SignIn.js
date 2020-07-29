@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import KaKaoButton from '../Component/Auth/KaKaoButton';
+import GoogleButton from "../Component/Auth/GoogleButton";
 
 const SignIn = ({ isLogin, setIsLogin }) => {
     return (
         <View>
-            <Button color='pink' style={styles.google} title='구글' />
             <KaKaoButton />
             <Button color='skyblue' style={styles.naver} title='네이버' />
+            <GoogleButton />
             <Button
                 color='magenta'
                 style={styles.noneLogin}
