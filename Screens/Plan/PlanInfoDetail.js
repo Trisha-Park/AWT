@@ -80,7 +80,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
                         dailyPlan: {
                             [day]: {
                                 date: date,
-                                plans: [...regions],
+                                tasks: [...regions],
                             },
                         },
                         index,

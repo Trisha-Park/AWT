@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import KaKaoButton from '../Component/Auth/KaKaoButton';
-import GoogleButton from "../Component/Auth/GoogleButton";
+import GoogleButton from '../Component/Auth/GoogleButton';
 
 const SignIn = ({ isLogin, setIsLogin }) => {
     return (
-        <View>
+        <View style={styles.container}>
             <KaKaoButton />
             <Button color='skyblue' style={styles.naver} title='네이버' />
             <GoogleButton />
@@ -23,6 +23,12 @@ const SignIn = ({ isLogin, setIsLogin }) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
     google: {},
     kakao: {},
     naver: {},

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,10 +16,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
+import { deletePlans, checkPlan } from './Actions/planActions';
+import { connect } from 'react-redux';
+
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+const App = ({ deletePlans, checkPlan }) => {
     const [isLogin, setIsLogin] = useState(false);
+
+    // 플랜 리다이렉션 실험용
+    // useEffect(() => {
+    //     deletePlans();
+    //     checkPlan(false);
+    // }, []);
+
     return isLogin ? (
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
@@ -80,4 +90,13 @@ export default function App() {
     ) : (
         <SignIn isLogin={isLogin} setIsLogin={setIsLogin} />
     );
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
+        deletePlans: () => dispatch(deletePlans()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(App);

@@ -1,10 +1,23 @@
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Card } from 'native-base';
 import { StackActions, useIsFocused } from '@react-navigation/native';
-import { connect } from 'react-redux';
-import { postPlans } from '../../Actions/PlanActions';
 
-const PlanInfo = ({ route, navigation }) => {
+import { connect } from 'react-redux';
+import {
+    storePlans,
+    checkPlan,
+    editPlanLoadingStart,
+} from '../../Actions/planActions';
+import axios from 'axios';
+
+const PlanInfo = ({
+    route,
+    navigation,
+    storePlans,
+    checkPlan,
+    editPlanLoadingStart,
+}) => {
     const {
         params: { fullDates, dailyPlan, index },
     } = route;
@@ -23,6 +36,21 @@ const PlanInfo = ({ route, navigation }) => {
             }
         }
     }, [isFocused]);
+
+    const postPlanData = async () => {
+        try {
+            const { data } = await axios.post('http://192.168.0.40:5050/plan', {
+                userId: 1,
+                list: plans,
+            });
+
+            storePlans(data);
+            checkPlan(true);
+            editPlanLoadingStart(true);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const renderItem = ({ item }) => (
         <TouchableOpacity
@@ -51,10 +79,10 @@ const PlanInfo = ({ route, navigation }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    // TODO: plans를 axios post 요청
-                    // TODO: Main 가자마자 플랜 axios로 불러오고 isPlan === true 바꿔주기
+                    postPlanData();
+                    navigation.navigate('Main');
                     navigation.dispatch(StackActions.popToTop());
-                    navigation.navigate('PlanEdit');
+                    navigation.dispatch(StackActions.replace('PlanEdit'));
                 }}
             >
                 <Text style={styles.btnTitle}>모든 계획 저장하기</Text>
@@ -86,16 +114,18 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = (state, owmProps) => {
-    console.log(state);
-    // return {
-    //     deleteToDos: (idx) => dispatch(deleteToDos(idx)),
-    // };
+const mapStateToProps = (state) => {
+    return {
+        plan: state.planReducer.plan,
+    };
 };
 
-const mapDispatchToProps = (dispatch, owmProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        postPlans: (plans, planId) => dispatch(postPlans(plans, planId)),
+        storePlans: (plan) => dispatch(storePlans(plan)),
+        checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
+        editPlanLoadingStart: (isEditPlanLoading) =>
+            dispatch(editPlanLoadingStart(isEditPlanLoading)),
     };
 };
 

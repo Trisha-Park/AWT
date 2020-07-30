@@ -5,13 +5,11 @@ import PlanInfo from '../Screens/Plan/PlanInfo';
 import PlanInfoDetail from '../Screens/Plan/PlanInfoDetail';
 import PlanEdit from '../Screens/Plan/PlanEdit';
 import PlanEditDetail from '../Screens/Plan/PlanEditDetail';
+import { connect } from 'react-redux';
 
 const PlanStack = createStackNavigator();
 
-const PlanStackNavigator = ({ navigation, route }) => {
-    const isPlan = false;
-    // 현재 계획이 있는 지를 나타내는 임시 변수 (추후 asyncStorage / axios로 가져와지는 데이터가 있는지로 판단 예정입니다)
-
+const PlanStackNavigator = ({ navigation, route, isPlanExist }) => {
     if (route.state) {
         if (route.state.index === 0) {
             navigation.setOptions({ tabBarVisible: true });
@@ -22,9 +20,9 @@ const PlanStackNavigator = ({ navigation, route }) => {
 
     return (
         <PlanStack.Navigator
-            initialRouteName={isPlan ? 'PlanEdit' : 'Plan'}
+            initialRouteName={isPlanExist ? 'PlanEdit' : 'Plan'}
             screenOptions={({ route }) => {
-                if (route.name === 'Plan' || route.name === 'PlanEdit') {
+                if (route.name === 'Plan') {
                     return {
                         headerShown: false,
                     };
@@ -46,4 +44,10 @@ const PlanStackNavigator = ({ navigation, route }) => {
     );
 };
 
-export default PlanStackNavigator;
+const mapStateToProps = (state) => {
+    return {
+        isPlanExist: state.planReducer.isPlanExist,
+    };
+};
+
+export default connect(mapStateToProps)(PlanStackNavigator);

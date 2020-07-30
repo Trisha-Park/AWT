@@ -1,24 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, ScrollView } from 'react-native';
-import { Card, CardItem, View } from 'native-base';
+import { Card, View, CardItem } from 'native-base';
 import CheckListContent from './CheckListContent';
 
-const CheckList = ({ dummy }) => {
+// 스탈수정..
+const CheckList = ({ planItem }) => {
     return (
         <Card style={styles.card}>
-            <View style={styles.titles}>
-                <Text>{dummy.day}일차</Text>
+            <CardItem style={styles.titles}>
+                <Text>{planItem.day}</Text>
                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                    {dummy.region}
+                    {planItem.region}
                 </Text>
-            </View>
-            <View style={styles.items}>
+            </CardItem>
+            <CardItem style={styles.items}>
                 <ScrollView style={{ width: '100%' }}>
-                    {dummy.toDos.map((toDo, idx) => (
+                    {planItem.toDos.map((toDo, idx) => (
                         <CheckListContent toDo={toDo} key={idx} />
                     ))}
                 </ScrollView>
-            </View>
+            </CardItem>
         </Card>
     );
 };
@@ -27,16 +28,15 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         padding: 15,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
     },
     titles: {
         flexDirection: 'column',
         alignItems: 'flex-start',
-        paddingLeft: 5,
-        paddingBottom: 5,
     },
     items: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
         height: 100,
     },
 });
