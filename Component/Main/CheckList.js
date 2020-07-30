@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, ScrollView } from 'react-native';
-import { Card, View, CardItem } from 'native-base';
+import { Card, CardItem } from 'native-base';
 import CheckListContent from './CheckListContent';
 
 // 스탈수정..
