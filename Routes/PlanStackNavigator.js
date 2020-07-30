@@ -10,32 +10,25 @@ import { connect } from 'react-redux';
 const PlanStack = createStackNavigator();
 
 const PlanStackNavigator = ({ navigation, route, isPlanExist }) => {
-    if (route.state) {
-        if (route.state.index === 0) {
-            navigation.setOptions({ tabBarVisible: true });
-        } else {
-            navigation.setOptions({ tabBarVisible: false });
-        }
-    }
-
     return (
         <PlanStack.Navigator
             initialRouteName={isPlanExist ? 'PlanEdit' : 'Plan'}
-            screenOptions={({ route }) => {
-                if (route.name === 'Plan') {
-                    return {
-                        headerShown: false,
-                    };
-                }
-            }}
         >
-            <PlanStack.Screen name='Plan' component={Plan} />
+            <PlanStack.Screen
+                name='Plan'
+                component={Plan}
+                options={{ headerShown: false }}
+            />
             <PlanStack.Screen name='PlanInfo' component={PlanInfo} />
             <PlanStack.Screen
                 name='PlanInfoDetail'
                 component={PlanInfoDetail}
             />
-            <PlanStack.Screen name='PlanEdit' component={PlanEdit} />
+            <PlanStack.Screen
+                name='PlanEdit'
+                component={PlanEdit}
+                options={{ headerShown: false }}
+            />
             <PlanStack.Screen
                 name='PlanEditDetail'
                 component={PlanEditDetail}
