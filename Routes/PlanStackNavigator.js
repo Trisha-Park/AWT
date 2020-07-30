@@ -10,6 +10,13 @@ import { connect } from 'react-redux';
 const PlanStack = createStackNavigator();
 
 const PlanStackNavigator = ({ navigation, route, isPlanExist }) => {
+    if (route.state) {
+        if (route.state.index === 0) {
+            navigation.setOptions({ tabBarVisible: true });
+        } else {
+            navigation.setOptions({ tabBarVisible: false });
+        }
+    }
     return (
         <PlanStack.Navigator
             initialRouteName={isPlanExist ? 'PlanEdit' : 'Plan'}

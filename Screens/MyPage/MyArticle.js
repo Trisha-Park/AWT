@@ -23,7 +23,10 @@ const MyArticle = ({ navigation }) => {
                     key={idx}
                     style={styles.article}
                     onPress={() => {
-                        navigation.navigate('ArticleDetail', { id: idx });
+                        navigation.navigate('ArticleDetail', {
+                            screen: 'Community',
+                            params: { id: idx },
+                        });
                     }}
                 >
                     <Articles article={data} />

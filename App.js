@@ -27,16 +27,26 @@ const App = ({ deletePlans, checkPlan }) => {
     return isLogin ? (
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
-            <MainStack.Navigator screenOptions={{ headerShown: false }}>
-                <MainStack.Screen name='Main' component={Main} />
+            <MainStack.Navigator>
+                <MainStack.Screen
+                    name='Main'
+                    component={Main}
+                    options={{ headerShown: false }}
+                />
                 <MainStack.Screen
                     name='CourseDetail'
                     component={CourseDetail}
+                    options={{ headerShown: true }}
                 />
-                <MainStack.Screen name='Select' component={Select} />
+                <MainStack.Screen
+                    name='Select'
+                    component={Select}
+                    options={{ headerShown: true }}
+                />
                 <MainStack.Screen
                     name='StationDetail'
                     component={StationDetail}
+                    options={{ headerShown: true }}
                 />
             </MainStack.Navigator>
         </NavigationContainer>
