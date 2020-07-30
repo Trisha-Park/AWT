@@ -4,20 +4,10 @@ import { Card } from 'native-base';
 import { StackActions, useIsFocused } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
-import {
-    storePlans,
-    checkPlan,
-    editPlanLoadingStart,
-} from '../../Actions/planActions';
+import { storePlans, checkPlan } from '../../Actions/planActions';
 import axios from 'axios';
 
-const PlanInfo = ({
-    route,
-    navigation,
-    storePlans,
-    checkPlan,
-    editPlanLoadingStart,
-}) => {
+const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
     const {
         params: { fullDates, dailyPlan, index },
     } = route;
@@ -43,10 +33,8 @@ const PlanInfo = ({
                 userId: 1,
                 list: plans,
             });
-
             storePlans(data);
             checkPlan(true);
-            editPlanLoadingStart(true);
         } catch (error) {
             console.log(error);
         }
@@ -80,8 +68,9 @@ const PlanInfo = ({
                 style={styles.saveBtn}
                 onPress={() => {
                     postPlanData();
-                    navigation.navigate('Main');
-                    navigation.dispatch(StackActions.popToTop());
+                    navigation.dispatch(
+                        StackActions.push('Main', { screen: 'MyPage' })
+                    );
                     navigation.dispatch(StackActions.replace('PlanEdit'));
                 }}
             >
@@ -124,8 +113,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         storePlans: (plan) => dispatch(storePlans(plan)),
         checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
-        editPlanLoadingStart: (isEditPlanLoading) =>
-            dispatch(editPlanLoadingStart(isEditPlanLoading)),
     };
 };
 

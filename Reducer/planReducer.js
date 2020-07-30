@@ -1,10 +1,4 @@
-import {
-    STORE_PLANS,
-    CHECK_PLAN,
-    DELETE_PLANS,
-    EDIT_PLAN_LOADING_START,
-    EDIT_PLAN_LOADING_END,
-} from '../Actions/planActions';
+import { STORE_PLANS, CHECK_PLAN, DELETE_PLANS } from '../Actions/planActions';
 
 const initialState = {
     isPlanLoading: false,

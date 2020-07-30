@@ -9,36 +9,61 @@ import Courses from '../../Component/Main/Courses';
 
 import { regionDummy, courseDummy, noPlanDummy } from '../../FakeData/mainData';
 import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
-const Main = ({ navigation, plan, isPlanExist }) => {
-    const [plans, setPlans] = useState(
-        isPlanExist
-            ? [
-                  ...plan.list.reduce((arr, item, idx) => {
-                      item[`day0${idx + 1}`]['tasks'].forEach((task) => {
-                          arr.push({ day: `day0${idx + 1}`, ...task });
-                      });
-                      return arr;
-                  }, []),
-              ]
-            : [...noPlanDummy]
-    );
+const Main = ({ navigation, plan }) => {
+    const [plans, setPlans] = useState([...noPlanDummy]);
+    const [isPlanLoading, setIsPlanLoading] = useState(false);
+
     const [regions, setRegions] = useState([...regionDummy]);
     const [courses, setCourses] = useState([...courseDummy]);
 
+    // 이미 계획 있는 상태 main 첫 렌더링
     useEffect(() => {
-        // 수정된경우를 고려 이거 focus 이벤트로? 아님 replace?
-        if (isPlanExist) {
-            setPlans([
-                ...plan.list.reduce((arr, item, idx) => {
-                    item[`day0${idx + 1}`]['tasks'].forEach((task) => {
-                        arr.push({ day: `day0${idx + 1}`, ...task });
-                    });
-                    return arr;
-                }, []),
-            ]);
+        try {
+            if (plan._id) {
+                console.log(plan);
+                setIsPlanLoading(true);
+                setPlans([
+                    ...plan.list.reduce((arr, item, idx) => {
+                        item[`day0${idx + 1}`]['tasks'].forEach((task) => {
+                            arr.push({ day: `day0${idx + 1}`, ...task });
+                        });
+                        return arr;
+                    }, []),
+                ]);
+                setIsPlanLoading(false);
+            }
+        } catch (error) {
+            console.log(error);
         }
-    });
+    }, []);
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        try {
+            console.log(plan);
+            if (isFocused) {
+                // plan이 수정되었을 때
+                if (plan.list) {
+                    console.log(plan);
+                    setIsPlanLoading(true);
+                    setPlans([
+                        ...plan.list.reduce((arr, item, idx) => {
+                            item[`day0${idx + 1}`]['tasks'].forEach((task) => {
+                                arr.push({ day: `day0${idx + 1}`, ...task });
+                            });
+                            return arr;
+                        }, []),
+                    ]);
+                    setIsPlanLoading(false);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
 
     return (
         <View style={styles.container}>
@@ -54,9 +79,15 @@ const Main = ({ navigation, plan, isPlanExist }) => {
             </View>
             <View style={styles.plans}>
                 <ViewPager style={styles.viewPager}>
-                    {plans.map((planItem, idx) => (
-                        <CheckList planItem={planItem} key={idx} />
-                    ))}
+                    {isPlanLoading ? (
+                        <View>
+                            <Text>로딩중</Text>
+                        </View>
+                    ) : (
+                        plans.map((planItem, idx) => (
+                            <CheckList planItem={planItem} key={idx} />
+                        ))
+                    )}
                 </ViewPager>
             </View>
             <View style={styles.regions}>
@@ -74,7 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        backgroundColor: 'red',
+        backgroundColor: '#f5f6fa',
     },
     searchBar: {
         flex: 1,
@@ -108,7 +139,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         plan: state.planReducer.plan,
-        isPlanExist: state.planReducer.isPlanExist,
     };
 };
 
