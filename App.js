@@ -39,8 +39,8 @@ const App = ({ deletePlans, checkPlan }) => {
                     options={{ headerShown: true }}
                 />
                 <MainStack.Screen
-                    name='Select'
-                    component={Select}
+                    name='Search'
+                    component={Search}
                     options={{ headerShown: true }}
                 />
                 <MainStack.Screen

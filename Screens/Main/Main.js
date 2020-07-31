@@ -73,7 +73,7 @@ const Main = ({ navigation, plan }) => {
                 <Text>A Week Trip</Text>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('Select');
+                        navigation.navigate('Search');
                     }}
                 >
                     <FontAwesome name='search' size={24} color='black' />
