@@ -9,7 +9,7 @@ const StationDetailSlider = ({ detailInfo }) => {
         <View style={styles.cardsContainer}>
             <ViewPager style={styles.viewPager}>
                 {detailInfo.map((info, idx) => (
-                    <StationDetailCard key={idx} info={info} />
+                    <StationDetailCard key={idx} data={info} />
                 ))}
             </ViewPager>
         </View>

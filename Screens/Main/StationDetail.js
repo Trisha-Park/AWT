@@ -1,27 +1,56 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import axios from 'axios';
 
 import StationDetailSlider from '../../Component/Main/StationDetailSlider';
-import { staitonDetailDummy } from '../../FakeData/mainData';
 
 const StationDetail = ({ route }) => {
-    const [stationDetail, setStationDetail] = useState({
-        ...staitonDetailDummy,
-    });
     const {
-        params: { region },
+        params: { id },
     } = route;
-    const { sookBak, gwanGwang, foods } = stationDetail;
+    const [isStationDataLoading, setIsStationDataLoading] = useState(true);
+    const [stationData, setStationData] = useState({});
+    const [weather, setWeather] = useState('');
 
-    return (
+    const getStationData = async () => {
+        try {
+            setIsStationDataLoading(true);
+            const { data } = await axios.get(
+                `http://192.168.0.40:5050/station/${id}`
+            );
+            setStationData({ ...data.stationDeatil[0] });
+            setWeather(data.weather);
+            setIsStationDataLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getStationData();
+    }, []);
+
+    return isStationDataLoading ? (
+        <View />
+    ) : (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerTitle}>{region}</Text>
-                <Text>{region}조아 우분투조아</Text>
+                <View>
+                    <Text style={styles.headerTitle}>
+                        {stationData.station}
+                    </Text>
+                    <Text>{stationData.info}</Text>
+                </View>
+                <View>
+                    <Image
+                        source={{ uri: weather }}
+                        style={styles.weatherIcon}
+                    />
+                </View>
             </View>
-            <StationDetailSlider detailInfo={sookBak} />
-            <StationDetailSlider detailInfo={gwanGwang} />
-            <StationDetailSlider detailInfo={foods} />
+            <StationDetailSlider detailInfo={stationData.lodging} />
+            <StationDetailSlider detailInfo={stationData.tourism} />
+            <StationDetailSlider detailInfo={stationData.food} />
         </View>
     );
 };
@@ -49,6 +78,10 @@ const styles = StyleSheet.create({
     cardsContainer: {
         flex: 1,
         alignSelf: 'stretch',
+    },
+    weatherIcon: {
+        width: 50,
+        height: 50,
     },
 });
 
