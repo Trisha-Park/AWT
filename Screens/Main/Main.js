@@ -7,22 +7,24 @@ import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
 
-import { regionDummy, courseDummy, noPlanDummy } from '../../FakeData/mainData';
+import {
+    bestStationList,
+    courseDummy,
+    noPlanDummy,
+} from '../../FakeData/mainData';
 import { connect } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 
 const Main = ({ navigation, plan }) => {
     const [plans, setPlans] = useState([...noPlanDummy]);
     const [isPlanLoading, setIsPlanLoading] = useState(false);
-
-    const [regions, setRegions] = useState([...regionDummy]);
     const [courses, setCourses] = useState([...courseDummy]);
 
     // 이미 계획 있는 상태 main 첫 렌더링
     useEffect(() => {
         try {
             if (plan._id) {
-                console.log(plan);
+                // console.log(plan);
                 setIsPlanLoading(true);
                 setPlans([
                     ...plan.list.reduce((arr, item, idx) => {
@@ -43,11 +45,11 @@ const Main = ({ navigation, plan }) => {
 
     useEffect(() => {
         try {
-            console.log(plan);
+            // console.log(plan);
             if (isFocused) {
                 // plan이 수정되었을 때
                 if (plan.list) {
-                    console.log(plan);
+                    // console.log(plan);
                     setIsPlanLoading(true);
                     setPlans([
                         ...plan.list.reduce((arr, item, idx) => {
@@ -91,7 +93,7 @@ const Main = ({ navigation, plan }) => {
                 </ViewPager>
             </View>
             <View style={styles.regions}>
-                <Regions regions={regions} navigation={navigation} />
+                <Regions stations={bestStationList} navigation={navigation} />
             </View>
             <View style={styles.courses}>
                 <Courses courses={courses} navigation={navigation} />
