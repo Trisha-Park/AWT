@@ -1,13 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { Card, CardItem } from 'native-base';
+import { Card, CardItem, View } from 'native-base';
 
-const StationDetailCard = ({ info }) => {
+const StationDetailCard = ({ data }) => {
+    const { name, info, address, phone } = data;
+    // console.log(data);
     return (
         <Card>
-            <CardItem>
+            <View>
+                <Text>{name}</Text>
                 <Text>{info}</Text>
-            </CardItem>
+            </View>
+            <View>
+                <Text>{address}</Text>
+                <Text>{phone}</Text>
+            </View>
         </Card>
     );
 };
