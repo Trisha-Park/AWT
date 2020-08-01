@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { List } from 'native-base';
 
 import Articles from '../../Component/Community/Articles';
-
-import { articleDummy } from '../../FakeData/communityData';
+import axios from 'axios';
 
 const Community = ({ navigation }) => {
-    const [articles, setArticles] = useState([...articleDummy]);
-    // TODO: 화면 들어오자마자 axios get 요청 (useEffect, setArticles, Axios 사용)
+    const [isArticleLoading, setIsArticleLoading] = useState(false);
+    const [articles, setArticles] = useState([]);
 
-    return (
+    const getPostData = async () => {
+        try {
+            setIsArticleLoading(true);
+            const { data } = await axios.get(
+                'http://192.168.0.5:5050/community'
+            );
+            setArticles([ ...data ]);
+            setIsArticleLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getPostData();
+    }, []);
+
+    return isArticleLoading ? (
+        <View />
+    ) : (
         <>
             <View style={styles.article}>
                 {articles.map((article, idx) => (
                     <TouchableOpacity
                         key={idx}
                         onPress={() => {
-                            navigation.navigate('ArticleDetail', { id: idx });
+                            navigation.navigate('ArticleDetail', { id: article._id });
                         }}
                     >
                         <Articles article={article} />
