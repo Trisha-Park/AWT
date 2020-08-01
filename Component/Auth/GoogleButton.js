@@ -3,7 +3,7 @@ import * as Google from 'expo-google-app-auth';
 import { Button } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const GoogleButton = () => {
+const GoogleButton = ({ setIsLogin }) => {
     const ANDROID_CLIENT_ID =
         '499458411825-vqctkbs5ehf31ge8gpbnt28fq6nhpo68.apps.googleusercontent.com';
 
@@ -37,6 +37,7 @@ const GoogleButton = () => {
             title='구글'
             onPress={() => {
                 googleLogin();
+                setIsLogin(true);
             }}
         />
     );

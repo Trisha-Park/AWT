@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'react-native';
 
-const KaKaoButton = ({ setIsLogin }) => {
+const FaceBookButton = ({ setIsLogin }) => {
     return (
         <Button
-            color='gold'
-            title='카카오'
+            color='skyblue'
+            title='페이스북'
             onPress={(e) => {
                 setIsLogin(true);
             }}
@@ -13,4 +13,4 @@ const KaKaoButton = ({ setIsLogin }) => {
     );
 };
 
-export default KaKaoButton;
+export default FaceBookButton;
