@@ -6,14 +6,30 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
-import { articleDummy } from '../../FakeData/communityData';
+import axios from 'axios';
 
 const CreateArticle = () => {
-    const [title, setTitle] = useState([...articleDummy]);
-    const [data, setData] = useState([...articleDummy]);
-    // TODO: 글 내용도 TextInput에 프로퍼티들 적용을 해주세요
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
-    // TODO: 글쓰기 버튼을 눌렀을때 서버로 POST 요청을 해줍시다
+    const PostArticleButton = async () => {
+        try {
+            const { data } = await axios.post(
+                `http://192.168.0.5:5050/community`,
+                {
+                    userId: 1,
+                    name: 'trisha',
+                    title,
+                    article: content,
+                }
+            );
+            console.log(data);
+            console.log(title);
+            console.log(content);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <View>
@@ -30,18 +46,22 @@ const CreateArticle = () => {
                 <View style={styles.text}>
                     <TextInput
                         placeholder='내용을 입력하세요. (주의사항 들어갈 예정)'
-                        value={data}
+                        value={content}
                         onChangeText={(text) => {
-                            setData(text);
+                            setContent(text);
                         }}
                     ></TextInput>
                 </View>
             </View>
-            <View style={styles.button}>
-                <TouchableOpacity>
-                    <Text>글쓰기</Text>
-                </TouchableOpacity>
-            </View>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                    PostArticleButton();
+                }}
+            >
+                <Text>글쓰기</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -72,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 5,
-        marginTop: 300,
+        marginTop: 3,
     },
 });
 
