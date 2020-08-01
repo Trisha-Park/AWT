@@ -13,7 +13,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { stationDummy } from '../../FakeData/mainData';
 
-const Select = ({ navigation }) => {
+const Search = ({ navigation }) => {
     const [stations, setStaions] = useState([]);
     const [favStations, setFavStations] = useState([
         ...stationDummy.currentSelected,
@@ -186,4 +186,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Select;
+export default Search;

@@ -10,7 +10,7 @@ import { deletePlans, checkPlan } from './Actions/planActions';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import CourseDetail from './Screens/Main/CourseDetail';
-import Select from './Screens/Main/Select';
+import Search from './Screens/Main/Search';
 import StationDetail from './Screens/Main/StationDetail';
 
 const MainStack = createStackNavigator();
