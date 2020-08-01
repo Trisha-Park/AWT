@@ -4,19 +4,19 @@ import { Card, CardItem } from 'native-base';
 
 // TouchableOpacity로 감싸주고 onPress 이벤트에 메소드 적용
 const CourseCard = ({ course, navigation }) => {
-    const { hashTag } = course;
+    const { list, num } = course;
     return (
         <TouchableOpacity
             style={styles.cardContainer}
             onPress={() => {
                 navigation.navigate('CourseDetail', {
-                    course,
+                    num,
                 });
             }}
         >
             <Card style={styles.card}>
                 <CardItem>
-                    {hashTag.map((tag, idx) => (
+                    {list.map((tag, idx) => (
                         <Text key={idx}>{tag} </Text>
                     ))}
                 </CardItem>

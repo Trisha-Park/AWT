@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -76,6 +76,11 @@ const PlanInfoDetail = ({ navigation, route }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
+                    ToastAndroid.show(
+                        `${day}의 계획이 저장되었습니다.`,
+                        ToastAndroid.BOTTOM,
+                        ToastAndroid.LONG
+                    );
                     navigation.navigate('PlanInfo', {
                         dailyPlan: {
                             [day]: {

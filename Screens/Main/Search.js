@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     TextInput,
+    ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
@@ -79,6 +80,12 @@ const Search = ({ navigation }) => {
                             if (searchValue !== '') {
                                 searchStations();
                                 setSearchValue('');
+                            } else {
+                                ToastAndroid.show(
+                                    '검색어를 입력해주세요.',
+                                    ToastAndroid.BOTTOM,
+                                    ToastAndroid.LONG
+                                );
                             }
                         }}
                     >

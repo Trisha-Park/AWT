@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    ToastAndroid,
+} from 'react-native';
 import { Card } from 'native-base';
 import { StackActions, useIsFocused } from '@react-navigation/native';
 
@@ -65,9 +71,18 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
                 style={styles.container}
             />
             <TouchableOpacity
-                style={styles.saveBtn}
+                style={{
+                    ...styles.saveBtn,
+                    backgroundColor: plans.indexOf('') !== -1 ? 'grey' : 'blue',
+                }}
+                disabled={plans.indexOf('') !== -1 ? true : false}
                 onPress={() => {
                     postPlanData();
+                    ToastAndroid.show(
+                        '계획이 저장되었습니다.',
+                        ToastAndroid.BOTTOM,
+                        ToastAndroid.LONG
+                    );
                     navigation.dispatch(
                         StackActions.push('Main', { screen: 'MyPage' })
                     );
@@ -93,7 +108,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     saveBtn: {
-        backgroundColor: 'blue',
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',

@@ -31,6 +31,7 @@ const PlanRegionCard = ({
         <Card>
             <TouchableOpacity
                 style={{ alignItems: 'flex-end', margin: 10 }}
+                disabled={true}
                 onPress={() => {
                     deleteRegionCard(index);
                 }}
