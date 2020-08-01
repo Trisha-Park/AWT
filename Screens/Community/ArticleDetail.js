@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
@@ -6,57 +6,118 @@ import {
     TouchableOpacity,
     TextInput,
 } from 'react-native';
-import { CardItem, Card, ListItem, Left } from 'native-base';
+import { CardItem, Card } from 'native-base';
+import axios from 'axios';
 
 import Comments from '../../Component/Community/Comments';
 
-import { articleDummy } from '../../FakeData/communityData';
-import { commentDummy } from '../../FakeData/commentData';
-
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const ArticleDetail = ({ route }) => {
-    const [articleDetail, setArticleDetail] = useState({
-        ...articleDummy[route.params.id],
-    });
-    const [comments, setComment] = useState([...commentDummy]);
-    const { title, author, date, data, visit } = articleDetail;
+const ArticleDetail = ({ route, navigation }) => {
+    const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
+    const [articleDetail, setArticleDetail] = useState({});
+    const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
 
-    return (
+    const getPostView = async () => {
+        try {
+            setIsArticleDetailLoading(true);
+            const { data } = await axios.get(
+                `http://192.168.0.5:5050/community/${route.params.id}`
+            );
+            console.log('로딩 완료');
+            setArticleDetail({ ...data[0] });
+            setIsArticleDetailLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getCommentView = async () => {
+        try {
+            setIsArticleDetailLoading(true);
+            const { data } = await axios.get(
+                `http://192.168.0.5:5050/comment/${route.params.id}`
+            );
+            setComment([...data]);
+            setIsArticleDetailLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const commentCreate = async () => {
+        try {
+            const { data } = await axios.post(
+                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                {
+                    userId: 1,
+                    name: 'trisha',
+                    comment: commentValue,
+                    secret: false,
+                }
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getPostView();
+        getCommentView();
+    }, []);
+
+    return isArticleDetailLoading ? (
+        <View />
+    ) : (
         <View>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>{title}</Text>
+                    <Text>{articleDetail.title}</Text>
                     <CardItem style={styles.cardVisit}>
-                        <Text>{visit}</Text>
+                        <Text>{articleDetail.view}</Text>
                     </CardItem>
                 </CardItem>
                 <CardItem style={styles.cardAuthor}>
-                    <Text>{author}</Text>
+                    <Text>{articleDetail.name}</Text>
                 </CardItem>
                 <CardItem style={styles.cardItem}>
-                    <Text>{data}</Text>
+                    <Text>{articleDetail.article}</Text>
                 </CardItem>
             </Card>
             <View>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('EditArticleDetail', {
+                            articleDetail,
+                        });
+                    }}
+                >
+                    <Text>편집하기</Text>
+                </TouchableOpacity>
+            </View>
+            <View>
                 {comments.map((comment, idx) => (
                     <TouchableOpacity key={idx}>
-                        <Comments
-                            comments={comment}
-                            onChangeText={(text) => {
-                                setCommentValue(text);
-                            }}
-                        />
+                        <Comments comments={comment} />
                     </TouchableOpacity>
                 ))}
             </View>
+            <View></View>
             <View style={styles.input}>
                 <TextInput
                     style={styles.inputText}
                     value={commentValue}
-                    on
+                    onChangeText={(text) => {
+                        setCommentValue(text);
+                    }}
                 ></TextInput>
-                <TouchableOpacity sytle={styles.button}>
+                <TouchableOpacity
+                    sytle={styles.button}
+                    onPress={() => {
+                        commentCreate();
+                        getCommentView();
+                    }}
+                >
                     <Text> 댓글쓰기</Text>
                 </TouchableOpacity>
             </View>
@@ -69,25 +130,21 @@ const styles = StyleSheet.create({
         position: 'relative',
         marginTop: 30,
         width: 395,
-        backgroundColor: 'lavender',
         height: 300,
     },
     cardItem: {
         height: 40,
         position: 'relative',
-        backgroundColor: 'lavender',
     },
     cardVisit: {
         height: 40,
         position: 'relative',
         marginLeft: 155,
-        backgroundColor: 'lavender',
     },
     cardAuthor: {
         position: 'relative',
         marginTop: -10,
         marginLeft: 2,
-        backgroundColor: 'lavender',
     },
 
     input: {
