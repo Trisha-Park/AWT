@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     TextInput,
+    ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
@@ -13,7 +14,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { stationDummy } from '../../FakeData/mainData';
 
-const Select = ({ navigation }) => {
+const Search = ({ navigation }) => {
     const [stations, setStaions] = useState([]);
     const [favStations, setFavStations] = useState([
         ...stationDummy.currentSelected,
@@ -79,6 +80,12 @@ const Select = ({ navigation }) => {
                             if (searchValue !== '') {
                                 searchStations();
                                 setSearchValue('');
+                            } else {
+                                ToastAndroid.show(
+                                    '검색어를 입력해주세요.',
+                                    ToastAndroid.BOTTOM,
+                                    ToastAndroid.LONG
+                                );
                             }
                         }}
                     >
@@ -186,4 +193,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Select;
+export default Search;

@@ -10,11 +10,11 @@ const Courses = ({ courses, navigation }) => {
         <>
             <Text style={styles.title}>추천 코스</Text>
             <ViewPager style={styles.viewPager}>
-                {courses.map((course, idx) => (
+                {courses.map((course) => (
                     <CourseCard
                         course={course}
                         navigation={navigation}
-                        key={idx}
+                        key={course.id}
                     />
                 ))}
             </ViewPager>

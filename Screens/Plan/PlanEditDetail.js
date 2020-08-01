@@ -76,6 +76,11 @@ const PlanEditDetail = ({ navigation, route }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
+                    ToastAndroid.show(
+                        `${day}의 계획이 저장되었습니다.`,
+                        ToastAndroid.BOTTOM,
+                        ToastAndroid.LONG
+                    );
                     navigation.navigate('PlanEdit', {
                         dailyPlan: {
                             [day]: {

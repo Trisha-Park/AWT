@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+import axios from 'axios';
 
 import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
@@ -18,14 +19,32 @@ import { useIsFocused } from '@react-navigation/native';
 const Main = ({ navigation, plan }) => {
     const [plans, setPlans] = useState([...noPlanDummy]);
     const [isPlanLoading, setIsPlanLoading] = useState(false);
-    const [courses, setCourses] = useState([...courseDummy]);
+    const [courses, setCourses] = useState([]);
+
+    const getCourseLists = async () => {
+        try {
+            const { data } = await axios.get(
+                'http://192.168.0.40:5050/bestplan'
+            );
+            setCourses(
+                data.map((item) => {
+                    return {
+                        id: item._id,
+                        list: [...item.list],
+                        num: item.num,
+                    };
+                })
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     // 이미 계획 있는 상태 main 첫 렌더링
     useEffect(() => {
         try {
+            setIsPlanLoading(true);
             if (plan._id) {
-                // console.log(plan);
-                setIsPlanLoading(true);
                 setPlans([
                     ...plan.list.reduce((arr, item, idx) => {
                         item[`day0${idx + 1}`]['tasks'].forEach((task) => {
@@ -34,8 +53,10 @@ const Main = ({ navigation, plan }) => {
                         return arr;
                     }, []),
                 ]);
-                setIsPlanLoading(false);
             }
+            // 여기에 코스정보 추가
+            getCourseLists();
+            setIsPlanLoading(false);
         } catch (error) {
             console.log(error);
         }
