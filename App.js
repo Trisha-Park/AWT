@@ -24,6 +24,10 @@ const App = ({ deletePlans, checkPlan }) => {
     //     checkPlan(false);
     // }, []);
 
+    const setLoggedIn = () => {
+        setIsLogin(true);
+    };
+
     return isLogin ? (
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
@@ -51,7 +55,7 @@ const App = ({ deletePlans, checkPlan }) => {
             </MainStack.Navigator>
         </NavigationContainer>
     ) : (
-        <SignIn isLogin={isLogin} setIsLogin={setIsLogin} />
+        <SignIn isLogin={isLogin} setLoggedIn={setLoggedIn} />
     );
 };
 
