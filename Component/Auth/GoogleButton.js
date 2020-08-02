@@ -1,21 +1,12 @@
 import React from 'react';
 import * as Google from 'expo-google-app-auth';
 import { Button } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
-const GoogleButton = ({ setIsLogin }) => {
+const GoogleButton = ({ setLoggedIn }) => {
     const ANDROID_CLIENT_ID =
         '499458411825-vqctkbs5ehf31ge8gpbnt28fq6nhpo68.apps.googleusercontent.com';
 
-    const storeData = async (key, value) => {
-        try {
-            await AsyncStorage.setItem(key, value);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const googleLogin = async () => {
+    const googleSignIn = async () => {
         try {
             const data = await Google.logInAsync({
                 androidClientId: ANDROID_CLIENT_ID,
@@ -23,8 +14,7 @@ const GoogleButton = ({ setIsLogin }) => {
 
             if (data.type === 'success') {
                 console.log(data);
-                storeData('accessToken', data.accessToken);
-                storeData('refreshToken', data.refreshToken);
+                // TODO: 써버한테 데이터 쏴주고나서 JWT 토큰 받으면.. 그때 유저정보는 asyncstorage에 / 토큰은.. 어따주지 헬데답변 대기중입니다
             }
         } catch (err) {
             console.log(err);
@@ -36,8 +26,8 @@ const GoogleButton = ({ setIsLogin }) => {
             color='pink'
             title='구글'
             onPress={() => {
-                googleLogin();
-                setIsLogin(true);
+                googleSignIn();
+                setLoggedIn();
             }}
         />
     );

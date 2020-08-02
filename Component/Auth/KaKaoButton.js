@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from 'react-native';
 
-const KaKaoButton = ({ setIsLogin }) => {
+const KaKaoButton = ({ setLoggedIn }) => {
     return (
         <Button
             color='gold'
             title='카카오'
-            onPress={(e) => {
-                setIsLogin(true);
+            onPress={() => {
+                setLoggedIn();
             }}
         />
     );
