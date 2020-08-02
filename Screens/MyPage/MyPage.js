@@ -4,16 +4,14 @@ import { Card, List, ListItem } from 'native-base';
 
 import { userInfo } from '../../FakeData/userData';
 
-
 const MyPage = ({ navigation }) => {
     const [userName, setUserName] = useState(userInfo.userName);
     const [userId, setUserId] = useState(userInfo.userId);
 
-    // TODO: 유저 정보를 useEffect, axios를 이용해서 받아와야 합니다.
-    // TODO: 내가 쓴 게시글을 클릭했을 때 리액트 네비게이터를 이용해 유저 id 정보를 넘겨주고, 페이지를 이동해 주세요.
+    // TODO: 유저 정보를 리덕스에 저장 => 이거는 로긴하자마자 할것입니다
 
     return (
-        <View>
+        <View style={styles.container}>
             <Card style={styles.userCard}>
                 <Card style={styles.nameCard}>
                     <Text>{userName} 님</Text>
@@ -24,10 +22,25 @@ const MyPage = ({ navigation }) => {
                     <List>
                         <ListItem
                             onPress={() => {
+                                // TODO: 내 계획 네비게이션
+                                navigation.navigate('MyPlans');
+                            }}
+                        >
+                            <Text>내 계획</Text>
+                        </ListItem>
+                        <ListItem
+                            onPress={() => {
                                 navigation.navigate('MyArticle');
                             }}
                         >
                             <Text>내가 쓴 게시글</Text>
+                        </ListItem>
+                        <ListItem
+                            onPress={() => {
+                                // TODO: 스크랩 게시글 네비게이션
+                            }}
+                        >
+                            <Text>스크랩한 게시글</Text>
                         </ListItem>
                     </List>
                 </Card>
@@ -55,18 +68,21 @@ const MyPage = ({ navigation }) => {
     );
 };
 const styles = StyleSheet.create({
-    userCard: {
-        position: 'relative',
-        marginTop: -100,
-        height: 200,
-        width: 400,
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
         padding: 5,
+    },
+    userCard: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'lightgreen',
+        alignSelf: 'stretch',
     },
     nameCard: {
-        position: 'relative',
         height: 80,
         width: 150,
         alignItems: 'center',
@@ -75,7 +91,8 @@ const styles = StyleSheet.create({
     },
     allList: {
         position: 'relative',
-        width: 400,
+        flex: 3.5,
+        alignSelf: 'stretch',
         backgroundColor: 'navy',
     },
 });
