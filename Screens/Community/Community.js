@@ -14,7 +14,7 @@ const Community = ({ navigation }) => {
             const { data } = await axios.get(
                 'http://192.168.0.5:5050/community'
             );
-            setArticles([ ...data ]);
+            setArticles([...data]);
             setIsArticleLoading(false);
         } catch (error) {
             console.log(error);
@@ -34,7 +34,9 @@ const Community = ({ navigation }) => {
                     <TouchableOpacity
                         key={idx}
                         onPress={() => {
-                            navigation.navigate('ArticleDetail', { id: article._id });
+                            navigation.navigate('ArticleDetail', {
+                                id: article._id,
+                            });
                         }}
                     >
                         <Articles article={article} />
