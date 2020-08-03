@@ -5,6 +5,7 @@ import MyPage from '../Screens/MyPage/MyPage';
 import MyArticle from '../Screens/MyPage/MyArticle';
 import MyPlans from '../Screens/MyPage/MyPlans';
 import MyPlanDetail from '../Screens/MyPage/MyPlanDetail';
+import MyArticleDetail from '../Screens/MyPage/MyArticleDetail';
 
 const MyPageStack = createStackNavigator();
 
@@ -31,6 +32,10 @@ const MyPageStackNavigator = ({ navigation, route }) => {
             <MyPageStack.Screen name='MyArticle' component={MyArticle} />
             <MyPageStack.Screen name='MyPlans' component={MyPlans} />
             <MyPageStack.Screen name='MyPlanDetail' component={MyPlanDetail} />
+            <MyPageStack.Screen
+                name='MyArticleDetail'
+                component={MyArticleDetail}
+            />
         </MyPageStack.Navigator>
     );
 };
