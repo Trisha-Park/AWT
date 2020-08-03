@@ -16,7 +16,17 @@ const CheckListContent = ({ toDo }) => {
                         : setToggleCheckBox(true)
                 }
             />
-            <Text>{toDo}</Text>
+            <Text
+                style={{
+                    fontSize: 17,
+                    color: !toggleCheckBox ? '#222f3e' : '#747d8c',
+                    textDecorationLine: !toggleCheckBox
+                        ? 'none'
+                        : 'line-through',
+                }}
+            >
+                {toDo}
+            </Text>
         </View>
     );
 };
@@ -24,7 +34,7 @@ const CheckListContent = ({ toDo }) => {
 const styles = StyleSheet.create({
     checkListContent: {
         flexDirection: 'row',
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },

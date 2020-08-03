@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import axios from 'axios';
+
+import { EvilIcons } from '@expo/vector-icons';
 
 import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
 
-import {
-    bestStationList,
-    courseDummy,
-    noPlanDummy,
-} from '../../FakeData/mainData';
+import { bestStationList, noPlanDummy } from '../../FakeData/mainData';
 import { connect } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -91,13 +88,14 @@ const Main = ({ navigation, plan }) => {
     return (
         <View style={styles.container}>
             <View style={styles.searchBar}>
-                <Text>A Week Trip</Text>
+                <Text style={styles.logoTitle}>A WEEK TRIP</Text>
                 <TouchableOpacity
                     onPress={() => {
                         navigation.navigate('Search');
                     }}
+                    style={styles.searchButton}
                 >
-                    <FontAwesome name='search' size={24} color='black' />
+                    <EvilIcons name='search' size={28} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.plans}>
@@ -128,16 +126,29 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        backgroundColor: '#f5f6fa',
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
     },
     searchBar: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#f5f6fa',
+        backgroundColor: 'white',
         alignSelf: 'stretch',
         paddingHorizontal: 15,
+        paddingTop: 10,
+    },
+    logoTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    searchButton: {
+        backgroundColor: '#f1f2f6',
+        paddingLeft: 60,
+        paddingRight: 6,
+        paddingVertical: 6,
+        borderRadius: 8,
     },
     plans: {
         flex: 4,

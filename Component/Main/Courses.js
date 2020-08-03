@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 15,
+        marginTop: 5,
+        marginBottom: 10,
+        color: '#222f3e',
     },
     viewPager: {
         flex: 0.8,
