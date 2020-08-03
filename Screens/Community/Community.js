@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
 import axios from 'axios';
 
 const Community = ({ navigation }) => {
-    const [isArticleLoading, setIsArticleLoading] = useState(false);
+    const [isArticleLoading, setIsArticleLoading] = useState(true);
     const [articles, setArticles] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     const getPostData = async () => {
         try {
@@ -14,7 +15,7 @@ const Community = ({ navigation }) => {
             const { data } = await axios.get(
                 'http://192.168.0.5:5050/community'
             );
-            setArticles([ ...data ]);
+            setArticles([...data]);
             setIsArticleLoading(false);
         } catch (error) {
             console.log(error);
@@ -26,15 +27,45 @@ const Community = ({ navigation }) => {
     }, []);
 
     return isArticleLoading ? (
-        <View />
+        <View style={styles.fix}>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                    navigation.navigate('CreateArticle');
+                }}
+            >
+                <Text>🖋글쓰기</Text>
+            </TouchableOpacity>
+            <Text>로딩중</Text>
+        </View>
     ) : (
-        <>
+        <View>
+            <View>
+                <TextInput
+                    value={searchValue}
+                    onChangeText={(text) => {
+                        setSearchValue(text);
+                    }}
+                ></TextInput>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('CommunitySearch', {
+                            searchValue: searchValue,
+                            articles : articles
+                        });
+                    }}
+                >
+                    <Text>검색</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.article}>
                 {articles.map((article, idx) => (
                     <TouchableOpacity
                         key={idx}
                         onPress={() => {
-                            navigation.navigate('ArticleDetail', { id: article._id });
+                            navigation.navigate('ArticleDetail', {
+                                id: article._id,
+                            });
                         }}
                     >
                         <Articles article={article} />
@@ -51,7 +82,7 @@ const Community = ({ navigation }) => {
                     <Text>🖋글쓰기</Text>
                 </TouchableOpacity>
             </View>
-        </>
+        </View>
     );
 };
 
