@@ -196,11 +196,11 @@ export const stationData = {
 };
 
 export const bestStationList = [
-    { region: '서울', id: '5f23adc61bf726dd6472e8e5' },
-    { region: '서울', id: '5f23adc61bf726dd6472e8e5' },
-    { region: '서울', id: '5f23adc61bf726dd6472e8e5' },
-    { region: '서울', id: '5f23adc61bf726dd6472e8e5' },
-    { region: '서울', id: '5f23adc61bf726dd6472e8e5' },
+    { region: '서울역', id: '5f27c68a601eff4f1fc45893' },
+    { region: '서울역', id: '5f27c68a601eff4f1fc45893' },
+    { region: '서울역', id: '5f27c68a601eff4f1fc45893' },
+    { region: '서울역', id: '5f27c68a601eff4f1fc45893' },
+    { region: '서울역', id: '5f27c68a601eff4f1fc45893' },
 ];
 
 export const bestPlanDummy = [
@@ -266,3 +266,14 @@ export const bestPlanDummy = [
         ],
     },
 ];
+
+export const newStationDummy = {
+    stationDetail: [
+        {
+            coord: [35.1145855, 129.039662],
+            station: '서울역',
+            stationNumber: 1,
+            info: '서울의 중심지입니다.',
+        },
+    ],
+};

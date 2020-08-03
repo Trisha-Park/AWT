@@ -10,6 +10,9 @@ const StationDetail = ({ route }) => {
     } = route;
     const [isStationDataLoading, setIsStationDataLoading] = useState(true);
     const [stationData, setStationData] = useState({});
+    const [food, setFood] = useState([]);
+    const [tourism, setTourism] = useState([]);
+    const [lodging, setLodging] = useState([]);
     const [weather, setWeather] = useState('');
 
     const getStationData = async () => {
@@ -18,7 +21,11 @@ const StationDetail = ({ route }) => {
             const { data } = await axios.get(
                 `http://192.168.0.40:5050/station/${id}`
             );
+            console.log(data);
             setStationData({ ...data.stationDeatil[0] });
+            setFood([...data.food]);
+            setTourism([...data.tourism]);
+            setLodging([...data.lodging]);
             setWeather(data.weather);
             setIsStationDataLoading(false);
         } catch (error) {
@@ -48,9 +55,9 @@ const StationDetail = ({ route }) => {
                     />
                 </View>
             </View>
-            <StationDetailSlider detailInfo={stationData.lodging} />
-            <StationDetailSlider detailInfo={stationData.tourism} />
-            <StationDetailSlider detailInfo={stationData.food} />
+            <StationDetailSlider detailInfo={food} title='맛집' />
+            <StationDetailSlider detailInfo={tourism} title='관광지' />
+            <StationDetailSlider detailInfo={lodging} title='숙소' />
         </View>
     );
 };

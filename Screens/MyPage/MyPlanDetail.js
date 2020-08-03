@@ -48,7 +48,7 @@ const MyPlanDetail = ({ route, navigation }) => {
             <FlatList
                 data={list}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => String(index)}
             />
             <TouchableOpacity
                 onPress={() => {
