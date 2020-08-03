@@ -5,8 +5,8 @@ import {
     FlatList,
     TouchableOpacity,
     ToastAndroid,
+    View,
 } from 'react-native';
-import { Card, View } from 'native-base';
 import { useIsFocused, StackActions } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -109,10 +109,10 @@ const PlanEdit = ({ route, navigation, plan, storePlans }) => {
                 });
             }}
         >
-            <Card style={styles.card}>
-                <Text style={styles.day}>{item.day}</Text>
+            <View style={styles.card}>
                 <Text>{item.date}</Text>
-            </Card>
+                <Text style={styles.day}>{item.day}</Text>
+            </View>
         </TouchableOpacity>
     );
 
@@ -142,23 +142,39 @@ const PlanEdit = ({ route, navigation, plan, storePlans }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingTop: 20,
-        paddingHorizontal: 20,
+        paddingTop: 40,
+        paddingHorizontal: 30,
     },
     card: {
+        backgroundColor: '#f1f2f6',
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        borderRadius: 5,
+        paddingVertical: 13,
+        paddingHorizontal: 18,
+        marginBottom: 20,
     },
     saveBtn: {
-        backgroundColor: 'blue',
-        height: 45,
+        backgroundColor: '#0066FF',
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
     btnTitle: {
-        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#fff',
+    },
+    date: {
+        color: '#747d8c',
+        fontSize: 15,
+        marginBottom: 2,
+    },
+    day: {
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 });
 

@@ -5,8 +5,8 @@ import {
     FlatList,
     TouchableOpacity,
     ToastAndroid,
+    View,
 } from 'react-native';
-import { Card } from 'native-base';
 import { StackActions, useIsFocused } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
@@ -55,10 +55,10 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
                 });
             }}
         >
-            <Card style={styles.card}>
+            <View style={styles.card}>
+                <Text style={styles.date}>{item.date}</Text>
                 <Text style={styles.day}>{item.day}</Text>
-                <Text>{item.date}</Text>
-            </Card>
+            </View>
         </TouchableOpacity>
     );
 
@@ -73,7 +73,8 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
             <TouchableOpacity
                 style={{
                     ...styles.saveBtn,
-                    backgroundColor: plans.indexOf('') !== -1 ? 'grey' : 'blue',
+                    backgroundColor:
+                        plans.indexOf('') !== -1 ? '#f1f2f6' : '#0066FF',
                 }}
                 disabled={plans.indexOf('') !== -1 ? true : false}
                 onPress={() => {
@@ -89,7 +90,14 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
                     navigation.dispatch(StackActions.replace('PlanEdit'));
                 }}
             >
-                <Text style={styles.btnTitle}>모든 계획 저장하기</Text>
+                <Text
+                    style={{
+                        ...styles.btnTitle,
+                        color: plans.indexOf('') !== -1 ? '#000' : '#fff',
+                    }}
+                >
+                    모든 계획 저장하기
+                </Text>
             </TouchableOpacity>
         </>
     );
@@ -98,22 +106,37 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingTop: 20,
-        paddingHorizontal: 20,
+        paddingTop: 40,
+        paddingHorizontal: 30,
     },
     card: {
+        backgroundColor: '#f1f2f6',
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        borderRadius: 5,
+        paddingVertical: 13,
+        paddingHorizontal: 18,
+        marginBottom: 20,
     },
     saveBtn: {
-        height: 45,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
     btnTitle: {
-        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    date: {
+        color: '#747d8c',
+        fontSize: 15,
+        marginBottom: 2,
+    },
+    day: {
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 });
 

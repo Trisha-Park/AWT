@@ -28,7 +28,7 @@ const PlanRegionCard = ({
     const [regionValue, setRegionValue] = useState(regionInfo.region);
 
     return (
-        <Card>
+        <View style={styles.card}>
             <TouchableOpacity
                 style={{ alignItems: 'flex-end', margin: 10 }}
                 disabled={true}
@@ -38,8 +38,11 @@ const PlanRegionCard = ({
             >
                 <FontAwesome name='close' size={24} color='black' />
             </TouchableOpacity>
-            <ScrollView style={styles.card}>
-                <CardItem style={styles.header}>
+            <ScrollView
+                style={styles.cardScroll}
+                contentContainerStyle={{ alignItems: 'center' }}
+            >
+                <View style={styles.header}>
                     {!isClickedRegion ? (
                         <TouchableOpacity
                             style={{
@@ -52,7 +55,7 @@ const PlanRegionCard = ({
                         >
                             <Text
                                 style={{
-                                    color: '#7C859A',
+                                    color: '#000',
                                     fontWeight: 'bold',
                                     fontSize: 16,
                                 }}
@@ -93,8 +96,8 @@ const PlanRegionCard = ({
                             </TouchableOpacity>
                         </View>
                     )}
-                </CardItem>
-                <CardItem style={styles.toDoView}>
+                </View>
+                <View style={styles.toDoView}>
                     {toDos.map((toDo, idx) => {
                         return isClickedTodos[idx] ? (
                             <View
@@ -157,7 +160,7 @@ const PlanRegionCard = ({
                             >
                                 <Text
                                     style={{
-                                        color: '#7C859A',
+                                        color: '#000',
                                         fontWeight: 'bold',
                                         fontSize: 16,
                                     }}
@@ -181,20 +184,23 @@ const PlanRegionCard = ({
                     >
                         <AntDesign name='pluscircleo' size={24} color='black' />
                     </TouchableOpacity>
-                </CardItem>
+                </View>
             </ScrollView>
-        </Card>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     card: {
+        backgroundColor: '#f1f2f6',
+    },
+    cardScroll: {
         alignSelf: 'stretch',
-        backgroundColor: '#fff',
     },
     header: {
         flexDirection: 'column',
         justifyContent: 'center',
+        marginBottom: 30,
     },
     boxShadow: {
         shadowColor: '#000',
@@ -207,26 +213,30 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     regionText: {
-        backgroundColor: '#EBECF0',
+        backgroundColor: '#fff',
         width: 200,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 3,
+        marginBottom: 10,
     },
     regionInput: {
         flexDirection: 'row',
         borderWidth: 2,
         borderColor: '#EBECF0',
+        backgroundColor: '#fff',
         width: 200,
         height: 40,
         alignItems: 'center',
         justifyContent: 'space-between',
         borderRadius: 3,
         paddingHorizontal: 10,
+        marginBottom: 10,
     },
     toDoView: {
         flexDirection: 'column',
+        alignItems: 'center',
     },
     toDoInput: {
         height: 35,
