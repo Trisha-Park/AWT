@@ -1,20 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Card, CardItem, View } from 'native-base';
+import * as Linking from 'expo-linking';
 
 const StationDetailCard = ({ data }) => {
-    const { name, info, address, phone } = data;
-    // console.log(data);
+    const { blogName, date, description, href, title } = data;
     return (
         <Card>
-            <View>
-                <Text>{name}</Text>
-                <Text>{info}</Text>
-            </View>
-            <View>
-                <Text>{address}</Text>
-                <Text>{phone}</Text>
-            </View>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.openURL(href);
+                }}
+            >
+                <View>
+                    <Text>{title}</Text>
+                    <Text>{blogName}</Text>
+                    <Text>{date}</Text>
+                </View>
+                <View>
+                    <Text>{description}</Text>
+                </View>
+            </TouchableOpacity>
         </Card>
     );
 };
