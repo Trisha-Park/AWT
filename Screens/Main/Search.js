@@ -21,7 +21,7 @@ const Search = ({ navigation }) => {
     ]);
     const [isStationLoading, setIsStationLoading] = useState(true);
     const [searchValue, setSearchValue] = useState('');
-    const [toggleStar, setToggleStar] = useState(false);
+    const [toggleStar, setToggleStar] = useState([]);
 
     const getStations = async () => {
         try {
@@ -30,6 +30,7 @@ const Search = ({ navigation }) => {
                 'http://192.168.0.40:5050/station'
             );
             setStaions([...data]);
+            setToggleStar(Array(data.length).fill(false));
             setIsStationLoading(false);
         } catch (error) {
             console.log(error);
@@ -133,15 +134,19 @@ const Search = ({ navigation }) => {
                                 <TouchableOpacity
                                     onPress={() => {
                                         // TODO: 서버의 유저파트가 완료되면 할것
-                                        setToggleStar(
-                                            (prevState) => !prevState
-                                        );
+                                        setToggleStar((prevState) => [
+                                            ...prevState.slice(0, idx),
+                                            !prevState[idx],
+                                            ...prevState.slice(idx + 1),
+                                        ]);
                                     }}
                                 >
                                     <AntDesign
                                         name='star'
                                         size={24}
-                                        color={toggleStar ? 'red' : 'black'}
+                                        color={
+                                            toggleStar[idx] ? 'red' : 'black'
+                                        }
                                     />
                                 </TouchableOpacity>
                             </View>
