@@ -11,20 +11,18 @@ import {
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-const USER_OR_PLAN_ID = '5f2288ceb9611550862d9d38';
-
 const MyPlans = ({ navigation }) => {
     const [myPlans, setMyPlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const USER_ID = '1';
 
     const getMyPlans = async () => {
         try {
             setIsLoading(true);
-            const { data } = await axios(
-                `http://192.168.0.40:5050/plan/${USER_OR_PLAN_ID}`
+            const { data } = await axios.get(
+                `http://192.168.0.40:5050/plan/${USER_ID}`
             );
-            setMyPlans([data]);
-            // TODO: 서버랑 API 얘기해서 바꾸기
+            setMyPlans([...data]);
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -47,21 +45,23 @@ const MyPlans = ({ navigation }) => {
         }
     }, [isFocused]);
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity
-            onPress={() => {
-                navigation.navigate('MyPlanDetail', {
-                    list: item.list,
-                    id: item._id,
-                });
-            }}
-            style={styles.item}
-        >
-            <View>
-                <Text style={styles.title}>{`${item.order}번째 여행`}</Text>
-            </View>
-        </TouchableOpacity>
-    );
+    const renderItem = ({ item }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('MyPlanDetail', {
+                        list: item.list,
+                        id: item._id,
+                    });
+                }}
+                style={styles.item}
+            >
+                <View>
+                    <Text style={styles.title}>{`${item.order}번째 여행`}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return isLoading ? (
         <View>
