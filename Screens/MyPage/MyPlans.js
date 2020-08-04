@@ -11,6 +11,8 @@ import {
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
+import LoadingScreen from '../Loading';
+
 const MyPlans = ({ navigation }) => {
     const [myPlans, setMyPlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -64,9 +66,7 @@ const MyPlans = ({ navigation }) => {
     };
 
     return isLoading ? (
-        <View>
-            <Text>새 계획을 만들어보세요!</Text>
-        </View>
+        <LoadingScreen />
     ) : (
         <SafeAreaView style={styles.container}>
             <FlatList
@@ -82,15 +82,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 25,
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
+        backgroundColor: '#f1f2f6',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 25,
+        borderRadius: 8,
         marginVertical: 8,
     },
     title: {
-        fontSize: 25,
+        fontSize: 20,
+        fontWeight: 'bold',
     },
 });
 
