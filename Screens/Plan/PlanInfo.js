@@ -42,11 +42,17 @@ const PlanInfo = ({
 
     const postPlanData = async () => {
         try {
-            const { data } = await axios.post('http://192.168.0.40:5050/plan', {
-                userId: userInfo.userId,
-                list: plans,
-                token: resourceToken,
-            });
+            const { data } = await axios.post(
+                'http://192.168.0.40:5050/plan',
+                {
+                    userId: userInfo.userId,
+                    list: plans,
+                },
+                {
+                    headers: { Authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
             storePlans(data);
             checkPlan(true);
         } catch (error) {
