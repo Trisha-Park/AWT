@@ -4,11 +4,11 @@
         "slug": "A_week_trip-client",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icon.png",
+        "icon": "./assets/logo.png",
         "entryPoint": "./index.js",
         "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
+            "image": "./assets/mainLoading.png",
+            "resizeMode": "cover",
             "backgroundColor": "#ffffff"
         },
         "updates": {

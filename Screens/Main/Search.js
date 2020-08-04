@@ -116,7 +116,7 @@ const Search = ({ navigation }) => {
             <View style={styles.allResult}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     {isStationLoading ? (
-                        <Text>로딩중...</Text>
+                        <View />
                     ) : (
                         stations.map((region, idx) => (
                             <View style={{ flexDirection: 'row' }} key={idx}>

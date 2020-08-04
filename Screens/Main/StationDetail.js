@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import axios from 'axios';
 
 import StationDetailSlider from '../../Component/Main/StationDetailSlider';
+import LoadingScreen from '../Loading';
 
 const StationDetail = ({ route }) => {
     const {
@@ -37,9 +38,7 @@ const StationDetail = ({ route }) => {
     }, []);
 
     return isStationDataLoading ? (
-        <View>
-            <Text>로딩중..</Text>
-        </View>
+        <LoadingScreen />
     ) : (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
