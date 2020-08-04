@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, List, ListItem } from 'native-base';
 
-import { userInfo } from '../../FakeData/userData';
+
 
 const MyPage = ({ navigation }) => {
-    const [userName, setUserName] = useState(userInfo.userName);
-    const [userId, setUserId] = useState(userInfo.userId);
 
     // TODO: 유저 정보를 리덕스에 저장 => 이거는 로긴하자마자 할것입니다
 
@@ -14,7 +12,7 @@ const MyPage = ({ navigation }) => {
         <View style={styles.container}>
             <Card style={styles.userCard}>
                 <Card style={styles.nameCard}>
-                    <Text>{userName} 님</Text>
+                    <Text> trisha 님</Text>
                 </Card>
             </Card>
             <View style={styles.allList}>
