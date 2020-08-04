@@ -28,10 +28,14 @@ const FaceBookButton = ({ FBAuthStart, FBAuthSuccess, FBAuthFailure }) => {
                     'http://192.168.0.40:5050/user/facebook',
                     {
                         fbAccessToken: data.token,
+                    },
+                    {
+                        headers: { Authorization: data.token },
+                        withCredentials: true,
                     }
                 );
                 // console.log('==========================');
-                // console.log(userData.data);
+                console.log(userData.data);
                 FBAuthSuccess(
                     false,
                     { name: userData.data.name, userId: userData.data.userId },
