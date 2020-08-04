@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 
 import CourseDetailCard from '../../Component/Main/CourseDetailCard';
+import LoadingScreen from '../Loading';
 
 const CourseDetail = ({ route }) => {
     const {
@@ -30,9 +31,7 @@ const CourseDetail = ({ route }) => {
     }, []);
 
     return isLoading ? (
-        <View>
-            <Text>로딩중..</Text>
-        </View>
+        <LoadingScreen />
     ) : (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
