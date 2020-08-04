@@ -6,6 +6,8 @@ import MyArticle from '../Screens/MyPage/MyArticle';
 import MyPlans from '../Screens/MyPage/MyPlans';
 import MyPlanDetail from '../Screens/MyPage/MyPlanDetail';
 import MyArticleDetail from '../Screens/MyPage/MyArticleDetail';
+import MyScrap from '../Screens/MyPage/MyScrap';
+import MyScrapDetail from '../Screens/MyPage/MyScrapDetail';
 
 const MyPageStack = createStackNavigator();
 
@@ -35,6 +37,11 @@ const MyPageStackNavigator = ({ navigation, route }) => {
             <MyPageStack.Screen
                 name='MyArticleDetail'
                 component={MyArticleDetail}
+            />
+            <MyPageStack.Screen name='MyScrap' component={MyScrap} />
+            <MyPageStack.Screen
+                name='MyScrapDetail'
+                component={MyScrapDetail}
             />
         </MyPageStack.Navigator>
     );
