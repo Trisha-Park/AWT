@@ -9,7 +9,7 @@ import {
     ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
-import { FontAwesome } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 import { stationDummy } from '../../FakeData/mainData';
@@ -66,32 +66,32 @@ const Search = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>어디로 가시나요?</Text>
-                <View
-                    style={{ flexDirection: 'row', justifyContent: 'flex-end' }}
-                >
-                    <TextInput
-                        style={styles.textInput}
-                        value={searchValue}
-                        onChangeText={(text) => {
-                            setSearchValue(text);
-                        }}
-                    />
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (searchValue !== '') {
-                                searchStations();
-                                setSearchValue('');
-                            } else {
-                                ToastAndroid.show(
-                                    '검색어를 입력해주세요.',
-                                    ToastAndroid.BOTTOM,
-                                    ToastAndroid.LONG
-                                );
-                            }
-                        }}
-                    >
-                        <FontAwesome name='search' size={24} color='black' />
-                    </TouchableOpacity>
+                <View style={{ alignItems: 'flex-end' }}>
+                    <View style={styles.headerInput}>
+                        <TextInput
+                            value={searchValue}
+                            onChangeText={(text) => {
+                                setSearchValue(text);
+                            }}
+                            style={styles.textInput}
+                        />
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (searchValue !== '') {
+                                    searchStations();
+                                    setSearchValue('');
+                                } else {
+                                    ToastAndroid.show(
+                                        '검색어를 입력해주세요.',
+                                        ToastAndroid.BOTTOM,
+                                        ToastAndroid.LONG
+                                    );
+                                }
+                            }}
+                        >
+                            <EvilIcons name='search' size={28} color='black' />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
             <View style={styles.currentSelected}>
@@ -127,7 +127,13 @@ const Search = ({ navigation }) => {
                                         });
                                     }}
                                 >
-                                    <Text style={{ fontSize: 20 }}>
+                                    <Text
+                                        style={{
+                                            fontSize: 20,
+                                            marginBottom: 10,
+                                            marginRight: 5,
+                                        }}
+                                    >
                                         {region.station}
                                     </Text>
                                 </TouchableOpacity>
@@ -143,9 +149,11 @@ const Search = ({ navigation }) => {
                                 >
                                     <AntDesign
                                         name='star'
-                                        size={24}
+                                        size={20}
                                         color={
-                                            toggleStar[idx] ? 'red' : 'black'
+                                            toggleStar[idx]
+                                                ? '#FFC312'
+                                                : '#dfe4ea'
                                         }
                                     />
                                 </TouchableOpacity>
@@ -162,6 +170,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+        paddingHorizontal: 15,
     },
     header: {
         justifyContent: 'flex-end',
@@ -172,8 +181,9 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     headerText: {
-        fontSize: 28,
+        fontSize: 25,
         fontWeight: 'bold',
+        paddingBottom: 20,
     },
     currentSelected: {
         paddingLeft: 10,
@@ -190,11 +200,18 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingVertical: 15,
     },
+    headerInput: {
+        backgroundColor: '#f1f2f6',
+        borderRadius: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     textInput: {
-        width: 100,
-        borderWidth: 2,
+        textAlign: 'left',
         fontSize: 20,
-        padding: 3,
+        width: 120,
     },
 });
 

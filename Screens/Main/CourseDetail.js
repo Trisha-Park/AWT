@@ -4,7 +4,6 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 
 import CourseDetailCard from '../../Component/Main/CourseDetailCard';
-import { courseDetailDummy } from '../../FakeData/mainData';
 
 const CourseDetail = ({ route }) => {
     const {
@@ -35,7 +34,7 @@ const CourseDetail = ({ route }) => {
             <Text>로딩중..</Text>
         </View>
     ) : (
-        <SafeAreaView styles={styles.container}>
+        <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 {couresDetail.map((courseInfo, idx) => (
                     <CourseDetailCard courseInfo={courseInfo} key={idx} />
@@ -48,6 +47,7 @@ const CourseDetail = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     scrollView: {
         alignItems: 'center',

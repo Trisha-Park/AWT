@@ -62,7 +62,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
                         setRegionPlan={setRegionPlan}
                     />
                 ))}
-                <Card style={styles.card}>
+                <View style={styles.card}>
                     <TouchableOpacity
                         onPress={() => {
                             addRegionCard();
@@ -71,7 +71,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
                     >
                         <Entypo name='plus' size={100} color='black' />
                     </TouchableOpacity>
-                </Card>
+                </View>
             </ViewPager>
             <TouchableOpacity
                 style={styles.saveBtn}
@@ -106,25 +106,29 @@ const styles = StyleSheet.create({
     },
     slider: {
         flex: 0.95,
-        marginVertical: 20,
-        marginHorizontal: 10,
+        marginTop: 20,
+        marginBottom: 60,
+        marginHorizontal: 20,
         alignSelf: 'stretch',
     },
     saveBtn: {
-        position: 'relative',
+        position: 'absolute',
         bottom: 0,
-        backgroundColor: 'blue',
-        width: 60,
-        height: 35,
+        backgroundColor: '#0066FF',
+        width: '100%',
+        height: 50,
+        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },
     btnTitle: {
-        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#fff',
     },
     card: {
         flex: 0.95,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         justifyContent: 'center',
         alignItems: 'center',
     },

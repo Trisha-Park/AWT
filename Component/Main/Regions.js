@@ -4,7 +4,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 const Regions = ({ stations, navigation }) => {
     return (
         <>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>추천 지역</Text>
+            <Text
+                style={{ fontSize: 18, fontWeight: 'bold', color: '#222f3e' }}
+            >
+                추천 지역
+            </Text>
             <View style={styles.container}>
                 {stations.map((station, idx) => (
                     <TouchableOpacity
@@ -17,7 +21,9 @@ const Regions = ({ stations, navigation }) => {
                             });
                         }}
                     >
-                        <Text>{station.region}</Text>
+                        <Text style={{ color: '#222f3e', fontSize: 15 }}>
+                            {station.region}
+                        </Text>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -33,12 +39,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
     },
 });
 

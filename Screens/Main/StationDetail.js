@@ -21,7 +21,6 @@ const StationDetail = ({ route }) => {
             const { data } = await axios.get(
                 `http://192.168.0.40:5050/station/${id}`
             );
-            console.log(data);
             setStationData({ ...data.stationDeatil[0] });
             setFood([...data.food]);
             setTourism([...data.tourism]);
@@ -38,22 +37,19 @@ const StationDetail = ({ route }) => {
     }, []);
 
     return isStationDataLoading ? (
-        <View />
+        <View>
+            <Text>로딩중..</Text>
+        </View>
     ) : (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <View>
+                <View style={{ paddingRight: 20 }}>
                     <Text style={styles.headerTitle}>
                         {stationData.station}
                     </Text>
-                    <Text>{stationData.info}</Text>
+                    <Text style={styles.headerInfo}>{stationData.info}</Text>
                 </View>
-                <View>
-                    <Image
-                        source={{ uri: weather }}
-                        style={styles.weatherIcon}
-                    />
-                </View>
+                <Image source={{ uri: weather }} style={styles.weatherIcon} />
             </View>
             <StationDetailSlider detailInfo={food} title='맛집' />
             <StationDetailSlider detailInfo={tourism} title='관광지' />
@@ -65,17 +61,22 @@ const StationDetail = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'flex-start',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
+        paddingHorizontal: 20,
     },
     headerContainer: {
-        marginLeft: 20,
         marginVertical: 30,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
     },
     headerTitle: {
         fontSize: 30,
         fontWeight: 'bold',
+        marginBottom: 6,
+    },
+    headerInfo: {
+        color: '#747d8c',
     },
     viewPager: {
         marginHorizontal: 20,
