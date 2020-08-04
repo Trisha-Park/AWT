@@ -5,18 +5,22 @@ import {
     View,
     TouchableOpacity,
     TextInput,
+    Alert,
 } from 'react-native';
 import { CardItem, Card } from 'native-base';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import Comments from '../../Component/Community/Comments';
 
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const ArticleDetail = ({ route, navigation }) => {
+const ArticleDetail = ({ route, navigation, userInfo }) => {
     const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
     const [articleDetail, setArticleDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
+
+    console.log(navigation);
 
     const getPostView = async () => {
         try {
@@ -50,7 +54,7 @@ const ArticleDetail = ({ route, navigation }) => {
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/comment/${route.params.id}`,
                 {
-                    userId: 1,
+                    userId: userInfo.userId,
                     name: 'trisha',
                     comment: commentValue,
                     secret: false,
@@ -64,7 +68,17 @@ const ArticleDetail = ({ route, navigation }) => {
     const communityDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/community/${route.params.id}/1`
+                `http://192.168.0.5:5050/community/${route.params.id}/${userInfo.userId}`
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const scrapArticle = async () => {
+        try {
+            const { data } = await axios.put(
+                `http://192.168.0.5:5050/user/scrap/${userInfo.userId}/${route.params.id}`
             );
         } catch (error) {
             console.log(error);
@@ -99,17 +113,40 @@ const ArticleDetail = ({ route, navigation }) => {
                     onPress={() => {
                         navigation.navigate('EditArticleDetail', {
                             articleDetail,
+                            navigation : {navigation}
                         });
                     }}
                 >
                     <Text>편집하기</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                    <Text>스크랩하기</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        communityDelete();
+                        Alert.alert(
+                            '게시물을 삭제합니다.',
+                            '삭제한 게시물은 되돌릴 수 없습니다.',
+                            [
+                                {
+                                    text: '삭제',
+                                    onPress: () => {
+                                        console.log('Article Delete Success');
+                                        communityDelete();
+                                        navigation.navigate('Community');
+                                    },
+                                },
+                                {
+                                    text: '취소',
+                                    onPress: () => {
+                                        console.log('Delete Cancle');
+                                    },
+                                },
+                            ]
+                        );
                     }}
                 >
-                    <Text>삭제</Text>
+                    <Text>삭제하기</Text>
                 </TouchableOpacity>
             </View>
             <View>
@@ -192,4 +229,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ArticleDetail;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+    };
+};
+
+export default connect(mapStateToProps)(ArticleDetail);
