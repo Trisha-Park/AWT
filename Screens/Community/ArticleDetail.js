@@ -61,6 +61,16 @@ const ArticleDetail = ({ route, navigation }) => {
         }
     };
 
+    const communityDelete = async () => {
+        try {
+            const { data } = await axios.delete(
+                `http://192.168.0.5:5050/community/${route.params.id}/1`
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         getPostView();
         getCommentView();
@@ -94,11 +104,22 @@ const ArticleDetail = ({ route, navigation }) => {
                 >
                     <Text>편집하기</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        communityDelete();
+                    }}
+                >
+                    <Text>삭제</Text>
+                </TouchableOpacity>
             </View>
             <View>
                 {comments.map((comment, idx) => (
                     <TouchableOpacity key={idx}>
-                        <Comments comments={comment} />
+                        <Comments
+                            comments={comment}
+                            route={route}
+                            navigation={navigation}
+                        />
                     </TouchableOpacity>
                 ))}
             </View>

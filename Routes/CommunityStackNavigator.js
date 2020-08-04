@@ -4,6 +4,8 @@ import Community from '../Screens/Community/Community';
 import ArticleDetail from '../Screens/Community/ArticleDetail';
 import CreateArticle from '../Screens/Community/CreateArticle';
 import EditArticleDetail from '../Screens/Community/EditArticleDetail';
+import EditComment from '../Screens/Community/EditComment';
+import CommunitySearch from '../Screens/Community/CommunitySearch';
 
 const CommunityStack = createStackNavigator();
 
@@ -39,6 +41,8 @@ const CommunityStackNavigator = ({ navigation, route }) => {
                 name='EditArticleDetail'
                 component={EditArticleDetail}
             />
+            <CommunityStack.Screen name='EditComment' component={EditComment} />
+            <CommunityStack.Screen name='CommunitySearch' component={CommunitySearch} />
         </CommunityStack.Navigator>
     );
 };

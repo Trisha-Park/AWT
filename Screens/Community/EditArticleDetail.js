@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+} from 'react-native';
 
 import axios from 'axios';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const EditArticleDetail = ({ route }) => {
     const [articleDetailForEdit, setArticleDetailForEdit] = useState({

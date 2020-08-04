@@ -14,7 +14,7 @@ const CreateArticle = () => {
 
     const PostArticleButton = async () => {
         try {
-            const { data } = await axios.post(
+                const { data } = await axios.post(
                 `http://192.168.0.5:5050/community`,
                 {
                     userId: 1,
