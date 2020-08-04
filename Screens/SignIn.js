@@ -1,18 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import KaKaoButton from '../Component/Auth/KaKaoButton';
 import GoogleButton from '../Component/Auth/GoogleButton';
 import FaceBookButton from '../Component/Auth/FaceBookButton';
 
-const SignIn = ({ setLoggedIn }) => {
-    // TODO: setIsLogin 함수로 빼고 (1차), 리덕스 적용
-
+const SignIn = () => {
     return (
         <View style={styles.container}>
-            <KaKaoButton setLoggedIn={setLoggedIn} />
-            <FaceBookButton setLoggedIn={setLoggedIn} />
-            <GoogleButton setLoggedIn={setLoggedIn} />
+            <KaKaoButton />
+            <FaceBookButton />
+            <GoogleButton />
         </View>
     );
 };
@@ -24,10 +22,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
     },
-    google: {},
-    kakao: {},
-    naver: {},
-    noneLogin: {},
 });
 
 export default SignIn;
