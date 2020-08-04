@@ -15,20 +15,14 @@ import StationDetail from './Screens/Main/StationDetail';
 
 const MainStack = createStackNavigator();
 
-const App = ({ deletePlans, checkPlan }) => {
-    const [isLogin, setIsLogin] = useState(false);
-
+const App = ({ deletePlans, checkPlan, resourceToken }) => {
     // 플랜 리다이렉션 실험용
-    // useEffect(() => {
-    //     deletePlans();
-    //     checkPlan(false);
-    // }, []);
+    useEffect(() => {
+        deletePlans();
+        checkPlan(false);
+    }, []);
 
-    const setLoggedIn = () => {
-        setIsLogin(true);
-    };
-
-    return isLogin ? (
+    return resourceToken ? (
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
             <MainStack.Navigator>
@@ -55,8 +49,14 @@ const App = ({ deletePlans, checkPlan }) => {
             </MainStack.Navigator>
         </NavigationContainer>
     ) : (
-        <SignIn isLogin={isLogin} setLoggedIn={setLoggedIn} />
+        <SignIn />
     );
+};
+
+const mapStateToProps = (state) => {
+    return {
+        resourceToken: state.authReducer.resourceToken,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -66,4 +66,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

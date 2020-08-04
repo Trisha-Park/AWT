@@ -1,8 +1,44 @@
-// 유저 정보 및 토큰은.. 나중에 더 공부하고 셋팅하기
+import {
+    FB_AUTH_START,
+    FB_AUTH_SUCCESS,
+    FB_AUTH_FAILURE,
+} from '../Actions/authActions';
+
 const initialState = {
-    isLogin: false,
-    userInfo: null,
+    isLoggingIn: false,
+    userInfo: {},
+    authToken: null,
+    resourceToken: null,
     googleAuthError: '',
     fbAuthError: '',
-    kakaoAuthError: '',
+};
+
+export const authReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FB_AUTH_START: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+            };
+        }
+        case FB_AUTH_SUCCESS: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                userInfo: { ...action.userInfo },
+                authToken: action.authToken,
+                resourceToken: action.resourceToken,
+            };
+        }
+        case FB_AUTH_FAILURE: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                fbAuthError: action.fbAuthError,
+            };
+        }
+        default: {
+            return state;
+        }
+    }
 };

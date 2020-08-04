@@ -13,7 +13,14 @@ import { connect } from 'react-redux';
 import { storePlans, checkPlan } from '../../Actions/planActions';
 import axios from 'axios';
 
-const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
+const PlanInfo = ({
+    route,
+    navigation,
+    storePlans,
+    checkPlan,
+    userInfo,
+    resourceToken,
+}) => {
     const {
         params: { fullDates, dailyPlan, index },
     } = route;
@@ -36,8 +43,9 @@ const PlanInfo = ({ route, navigation, storePlans, checkPlan, plan }) => {
     const postPlanData = async () => {
         try {
             const { data } = await axios.post('http://192.168.0.40:5050/plan', {
-                userId: 1,
+                userId: userInfo.userId,
                 list: plans,
+                token: resourceToken,
             });
             storePlans(data);
             checkPlan(true);
@@ -143,6 +151,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         plan: state.planReducer.plan,
+        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
     };
 };
 

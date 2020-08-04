@@ -2,7 +2,7 @@ import React from 'react';
 import * as Google from 'expo-google-app-auth';
 import { Button } from 'react-native';
 
-const GoogleButton = ({ setLoggedIn }) => {
+const GoogleButton = () => {
     const ANDROID_CLIENT_ID =
         '499458411825-vqctkbs5ehf31ge8gpbnt28fq6nhpo68.apps.googleusercontent.com';
 
@@ -27,7 +27,6 @@ const GoogleButton = ({ setLoggedIn }) => {
             title='구글'
             onPress={() => {
                 googleSignIn();
-                setLoggedIn();
             }}
         />
     );
