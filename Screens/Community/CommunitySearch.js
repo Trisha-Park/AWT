@@ -5,7 +5,7 @@ import Articles from '../../Component/Community/Articles';
 
 import axios from 'axios';
 
-const CommunitySearch = ({ route }) => {
+const CommunitySearch = ({ route, navigation }) => {
     const [isSearchLoading, setIsSearchLoading] = useState(true);
     const [searchs, setSearch] = useState([]);
 
@@ -24,6 +24,7 @@ const CommunitySearch = ({ route }) => {
                     view: articleSearchData.view,
                 };
             });
+
             setSearch([...articleSearchDatas]);
             setIsSearchLoading(false);
         } catch (error) {
@@ -51,7 +52,7 @@ const CommunitySearch = ({ route }) => {
                         console.log(search);
                     }}
                 >
-                    <Articles article={searchs} />
+                    <Articles article={search} />
                 </TouchableOpacity>
             ))}
         </View>
