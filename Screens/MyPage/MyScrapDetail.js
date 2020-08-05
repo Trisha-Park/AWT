@@ -5,44 +5,50 @@ import {
     View,
     TouchableOpacity,
     TextInput,
-    Alert,
+    Alert
 } from 'react-native';
 import { CardItem, Card } from 'native-base';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
 
 import Comments from '../../Component/Community/Comments';
 
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const ArticleDetail = ({ route, navigation, userInfo }) => {
-    const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
-    const [articleDetail, setArticleDetail] = useState({});
+const MyScrapDetail = ({ route, navigation, userInfo }) => {
+    const [isScrapDetailLoading, setIsScrapDetailLoading] = useState(false);
+    const [scrapDetail, setScrapDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
 
+    console.log('마이 스크랩 디테일 진입');
+
+    //console.log(route);
+    //console.log('====================');
+
     const getPostView = async () => {
         try {
-            setIsArticleDetailLoading(true);
+            setIsScrapDetailLoading(false);
             const { data } = await axios.get(
                 `http://192.168.0.5:5050/community/${route.params.id}`
-            );
-            console.log('로딩 완료');
-            setArticleDetail({ ...data[0] });
-            setIsArticleDetailLoading(false);
+                );
+            setScrapDetail({...data[0]});
+            //console.log(data);
+            setIsScrapDetailLoading(true);
         } catch (error) {
             console.log(error);
         }
     };
+    //console.log('스크랩 티데일')
+    //console.log(scrapDetail.article);
 
     const getCommentView = async () => {
         try {
-            setIsArticleDetailLoading(true);
+            setIsScrapDetailLoading(true);
             const { data } = await axios.get(
                 `http://192.168.0.5:5050/comment/${route.params.id}`
             );
             setComment([...data]);
-            setIsArticleDetailLoading(false);
+            setIsScrapDetailLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +59,7 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/comment/${route.params.id}`,
                 {
-                    userId: userInfo.userId,
+                    userId: 1,
                     name: 'trisha',
                     comment: commentValue,
                     secret: false,
@@ -89,48 +95,25 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
         getCommentView();
     }, []);
 
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        try {
-            if (isFocused) {
-                getPostView();
-                getCommentView();
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }, [isFocused]);
-
-    return isArticleDetailLoading ? (
-        <View />
+    return isScrapDetailLoading ? (
+        <View ><Text>로딩 중</Text></View>
     ) : (
         <View>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>{articleDetail.title}</Text>
+                    <Text>{scrapDetail.title}</Text>
                     <CardItem style={styles.cardVisit}>
-                        <Text>{articleDetail.view}</Text>
+                        <Text>{scrapDetail.view}</Text>
                     </CardItem>
                 </CardItem>
                 <CardItem style={styles.cardAuthor}>
-                    <Text>{articleDetail.name}</Text>
+                    <Text>{scrapDetail.name}</Text>
                 </CardItem>
                 <CardItem style={styles.cardItem}>
-                    <Text>{articleDetail.article}</Text>
+                    <Text>{scrapDetail.article}</Text>
                 </CardItem>
             </Card>
             <View>
-                <TouchableOpacity
-                    onPress={() => {
-                        navigation.navigate('EditArticleDetail', {
-                            articleDetail,
-                            navigation : {navigation}
-                        });
-                    }}
-                >
-                    <Text>편집하기</Text>
-                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     scrapArticle();
                 }}>
@@ -249,4 +232,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(ArticleDetail);
+export default connect(mapStateToProps)(MyScrapDetail);

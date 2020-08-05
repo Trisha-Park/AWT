@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    TextInput,
+} from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
 import axios from 'axios';
+
+import { useIsFocused } from '@react-navigation/native';
 
 const Community = ({ navigation }) => {
     const [isArticleLoading, setIsArticleLoading] = useState(true);
@@ -21,10 +29,23 @@ const Community = ({ navigation }) => {
             console.log(error);
         }
     };
+    //console.log(articles);
 
     useEffect(() => {
         getPostData();
     }, []);
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getPostData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
 
     return isArticleLoading ? (
         <View style={styles.fix}>
@@ -32,6 +53,7 @@ const Community = ({ navigation }) => {
                 style={styles.button}
                 onPress={() => {
                     navigation.navigate('CreateArticle');
+                    navigation = { navigation };
                 }}
             >
                 <Text>🖋글쓰기</Text>
@@ -51,7 +73,7 @@ const Community = ({ navigation }) => {
                     onPress={() => {
                         navigation.navigate('CommunitySearch', {
                             searchValue: searchValue,
-                            articles : articles
+                            articles: articles,
                         });
                     }}
                 >
@@ -77,6 +99,7 @@ const Community = ({ navigation }) => {
                     style={styles.button}
                     onPress={() => {
                         navigation.navigate('CreateArticle');
+                        navigation = { navigation };
                     }}
                 >
                     <Text>🖋글쓰기</Text>

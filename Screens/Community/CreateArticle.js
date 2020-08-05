@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-const CreateArticle = () => {
+const CreateArticle = ({navigation}) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -58,6 +58,7 @@ const CreateArticle = () => {
                 style={styles.button}
                 onPress={() => {
                     PostArticleButton();
+                    navigation.navigate('Community');
                 }}
             >
                 <Text>글쓰기</Text>
