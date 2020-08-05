@@ -35,7 +35,7 @@ const MyPage = ({ navigation }) => {
                         </ListItem>
                         <ListItem
                             onPress={() => {
-                                // TODO: 스크랩 게시글 네비게이션
+                                navigation.navigate('MyScrap');
                             }}
                         >
                             <Text>스크랩한 게시글</Text>
