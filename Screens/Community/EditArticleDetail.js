@@ -9,7 +9,7 @@ import {
 
 import axios from 'axios';
 
-const EditArticleDetail = ({ route }) => {
+const EditArticleDetail = ({ route, navigation }) => {
     const [articleDetailForEdit, setArticleDetailForEdit] = useState({
         ...route.params.articleDetail,
     });
@@ -59,6 +59,7 @@ const EditArticleDetail = ({ route }) => {
                 <TouchableOpacity
                     onPress={() => {
                         editArticle();
+                        navigation.navigate('ArticleDetail');
                     }}
                 >
                     <Text>저장하기</Text>
