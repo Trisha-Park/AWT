@@ -12,26 +12,81 @@ import axios from 'axios';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-import { stationDummy } from '../../FakeData/mainData';
+import { connect } from 'react-redux';
 
-const Search = ({ navigation }) => {
+const Search = ({ navigation, resourceToken }) => {
     const [stations, setStaions] = useState([]);
-    const [favStations, setFavStations] = useState([
-        ...stationDummy.currentSelected,
-    ]);
+    const [favStations, setFavStations] = useState([]);
+
     const [isStationLoading, setIsStationLoading] = useState(true);
     const [searchValue, setSearchValue] = useState('');
-    const [toggleStar, setToggleStar] = useState([]);
 
-    const getStations = async () => {
+    const [toggleFavListStar, setToggleFavListStar] = useState([]);
+    const [toggleAllListStar, setToggleAllListStar] = useState([]);
+
+    const toggleFavStations = async (stationId, resourceToken) => {
         try {
-            setIsStationLoading(true);
+            await axios.put(
+                `http://192.168.0.40:5050/user/favStation/${stationId}`,
+                {},
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getAllStations = async () => {
+        try {
             const { data } = await axios.get(
                 'http://192.168.0.40:5050/station'
             );
             setStaions([...data]);
-            setToggleStar(Array(data.length).fill(false));
-            setIsStationLoading(false);
+            getFavStations();
+        } catch (error) {
+            console.log(error());
+        }
+    };
+
+    const getFavStations = async () => {
+        try {
+            const { data } = await axios.get(
+                'http://192.168.0.40:5050/user/favStationList',
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
+
+            if (data.favStation.length === 0) {
+                setToggleFavListStar([]);
+                setFavStations([
+                    { _id: 1, station: '즐겨찾기된 역이 없습니다.' },
+                ]);
+            } else {
+                setToggleFavListStar([
+                    ...Array(data.favStation.length).fill(true),
+                ]);
+                setFavStations([...data.favStation]);
+            }
+
+            const allStationsIds = stations.map((station) => station._id);
+            const favStationsIds = data.favStation.map(
+                (station) => station._id
+            );
+
+            setToggleAllListStar([
+                ...allStationsIds.map((station) => {
+                    let isStationExist = false;
+                    if (favStationsIds.indexOf(station) !== -1) {
+                        isStationExist = true;
+                    }
+                    return isStationExist;
+                }),
+            ]);
         } catch (error) {
             console.log(error);
         }
@@ -59,7 +114,9 @@ const Search = ({ navigation }) => {
     };
 
     useEffect(() => {
-        getStations();
+        setIsStationLoading(true);
+        getAllStations();
+        setIsStationLoading(false);
     }, []);
 
     return (
@@ -96,22 +153,48 @@ const Search = ({ navigation }) => {
             </View>
             <View style={styles.currentSelected}>
                 <Text style={styles.currentSelectedText}>즐겨찾기</Text>
-                {/* {favStations.map((region, idx) => (
-                    <View style={{ flexDirection: 'row' }} key={idx}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate('StationDetail', {
-                                    region, // id로 변경하기
-                                });
-                            }}
-                        >
-                            <Text style={{ fontSize: 20 }}>{region}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <AntDesign name='star' size={24} color='black' />
-                        </TouchableOpacity>
-                    </View>
-                ))} */}
+                {favStations.map((region, idx) =>
+                    favStations[0].stationNumber ? (
+                        <View style={{ flexDirection: 'row' }} key={idx}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.navigate('StationDetail', {
+                                        id: region._id, // id로 변경하기
+                                    });
+                                }}
+                            >
+                                <Text style={styles.stationText}>
+                                    {region.station}
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    toggleFavStations(
+                                        region._id,
+                                        resourceToken
+                                    );
+                                    getAllStations();
+                                }}
+                            >
+                                <AntDesign
+                                    name='star'
+                                    size={20}
+                                    color={
+                                        toggleFavListStar[idx]
+                                            ? '#FFC312'
+                                            : '#dfe4ea'
+                                    }
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <View key={idx}>
+                            <Text style={styles.stationText}>
+                                {favStations[0].station}
+                            </Text>
+                        </View>
+                    )
+                )}
             </View>
             <View style={styles.allResult}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -127,31 +210,24 @@ const Search = ({ navigation }) => {
                                         });
                                     }}
                                 >
-                                    <Text
-                                        style={{
-                                            fontSize: 20,
-                                            marginBottom: 10,
-                                            marginRight: 5,
-                                        }}
-                                    >
+                                    <Text style={styles.stationText}>
                                         {region.station}
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        // TODO: 서버의 유저파트가 완료되면 할것
-                                        setToggleStar((prevState) => [
-                                            ...prevState.slice(0, idx),
-                                            !prevState[idx],
-                                            ...prevState.slice(idx + 1),
-                                        ]);
+                                        toggleFavStations(
+                                            region._id,
+                                            resourceToken
+                                        );
+                                        getAllStations();
                                     }}
                                 >
                                     <AntDesign
                                         name='star'
-                                        size={20}
+                                        size={28}
                                         color={
-                                            toggleStar[idx]
+                                            toggleAllListStar[idx]
                                                 ? '#FFC312'
                                                 : '#dfe4ea'
                                         }
@@ -183,7 +259,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 25,
         fontWeight: 'bold',
-        paddingBottom: 20,
+        paddingBottom: 28,
     },
     currentSelected: {
         paddingLeft: 10,
@@ -194,7 +270,12 @@ const styles = StyleSheet.create({
     currentSelectedText: {
         fontSize: 20,
         fontWeight: 'bold',
-        paddingBottom: 10,
+        paddingBottom: 15,
+    },
+    stationText: {
+        fontSize: 28,
+        marginBottom: 7,
+        marginRight: 5,
     },
     allResult: {
         paddingLeft: 10,
@@ -215,4 +296,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Search;
+const mapStateToProps = (state) => {
+    return {
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(Search);

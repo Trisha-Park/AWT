@@ -268,12 +268,8 @@ export const bestPlanDummy = [
 ];
 
 export const newStationDummy = {
-    stationDetail: [
-        {
-            coord: [35.1145855, 129.039662],
-            station: '서울역',
-            stationNumber: 1,
-            info: '서울의 중심지입니다.',
-        },
-    ],
+    coord: [35.1145855, 129.039662],
+    station: '서울역',
+    stationNumber: 1,
+    info: '서울의 중심지입니다.',
 };
