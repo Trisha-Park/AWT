@@ -12,15 +12,22 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CourseDetail from './Screens/Main/CourseDetail';
 import Search from './Screens/Main/Search';
 import StationDetail from './Screens/Main/StationDetail';
+import { signOutSuccess } from './Actions/authActions';
 
 const MainStack = createStackNavigator();
 
-const App = ({ deletePlans, checkPlan, resourceToken }) => {
+const App = ({ deletePlans, checkPlan, resourceToken, signOutSuccess }) => {
     // 플랜 리다이렉션 실험용
-    useEffect(() => {
-        deletePlans();
-        checkPlan(false);
-    }, []);
+    // useEffect(() => {
+    //     deletePlans();
+    //     checkPlan(false);
+    // }, []);
+
+    // 로그아웃을 하시려면 주석을 풀어주세요
+    // useEffect(() => {
+    //     signOutSuccess();
+    // }, []);
+    // console.log(resourceToken);
 
     return resourceToken ? (
         <NavigationContainer>
@@ -63,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
         deletePlans: () => dispatch(deletePlans()),
+        signOutSuccess: () => dispatch(signOutSuccess()),
     };
 };
 
