@@ -10,6 +10,7 @@ import {
 import { CardItem, Card } from 'native-base';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 import Comments from '../../Component/Community/Comments';
 
@@ -19,8 +20,6 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
     const [articleDetail, setArticleDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
-
-    console.log(navigation);
 
     const getPostView = async () => {
         try {
@@ -90,6 +89,19 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
         getCommentView();
     }, []);
 
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getPostView();
+                getCommentView();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
+
     return isArticleDetailLoading ? (
         <View />
     ) : (
@@ -119,7 +131,9 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
                 >
                     <Text>편집하기</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => {
+                    scrapArticle();
+                }}>
                     <Text>스크랩하기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
