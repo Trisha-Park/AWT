@@ -30,12 +30,12 @@ const FaceBookButton = ({ FBAuthStart, FBAuthSuccess, FBAuthFailure }) => {
                         fbAccessToken: data.token,
                     },
                     {
-                        headers: { Authorization: data.token },
+                        // headers: { authorization: data.token },
                         withCredentials: true,
                     }
                 );
                 // console.log('==========================');
-                console.log(userData.data);
+                // console.log(userData.data);
                 FBAuthSuccess(
                     false,
                     { name: userData.data.name, userId: userData.data.userId },
