@@ -3,11 +3,15 @@ import {
     FB_AUTH_SUCCESS,
     FB_AUTH_FAILURE,
     SIGN_OUT_SUCCESS,
+    GOOGLE_AUTH_START,
+    GOOGLE_AUTH_SUCCESS,
+    GOOGLE_AUTH_FAILURE,
 } from '../Actions/authActions';
 
 const initialState = {
     isLoggingIn: false,
-    userInfo: {},
+    userId: '',
+    userName: '',
     authToken: null,
     resourceToken: null,
     googleAuthError: '',
@@ -26,7 +30,8 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                userInfo: { ...action.userInfo },
+                userId: action.userId,
+                userName: action.userName,
                 authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
@@ -38,10 +43,34 @@ export const authReducer = (state = initialState, action) => {
                 fbAuthError: action.fbAuthError,
             };
         }
+        case GOOGLE_AUTH_START: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+            };
+        }
+        case GOOGLE_AUTH_SUCCESS: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                userId: action.userId,
+                userName: action.userName,
+                authToken: action.authToken,
+                resourceToken: action.resourceToken,
+            };
+        }
+        case GOOGLE_AUTH_FAILURE: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                googleAuthError: action.googleAuthError,
+            };
+        }
         case SIGN_OUT_SUCCESS: {
             return {
                 ...state,
-                userInfo: {},
+                userId: null,
+                userName: null,
                 authToken: null,
                 resourceToken: null,
             };
