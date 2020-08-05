@@ -2,6 +2,7 @@ import {
     FB_AUTH_START,
     FB_AUTH_SUCCESS,
     FB_AUTH_FAILURE,
+    SIGN_OUT_SUCCESS,
 } from '../Actions/authActions';
 
 const initialState = {
@@ -35,6 +36,14 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
                 fbAuthError: action.fbAuthError,
+            };
+        }
+        case SIGN_OUT_SUCCESS: {
+            return {
+                ...state,
+                userInfo: {},
+                authToken: null,
+                resourceToken: null,
             };
         }
         default: {
