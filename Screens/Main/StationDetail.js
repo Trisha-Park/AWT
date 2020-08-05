@@ -46,7 +46,6 @@ const StationDetail = ({ route }) => {
                     <Text style={styles.headerTitle}>
                         {stationData.station}
                     </Text>
-                    <Text style={styles.headerInfo}>{stationData.info}</Text>
                 </View>
                 <Image source={{ uri: weather }} style={styles.weatherIcon} />
             </View>
@@ -73,9 +72,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 6,
-    },
-    headerInfo: {
-        color: '#747d8c',
     },
     viewPager: {
         marginHorizontal: 20,
