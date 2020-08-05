@@ -23,17 +23,23 @@ const MyPlanDetail = ({ route, navigation }) => {
         console.log(item[`day0${index + 1}`]);
         return (
             <View style={styles.dayCard}>
-                <View>
-                    <Text>{item[`day0${index + 1}`]['date']}</Text>
-                    <Text>{`day0${index + 1}`}</Text>
+                <View style={styles.cardHeader}>
+                    <Text style={styles.headerDay}>{`day0${index + 1}`}</Text>
+                    <Text style={styles.headerDate}>
+                        {item[`day0${index + 1}`]['date']}
+                    </Text>
                 </View>
                 <View>
                     {item[`day0${index + 1}`]['tasks'].map((task, taskIdx) => (
-                        <View key={taskIdx}>
-                            <Text>{task.region}</Text>
-                            <View>
+                        <View style={styles.cardBody} key={taskIdx}>
+                            <Text style={styles.regionTitle}>
+                                {task.region}
+                            </Text>
+                            <View style={styles.toDoContainer}>
                                 {task.toDos.map((toDo, toDoIdx) => (
-                                    <Text key={toDoIdx}>{toDo}</Text>
+                                    <Text key={toDoIdx} style={styles.toDo}>
+                                        {toDo}
+                                    </Text>
                                 ))}
                             </View>
                         </View>
@@ -44,12 +50,14 @@ const MyPlanDetail = ({ route, navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                data={list}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => String(index)}
-            />
+        <>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={list}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </SafeAreaView>
             <TouchableOpacity
                 onPress={() => {
                     Alert.alert('계획 삭제', '정말로 삭제하시겠습니까?', [
@@ -72,9 +80,9 @@ const MyPlanDetail = ({ route, navigation }) => {
                 }}
                 style={styles.deleteBtn}
             >
-                <Text style={{ color: 'white' }}>계획 삭제하기</Text>
+                <Text style={styles.buttonTitle}>계획 삭제하기</Text>
             </TouchableOpacity>
-        </SafeAreaView>
+        </>
     );
 };
 
@@ -86,13 +94,52 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     dayCard: {
+        backgroundColor: '#f1f2f6',
+        borderRadius: 5,
+        paddingVertical: 13,
+        paddingHorizontal: 18,
+        marginBottom: 20,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
         marginBottom: 10,
-        borderWidth: 2,
-        padding: 5,
+    },
+    headerDay: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    headerDate: {
+        color: '#747d8c',
+        fontSize: 14,
+    },
+    cardBody: {
+        backgroundColor: '#dfe4ea',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderRadius: 5,
+    },
+    regionTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 3,
+    },
+    toDoContainer: {
+        marginBottom: 7,
     },
     deleteBtn: {
-        padding: 10,
-        backgroundColor: 'blue',
+        alignSelf: 'stretch',
+        backgroundColor: '#0066FF',
+        paddingVertical: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonTitle: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

@@ -42,17 +42,10 @@ const PlanInfo = ({
 
     const postPlanData = async () => {
         try {
-            const { data } = await axios.post(
-                'http://192.168.0.40:5050/plan',
-                {
-                    userId: userInfo.userId,
-                    list: plans,
-                },
-                {
-                    headers: { Authorization: resourceToken },
-                    withCredentials: true,
-                }
-            );
+            const { data } = await axios.post('http://192.168.0.40:5050/plan', {
+                headers: { Authorization: resourceToken },
+                withCredentials: true,
+            });
             storePlans(data);
             checkPlan(true);
         } catch (error) {
@@ -132,7 +125,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 13,
         paddingHorizontal: 18,
-        marginBottom: 20,
     },
     saveBtn: {
         height: 50,
