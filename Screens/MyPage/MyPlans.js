@@ -12,18 +12,21 @@ import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
 import LoadingScreen from '../Loading';
+import { connect } from 'react-redux';
 
-const MyPlans = ({ navigation }) => {
+const MyPlans = ({ navigation, userInfo, resourceToken }) => {
     const [myPlans, setMyPlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const USER_ID = '1';
 
     const getMyPlans = async () => {
         try {
             setIsLoading(true);
-            const { data } = await axios.get(
-                `http://192.168.0.40:5050/plan/${USER_ID}`
-            );
+            const { data } = await axios.get('http://192.168.0.40:5050/plan/', {
+                headers: {
+                    authorization: resourceToken,
+                },
+                withCredentials: true,
+            });
             setMyPlans([...data]);
             setIsLoading(false);
         } catch (error) {
@@ -99,4 +102,11 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyPlans;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(MyPlans);

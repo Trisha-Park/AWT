@@ -9,7 +9,6 @@ import {
 import ViewPager from '@react-native-community/viewpager';
 
 import { Entypo } from '@expo/vector-icons';
-import { Card } from 'native-base';
 
 import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
 

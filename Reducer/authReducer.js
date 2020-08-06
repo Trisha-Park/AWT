@@ -3,6 +3,9 @@ import {
     FB_AUTH_SUCCESS,
     FB_AUTH_FAILURE,
     SIGN_OUT_SUCCESS,
+    GOOGLE_AUTH_START,
+    GOOGLE_AUTH_SUCCESS,
+    GOOGLE_AUTH_FAILURE,
 } from '../Actions/authActions';
 
 const initialState = {
@@ -26,7 +29,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                userInfo: { ...action.userInfo },
+                userInfo: action.userInfo,
                 authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
@@ -36,6 +39,28 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
                 fbAuthError: action.fbAuthError,
+            };
+        }
+        case GOOGLE_AUTH_START: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+            };
+        }
+        case GOOGLE_AUTH_SUCCESS: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                userInfo: action.userInfo,
+                authToken: action.authToken,
+                resourceToken: action.resourceToken,
+            };
+        }
+        case GOOGLE_AUTH_FAILURE: {
+            return {
+                ...state,
+                isLoggingIn: action.isLoggingIn,
+                googleAuthError: action.googleAuthError,
             };
         }
         case SIGN_OUT_SUCCESS: {

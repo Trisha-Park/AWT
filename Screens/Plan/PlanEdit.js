@@ -15,7 +15,14 @@ import { fullPlan, dateDummy } from '../../FakeData/planData';
 import { connect } from 'react-redux';
 import { storePlans } from '../../Actions/planActions';
 
-const PlanEdit = ({ route, navigation, plan, storePlans }) => {
+const PlanEdit = ({
+    route,
+    navigation,
+    plan,
+    storePlans,
+    resourceToken,
+    userInfo,
+}) => {
     const [plans, setPlans] = useState([...fullPlan]);
     const [fullDates, setFullDates] = useState([...dateDummy]);
     const [isLoading, setIsLoading] = useState(true);
@@ -81,17 +88,19 @@ const PlanEdit = ({ route, navigation, plan, storePlans }) => {
 
     const editPlanData = async () => {
         try {
-            console.log(plan);
-            const { data } = await axios.put(
+            await axios.put(
                 `http://192.168.0.40:5050/plan/${plan._id}`,
                 {
-                    userId: 1,
                     list: plans,
+                },
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
                 }
             );
             storePlans({
                 _id: plan._id,
-                userId: 1,
+                userId: userInfo.userId,
                 list: plans,
             });
         } catch (error) {
@@ -183,6 +192,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         plan: state.planReducer.plan,
+        resourceToken: state.authReducer.resourceToken,
+        userInfo: state.authReducer.userInfo,
     };
 };
 

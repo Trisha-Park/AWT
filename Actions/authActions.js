@@ -34,7 +34,31 @@ export const FBAuthFailure = (isLoggingIn, fbAuthError) => ({
     fbAuthError,
 });
 
-export const signOutStart = (userInfo) => ({
+export const googleAuthStart = (isLoggingIn) => ({
+    type: GOOGLE_AUTH_START,
+    isLoggingIn,
+});
+
+export const googleAuthSuccess = (
+    isLoggingIn,
+    userInfo,
+    authToken,
+    resourceToken
+) => ({
+    type: GOOGLE_AUTH_SUCCESS,
+    isLoggingIn,
+    userInfo,
+    authToken,
+    resourceToken,
+});
+
+export const googleAuthFailure = (isLoggingIn, googleAuthError) => ({
+    type: GOOGLE_AUTH_FAILURE,
+    isLoggingIn,
+    googleAuthError,
+});
+
+export const signOutStart = () => ({
     type: SIGN_OUT_START,
 });
 

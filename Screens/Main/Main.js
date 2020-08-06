@@ -78,6 +78,8 @@ const Main = ({ navigation, plan }) => {
                         }, []),
                     ]);
                     setIsPlanLoading(false);
+                } else {
+                    setPlans([...noPlanDummy]);
                 }
             }
         } catch (error) {
