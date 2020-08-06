@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import { CheckBox } from 'native-base';
 
 const CheckListContent = ({ toDo }) => {
     const [toggleCheckBox, setToggleCheckBox] = useState(false);
