@@ -8,11 +8,13 @@ import {
 } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
+import Loading from "../../Screens/Loading"
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import { useIsFocused } from '@react-navigation/native';
 
-const Community = ({ navigation }) => {
+const Community = ({ navigation, resourceToken }) => {
     const [isArticleLoading, setIsArticleLoading] = useState(true);
     const [articles, setArticles] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -21,7 +23,10 @@ const Community = ({ navigation }) => {
         try {
             setIsArticleLoading(true);
             const { data } = await axios.get(
-                'http://192.168.0.5:5050/community'
+                'http://192.168.0.5:5050/community',{
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             setArticles([...data]);
             setIsArticleLoading(false);
@@ -49,7 +54,8 @@ const Community = ({ navigation }) => {
 
     return isArticleLoading ? (
         <View style={styles.fix}>
-            <TouchableOpacity
+            <Loading />
+            {/* <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
                     navigation.navigate('CreateArticle');
@@ -58,7 +64,7 @@ const Community = ({ navigation }) => {
             >
                 <Text>🖋글쓰기</Text>
             </TouchableOpacity>
-            <Text>로딩중</Text>
+            <Text>로딩중</Text> */}
         </View>
     ) : (
         <View>
@@ -129,4 +135,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Community;
+const mapStateToProps = (state) => {
+    return {
+        resourceToken : state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(Community);
