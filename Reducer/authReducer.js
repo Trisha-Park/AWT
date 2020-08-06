@@ -10,8 +10,7 @@ import {
 
 const initialState = {
     isLoggingIn: false,
-    userId: '',
-    userName: '',
+    userInfo: {},
     authToken: null,
     resourceToken: null,
     googleAuthError: '',
@@ -30,8 +29,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                userId: action.userId,
-                userName: action.userName,
+                userInfo: action.userInfo,
                 authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
@@ -53,8 +51,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                userId: action.userId,
-                userName: action.userName,
+                userInfo: action.userInfo,
                 authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
@@ -69,8 +66,7 @@ export const authReducer = (state = initialState, action) => {
         case SIGN_OUT_SUCCESS: {
             return {
                 ...state,
-                userId: null,
-                userName: null,
+                userInfo: {},
                 authToken: null,
                 resourceToken: null,
             };

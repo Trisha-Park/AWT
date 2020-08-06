@@ -17,15 +17,13 @@ export const FBAuthStart = (isLoggingIn) => ({
 
 export const FBAuthSuccess = (
     isLoggingIn,
-    userId,
-    userName,
+    userInfo,
     authToken,
     resourceToken
 ) => ({
     type: FB_AUTH_SUCCESS,
     isLoggingIn,
-    userId,
-    userName,
+    userInfo,
     authToken,
     resourceToken,
 });
@@ -43,15 +41,13 @@ export const googleAuthStart = (isLoggingIn) => ({
 
 export const googleAuthSuccess = (
     isLoggingIn,
-    userId,
-    userName,
+    userInfo,
     authToken,
     resourceToken
 ) => ({
     type: GOOGLE_AUTH_SUCCESS,
     isLoggingIn,
-    userId,
-    userName,
+    userInfo,
     authToken,
     resourceToken,
 });
