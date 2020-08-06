@@ -7,7 +7,7 @@ import {
     ToastAndroid,
     View,
 } from 'react-native';
-import { useIsFocused, StackActions } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
 import { fullPlan, dateDummy } from '../../FakeData/planData';
@@ -37,11 +37,13 @@ const PlanEdit = ({ route, navigation, plan, storePlans }) => {
     }, []);
 
     const showToast = () => {
-        ToastAndroid.show(
-            '계획이 업데이트되었습니다.',
-            ToastAndroid.CENTER,
-            ToastAndroid.LONG
-        );
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                '계획이 업데이트되었습니다.',
+                ToastAndroid.CENTER,
+                ToastAndroid.LONG
+            );
+        }
     };
 
     const isFocused = useIsFocused();

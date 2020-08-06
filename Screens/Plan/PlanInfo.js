@@ -86,11 +86,13 @@ const PlanInfo = ({
                 disabled={plans.indexOf('') !== -1 ? true : false}
                 onPress={() => {
                     postPlanData();
-                    ToastAndroid.show(
-                        '계획이 저장되었습니다.',
-                        ToastAndroid.BOTTOM,
-                        ToastAndroid.LONG
-                    );
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show(
+                            '계획이 저장되었습니다.',
+                            ToastAndroid.BOTTOM,
+                            ToastAndroid.LONG
+                        );
+                    }
                     navigation.dispatch(
                         StackActions.push('Main', { screen: 'MyPage' })
                     );
