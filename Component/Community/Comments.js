@@ -3,17 +3,27 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ListItem } from 'native-base';
 import axios from 'axios';
 
-const Comments = ({ comments, route, navigation }) => {
+import { connect } from 'react-redux';
+
+
+
+const Comments = ({ comments, route, navigation, resourceToken }) => {
+    console.log(comments._id);
     const commentDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/comment/${comments._id}`
+                `http://192.168.0.5:5050/comment/${comments._id}`,
+                {
+                    headers: { authorization : resourceToken },
+                    withCredentials: true,
+                }
             );
         } catch (error) {
             console.log(error);
         }
     };
-
+    //console.log(resourceToken);
+    
     return (
         <>
             <TouchableOpacity style={styles.comment}>
@@ -52,4 +62,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Comments;
+const mapStateToProps = (state) => {
+    return {
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(Comments);
