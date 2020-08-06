@@ -42,19 +42,22 @@ const GoogleButton = () => {
             //     'http://3.34.197.112:5050/user/google/callback'
             // )
             // console.log(response);
+
         } catch (err) {
             console.log(err);
         }
     };
 
     return (
-        <Button
-            color='pink'
-            title='구글'
-            onPress={() => {
-                googleSignIn();
-            }}
-        />
+        <>
+            <Button
+                color='pink'
+                title='구글'
+                onPress={() => {
+                    googleSignIn();
+                }}
+            />
+        </>
     );
 };
 

@@ -42,11 +42,13 @@ const PlanEditDetail = ({ navigation, route }) => {
     };
 
     const showToast = () => {
-        ToastAndroid.show(
-            '지역 카드가 추가되었습니다.',
-            ToastAndroid.BOTTOM,
-            ToastAndroid.LONG
-        );
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                '지역 카드가 추가되었습니다.',
+                ToastAndroid.BOTTOM,
+                ToastAndroid.LONG
+            );
+        }
     };
 
     return (
@@ -75,11 +77,13 @@ const PlanEditDetail = ({ navigation, route }) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={() => {
-                    ToastAndroid.show(
-                        `${day}의 계획이 저장되었습니다.`,
-                        ToastAndroid.BOTTOM,
-                        ToastAndroid.LONG
-                    );
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show(
+                            `${day}의 계획이 저장되었습니다.`,
+                            ToastAndroid.BOTTOM,
+                            ToastAndroid.LONG
+                        );
+                    }
                     navigation.navigate('PlanEdit', {
                         dailyPlan: {
                             [day]: {

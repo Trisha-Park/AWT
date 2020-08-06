@@ -44,11 +44,13 @@ const PlanEdit = ({
     }, []);
 
     const showToast = () => {
-        ToastAndroid.show(
-            '계획이 업데이트되었습니다.',
-            ToastAndroid.CENTER,
-            ToastAndroid.LONG
-        );
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                '계획이 업데이트되었습니다.',
+                ToastAndroid.CENTER,
+                ToastAndroid.LONG
+            );
+        }
     };
 
     const isFocused = useIsFocused();

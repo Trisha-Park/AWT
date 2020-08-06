@@ -138,11 +138,13 @@ const Search = ({ navigation, resourceToken }) => {
                                     searchStations();
                                     setSearchValue('');
                                 } else {
-                                    ToastAndroid.show(
-                                        '검색어를 입력해주세요.',
-                                        ToastAndroid.BOTTOM,
-                                        ToastAndroid.LONG
-                                    );
+                                    if (Platform.OS === 'android') {
+                                        ToastAndroid.show(
+                                            '검색어를 입력해주세요.',
+                                            ToastAndroid.BOTTOM,
+                                            ToastAndroid.LONG
+                                        );
+                                    }
                                 }
                             }}
                         >
