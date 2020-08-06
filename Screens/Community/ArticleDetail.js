@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     TextInput,
     Alert,
+    Image,
 } from 'react-native';
 import { CardItem, Card } from 'native-base';
 import axios from 'axios';
@@ -15,17 +16,23 @@ import { useIsFocused } from '@react-navigation/native';
 import Comments from '../../Component/Community/Comments';
 
 // TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const ArticleDetail = ({ route, navigation, userInfo }) => {
+const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
     const [articleDetail, setArticleDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
 
+    console.log(route);
+
     const getPostView = async () => {
         try {
             setIsArticleDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/${route.params.id}`
+                `http://192.168.0.5:5050/community/${route.params.id}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             console.log('로딩 완료');
             setArticleDetail({ ...data[0] });
@@ -39,7 +46,11 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
         try {
             setIsArticleDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/comment/${route.params.id}`
+                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             setComment([...data]);
             setIsArticleDetailLoading(false);
@@ -57,6 +68,10 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
                     name: 'trisha',
                     comment: commentValue,
                     secret: false,
+                },
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
                 }
             );
         } catch (error) {
@@ -67,7 +82,12 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
     const communityDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/community/${route.params.id}/${userInfo.userId}`
+                `http://192.168.0.5:5050/community/${route.params.id}`,
+                {},
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
         } catch (error) {
             console.log(error);
@@ -77,7 +97,12 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
     const scrapArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/user/scrap/${userInfo.userId}/${route.params.id}`
+                `http://192.168.0.5:5050/user/scrap/${route.params.id}`,
+                {},
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
         } catch (error) {
             console.log(error);
@@ -118,6 +143,14 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
                 </CardItem>
                 <CardItem style={styles.cardItem}>
                     <Text>{articleDetail.article}</Text>
+                    <View>
+                        {image && (
+                            <Image
+                                source={{ uri: image }}
+                                style={{ width: 200, height: 200 }}
+                            />
+                        )}
+                    </View>
                 </CardItem>
             </Card>
             <View>
@@ -125,15 +158,17 @@ const ArticleDetail = ({ route, navigation, userInfo }) => {
                     onPress={() => {
                         navigation.navigate('EditArticleDetail', {
                             articleDetail,
-                            navigation : {navigation}
+                            navigation: { navigation },
                         });
                     }}
                 >
                     <Text>편집하기</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    scrapArticle();
-                }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        scrapArticle();
+                    }}
+                >
                     <Text>스크랩하기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -246,6 +281,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
     };
 };
 
