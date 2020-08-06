@@ -9,14 +9,34 @@ import {
     Alert,
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { deletePlans, checkPlan } from '../../Actions/planActions';
 
-const MyPlanDetail = ({ route, navigation }) => {
+const MyPlanDetail = ({
+    route,
+    navigation,
+    resourceToken,
+    plan,
+    checkPlan,
+    deletePlans,
+}) => {
     const {
         params: { id, list },
     } = route;
 
     const deletePlan = async () => {
-        await axios.delete(`http://192.168.0.40:5050/plan/${id}`);
+        console.log(id);
+        if (plan._id === id) {
+            // plan 삭제!
+            deletePlans();
+            checkPlan(false);
+        }
+        await axios.delete(`http://192.168.0.40:5050/plan/${id}`, {
+            headers: {
+                authorization: resourceToken,
+            },
+            withCredentials: true,
+        });
     };
 
     const renderItem = ({ item, index }) => {
@@ -143,4 +163,18 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyPlanDetail;
+const mapStateToProps = (state) => {
+    return {
+        resourceToken: state.authReducer.resourceToken,
+        plan: state.planReducer.plan,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
+        deletePlans: () => dispatch(deletePlans()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPlanDetail);

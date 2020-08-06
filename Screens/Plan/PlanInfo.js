@@ -18,8 +18,8 @@ const PlanInfo = ({
     navigation,
     storePlans,
     checkPlan,
-    userInfo,
     resourceToken,
+    userInfo,
 }) => {
     const {
         params: { fullDates, dailyPlan, index },
@@ -42,10 +42,18 @@ const PlanInfo = ({
 
     const postPlanData = async () => {
         try {
-            const { data } = await axios.post('http://192.168.0.40:5050/plan', {
-                headers: { Authorization: resourceToken },
-                withCredentials: true,
-            });
+            const { data } = await axios.post(
+                'http://192.168.0.40:5050/plan',
+                {
+                    userId: userInfo.userId,
+                    list: plans,
+                },
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
+            console.log(data);
             storePlans(data);
             checkPlan(true);
         } catch (error) {
@@ -149,8 +157,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         plan: state.planReducer.plan,
-        userInfo: state.authReducer.userInfo,
         resourceToken: state.authReducer.resourceToken,
+        userInfo: state.authReducer.userInfo,
     };
 };
 
