@@ -7,10 +7,11 @@ import {
     SafeAreaView,
     FlatList,
     Alert,
+    ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { deletePlans, checkPlan } from '../../Actions/planActions';
+import { deletePlans, checkPlan, storePlans } from '../../Actions/planActions';
 
 const MyPlanDetail = ({
     route,
@@ -19,19 +20,19 @@ const MyPlanDetail = ({
     plan,
     checkPlan,
     deletePlans,
+    storePlans,
 }) => {
     const {
-        params: { id, list },
+        params: { plans },
     } = route;
 
     const deletePlan = async () => {
-        console.log(id);
-        if (plan._id === id) {
-            // plan 삭제!
+        console.log(plans._id);
+        if (plan._id === plans._id) {
             deletePlans();
             checkPlan(false);
         }
-        await axios.delete(`http://192.168.0.40:5050/plan/${id}`, {
+        await axios.delete(`http://192.168.0.40:5050/plan/${list._id}`, {
             headers: {
                 authorization: resourceToken,
             },
@@ -73,35 +74,56 @@ const MyPlanDetail = ({
         <>
             <SafeAreaView style={styles.container}>
                 <FlatList
-                    data={list}
+                    data={plans.list}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => String(index)}
                 />
             </SafeAreaView>
-            <TouchableOpacity
-                onPress={() => {
-                    Alert.alert('계획 삭제', '정말로 삭제하시겠습니까?', [
-                        {
-                            text: '삭제',
-                            onPress: () => {
-                                // TODO: 삭제 API 실행, 마이페이지로 리다이렉트
-                                console.log('삭제');
-                                deletePlan();
-                                navigation.navigate('MyPage');
+            <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        storePlans(plans);
+                        checkPlan(true);
+                        if (Platform.OS === 'android') {
+                            ToastAndroid.show(
+                                '계획이 저장되었습니다.',
+                                ToastAndroid.BOTTOM,
+                                ToastAndroid.LONG
+                            );
+                        }
+                    }}
+                    style={{ ...styles.button, backgroundColor: '#0066FF' }}
+                >
+                    <Text style={{ ...styles.buttonTitle, color: '#fff' }}>
+                        메인에 추가하기
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        Alert.alert('계획 삭제', '정말로 삭제하시겠습니까?', [
+                            {
+                                text: '삭제',
+                                onPress: () => {
+                                    console.log('삭제');
+                                    deletePlan();
+                                    navigation.navigate('MyPage');
+                                },
                             },
-                        },
-                        {
-                            text: '취소',
-                            onPress: () => {
-                                console.log('취소');
+                            {
+                                text: '취소',
+                                onPress: () => {
+                                    console.log('취소');
+                                },
                             },
-                        },
-                    ]);
-                }}
-                style={styles.deleteBtn}
-            >
-                <Text style={styles.buttonTitle}>계획 삭제하기</Text>
-            </TouchableOpacity>
+                        ]);
+                    }}
+                    style={{ ...styles.button, backgroundColor: '#F1F2F6' }}
+                >
+                    <Text style={{ ...styles.buttonTitle, color: '#000' }}>
+                        계획 삭제하기
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </>
     );
 };
@@ -149,15 +171,13 @@ const styles = StyleSheet.create({
     toDoContainer: {
         marginBottom: 7,
     },
-    deleteBtn: {
-        alignSelf: 'stretch',
-        backgroundColor: '#0066FF',
+    button: {
+        width: '50%',
         paddingVertical: 15,
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonTitle: {
-        color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
     },
@@ -174,6 +194,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
         deletePlans: () => dispatch(deletePlans()),
+        storePlans: (plan) => dispatch(storePlans(plan)),
     };
 };
 
