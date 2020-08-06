@@ -58,6 +58,13 @@ const MainTabNavigator = ({ navigation, route }) => {
                     }
                 },
             })}
+            tabBarOptions={{
+                activeTintColor: '#0066FF',
+                inactiveTintColor: '#b2bec3',
+                tabStyle: {
+                    marginVertical: 4,
+                },
+            }}
             initialRouteName='Main'
         >
             <MainTab.Screen name='Main' component={Main} />
