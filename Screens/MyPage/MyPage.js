@@ -4,8 +4,6 @@ import { Card, List, ListItem } from 'native-base';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
 
-import { connect } from 'react-redux';
-
 const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
 
     return (
