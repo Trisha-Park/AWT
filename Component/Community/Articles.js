@@ -1,30 +1,49 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Left, Right } from 'native-base';
 
 const Articles = ({ article }) => {
-    const { createdAt, title, name} = article;
+    const { updatedAt, title, name } = article;
 
     // TODO: 리액트 네비게이터를 이용해서 ArticleDetail 페이지로 넘어가는 것을 구현해 주세요.
     // TODO: ArticleDetail 페이지로 받아온 개별 article의 내용들을 넘겨주세요
 
     return (
         <View style={styles.article}>
-            <Left style={{ flexDirection: 'column' }}>
-                <Text>{title}</Text>
-            </Left>
-            <Right>
-                <Text>{createdAt}</Text>
-                <Text>{name}</Text>
-            </Right>
+            <View style={{ height : 70, flexDirection: 'column', justifyContent : "space-between"}}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.name}>{name}</Text>
+            </View>
+            <View >
+                <Text style={styles.date}>{updatedAt}</Text>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     article: {
-        height: 70,
+        height: 90,
         width: 400,
+        flexDirection : "row",
+        alignItems : "flex-end",
+        justifyContent : "space-between",
+        backgroundColor : "#F1F2F6",
+        margin : 5,
+        padding : 10
+        
+
+
+    },
+    title : {
+        fontSize : 24
+    },
+    name: {
+        fontStyle : "normal",
+        color : "#454545",
+        fontSize : 18
+    },
+    date: {
+        fontSize : 18
     },
 });
 

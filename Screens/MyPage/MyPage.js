@@ -4,12 +4,15 @@ import { Card, List, ListItem } from 'native-base';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
 
-const MyPage = ({ navigation, signOutSuccess }) => {
+import { connect } from 'react-redux';
+
+const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
+
     return (
         <View style={styles.container}>
             <Card style={styles.userCard}>
                 <Card style={styles.nameCard}>
-                    <Text> trisha 님</Text>
+                    <Text> {userInfo.name} 님</Text>
                 </Card>
             </Card>
             <View style={styles.allList}>
@@ -121,10 +124,18 @@ const styles = StyleSheet.create({
     },
 });
 
+
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         signOutSuccess: () => dispatch(signOutSuccess()),
     };
 };
 
-export default connect(null, mapDispatchToProps)(MyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyPage);
+
