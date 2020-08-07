@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-// TouchableOpacity로 감싸주고 onPress 이벤트에 메소드 적용
 const CourseCard = ({ course, navigation }) => {
     const { list, num } = course;
     return (

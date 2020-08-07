@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,29 +6,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import Main from './Routes/MainTabNavigator';
 import SignIn from './Screens/SignIn';
 
-import { deletePlans, checkPlan } from './Actions/planActions';
-import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import CourseDetail from './Screens/Main/CourseDetail';
 import Search from './Screens/Main/Search';
 import StationDetail from './Screens/Main/StationDetail';
-import { signOutSuccess } from './Actions/authActions';
+
+import { connect } from 'react-redux';
 
 const MainStack = createStackNavigator();
 
-const App = ({ deletePlans, checkPlan, resourceToken, signOutSuccess }) => {
-    // 플랜 리다이렉션 실험용
-    // useEffect(() => {
-    //     deletePlans();
-    //     checkPlan(false);
-    // }, []);
-
-    // 로그아웃을 하시려면 주석을 풀어주세요
-    // useEffect(() => {
-    //     signOutSuccess();
-    // }, []);
-    // console.log(resourceToken);
-
+const App = ({ resourceToken }) => {
     return resourceToken ? (
         <NavigationContainer>
             <StatusBar backgroundColor='black' />
@@ -66,12 +53,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
-        deletePlans: () => dispatch(deletePlans()),
-        signOutSuccess: () => dispatch(signOutSuccess()),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

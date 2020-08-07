@@ -14,7 +14,6 @@ const DeletePlanCard = ({
             style={styles.card}
             onPress={() => {
                 if (isPlanExist) {
-                    // 삭제, 토스트 메시지를 추가
                     Alert.alert('계획 삭제', '정말로 삭제하시겠습니까?', [
                         {
                             text: '삭제',
@@ -35,7 +34,6 @@ const DeletePlanCard = ({
                         },
                     ]);
                 } else {
-                    // plan 페이지로 리다이렉트
                     navigation.navigate('Plan');
                 }
             }}

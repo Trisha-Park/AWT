@@ -76,11 +76,9 @@ const Main = ({ navigation, plan }) => {
 
     useEffect(() => {
         try {
-            // console.log(plan);
             if (isFocused) {
                 // plan이 수정되었을 때
                 if (plan.list) {
-                    // console.log(plan);
                     setIsPlanLoading(true);
                     setPlans([
                         ...plan.list.reduce((arr, item, idx) => {
