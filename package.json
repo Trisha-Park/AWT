@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@dudigital/react-native-zoomable-view": "^1.0.15",
     "@expo-google-fonts/inter": "^0.1.0",
     "@expo/vector-icons": "^10.2.0",
     "@react-native-community/async-storage": "^1.11.0",
@@ -35,6 +36,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-calendars": "^1.300.0",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-image-pan-zoom": "^2.1.12",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
