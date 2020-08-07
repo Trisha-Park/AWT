@@ -22,7 +22,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
 
-    console.log(route);
+    console.log(articleDetail);
 
     const getPostView = async () => {
         try {
@@ -34,7 +34,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     withCredentials: true,
                 }
             );
-            console.log('로딩 완료');
+            console.log(data);
             setArticleDetail({ ...data[0] });
             setIsArticleDetailLoading(false);
         } catch (error) {
@@ -132,6 +132,12 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     ) : (
         <View>
             <Card style={styles.card}>
+                    <View>
+                        <Image
+                            source={{uri : articleDetail.imageURL}}
+                            style={{ width: 200, height: 200 }}
+                        />
+                    </View>
                 <CardItem style={styles.cardItem}>
                     <Text>{articleDetail.title}</Text>
                     <CardItem style={styles.cardVisit}>
@@ -143,14 +149,6 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                 </CardItem>
                 <CardItem style={styles.cardItem}>
                     <Text>{articleDetail.article}</Text>
-                    <View>
-                        {image && (
-                            <Image
-                                source={{ uri: image }}
-                                style={{ width: 200, height: 200 }}
-                            />
-                        )}
-                    </View>
                 </CardItem>
             </Card>
             <View>
@@ -158,7 +156,6 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     onPress={() => {
                         navigation.navigate('EditArticleDetail', {
                             articleDetail,
-                            navigation: { navigation },
                         });
                     }}
                 >
