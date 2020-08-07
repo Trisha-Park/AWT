@@ -8,8 +8,9 @@ import { EvilIcons } from '@expo/vector-icons';
 import CheckList from '../../Component/Main/CheckList';
 import Regions from '../../Component/Main/Regions';
 import Courses from '../../Component/Main/Courses';
+import DeletePlanCard from '../../Component/Main/DeletePlanCard';
 
-import { bestStationList, noPlanDummy } from '../../FakeData/mainData';
+import { noPlanDummy } from '../../FakeData/mainData';
 import { connect } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -17,6 +18,18 @@ const Main = ({ navigation, plan }) => {
     const [plans, setPlans] = useState([...noPlanDummy]);
     const [isPlanLoading, setIsPlanLoading] = useState(false);
     const [courses, setCourses] = useState([]);
+    const [stations, setStations] = useState([]);
+
+    const getStationLists = async () => {
+        try {
+            const { data } = await axios.get(
+                'http://192.168.0.40:5050/station/random'
+            );
+            setStations([...data]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const getCourseLists = async () => {
         try {
@@ -51,7 +64,7 @@ const Main = ({ navigation, plan }) => {
                     }, []),
                 ]);
             }
-            // 여기에 코스정보 추가
+            getStationLists();
             getCourseLists();
             setIsPlanLoading(false);
         } catch (error) {
@@ -111,10 +124,11 @@ const Main = ({ navigation, plan }) => {
                             <CheckList planItem={planItem} key={idx} />
                         ))
                     )}
+                    <DeletePlanCard navigation={navigation} />
                 </ViewPager>
             </View>
             <View style={styles.regions}>
-                <Regions stations={bestStationList} navigation={navigation} />
+                <Regions stations={stations} navigation={navigation} />
             </View>
             <View style={styles.courses}>
                 <Courses courses={courses} navigation={navigation} />
