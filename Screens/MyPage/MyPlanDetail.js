@@ -27,12 +27,11 @@ const MyPlanDetail = ({
     } = route;
 
     const deletePlan = async () => {
-        console.log(plans._id);
         if (plan._id === plans._id) {
             deletePlans();
             checkPlan(false);
         }
-        await axios.delete(`http://192.168.0.40:5050/plan/${list._id}`, {
+        await axios.delete(`http://192.168.0.40:5050/plan/${plans._id}`, {
             headers: {
                 authorization: resourceToken,
             },

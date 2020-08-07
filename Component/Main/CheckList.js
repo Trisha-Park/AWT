@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, SafeAreaView } from 'react-native';
 import CheckListContent from './CheckListContent';
 
 const CheckList = ({ planItem }) => {
@@ -22,13 +22,13 @@ const CheckList = ({ planItem }) => {
                     {planItem.region}
                 </Text>
             </View>
-            <View style={styles.items}>
+            <SafeAreaView style={styles.items}>
                 <ScrollView style={{ width: '100%' }}>
                     {planItem.toDos.map((toDo, idx) => (
                         <CheckListContent toDo={toDo} key={idx} />
                     ))}
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         </View>
     );
 };
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     items: {
         marginTop: 50,
         height: 100,
+        width: '100%',
     },
 });
 

@@ -14,7 +14,7 @@ import axios from 'axios';
 import LoadingScreen from '../Loading';
 import { connect } from 'react-redux';
 
-const MyPlans = ({ navigation, resourceToken }) => {
+const MyPlans = ({ navigation, resourceToken, userInfo }) => {
     const [myPlans, setMyPlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +61,9 @@ const MyPlans = ({ navigation, resourceToken }) => {
                 style={styles.item}
             >
                 <View>
-                    <Text style={styles.title}>{`${item.order}번째 여행`}</Text>
+                    <Text
+                        style={styles.title}
+                    >{`${userInfo.name}님의 ${item.order}번째 여행`}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
+        userInfo: state.authReducer.userInfo,
         resourceToken: state.authReducer.resourceToken,
     };
 };
