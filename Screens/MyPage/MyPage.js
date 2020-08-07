@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, List, ListItem } from 'native-base';
 
+import { connect } from 'react-redux';
 
-
-const MyPage = ({ navigation }) => {
+const MyPage = ({ navigation, userInfo }) => {
 
     // TODO: 유저 정보를 리덕스에 저장 => 이거는 로긴하자마자 할것입니다
 
@@ -12,7 +12,7 @@ const MyPage = ({ navigation }) => {
         <View style={styles.container}>
             <Card style={styles.userCard}>
                 <Card style={styles.nameCard}>
-                    <Text> trisha 님</Text>
+                    <Text> {userInfo.name} 님</Text>
                 </Card>
             </Card>
             <View style={styles.allList}>
@@ -95,4 +95,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyPage;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+    };
+};
+
+export default connect(mapStateToProps)(MyPage);
