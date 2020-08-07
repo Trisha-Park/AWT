@@ -22,7 +22,9 @@ const DeletePlanCard = ({
                                 console.log('삭제');
                                 deletePlans();
                                 checkPlan(false);
-                                navigation.navigate('MyPage');
+                                navigation.navigate('MyPage', {
+                                    screen: 'MyPlans',
+                                });
                             },
                         },
                         {
