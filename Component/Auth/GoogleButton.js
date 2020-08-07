@@ -39,7 +39,6 @@ const GoogleButton = ({
                         withCredentials: true,
                     }
                 );
-                // console.log('=============================================');
                 googleAuthSuccess(
                     false,
                     { name: data.user.name, userId: data.user.id },

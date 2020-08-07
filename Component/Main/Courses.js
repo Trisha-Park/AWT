@@ -4,7 +4,6 @@ import ViewPager from '@react-native-community/viewpager';
 
 import CourseCard from './CourseCard';
 
-// 여기에 슬라이더 적용
 const Courses = ({ courses, navigation }) => {
     return (
         <>
