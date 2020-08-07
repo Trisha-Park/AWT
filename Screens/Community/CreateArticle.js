@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
-//import * as MediaLibrary from 'expo-media-library';
 import {
     StyleSheet,
     View,
@@ -15,37 +14,18 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
-    // 로딩여부
-    //const [loading, setLoading] = useState(false);
-    // 선택된 사진
+    // const [imageObj, setImageObj] = useState({});
     const [image, setImage] = useState();
-    // 접근 권한 허용?
-    //const [hasAllow, setHasAllow] = useState(false);
-
+    // const [imageName, setImageName] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
-    // 사진첩 접근 권한 허용 함수 만들기
-    // const requestCameraPermission = async () => {
-    //     const response = await Permissions.getAsync(Permissions.CAMERA);
-    //     //console.log(response);
-    // };
-
-    // 카메라 롤 허용
-    // const requestRollPermission = async () => {
-    //     const response = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-    //     console.log(response);
-    // };
-
-    // 카메라 롤 허용 메소드
-    //MediaLibrary.requestPermissionsAsync();
-    //ImagePicker.requestCameraRollPermissionsAsync();
-
     const getPermissionAsync = async () => {
-        // if (Constants.platform.ios) {
-        //     const { statusios } = await Permissions.askAsync(
-        //         Permissions.CAMERA_ROLL
-        //     );
+        if (Constants.platform.ios) {
+            const { statusios } = await Permissions.askAsync(
+                Permissions.CAMERA_ROLL
+            );
+        }
         if (Constants.platform.android) {
             const { status } = await Permissions.askAsync(
                 Permissions.CAMERA_ROLL
@@ -59,28 +39,36 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 allowsEditing: false,
                 quality: 1,
             });
-            console.log(result);
+            //console.log(result);
             if (!result.cancelled) {
+                const splitName = result.uri.split('/');
+                const hello = splitName[splitName.length - 1].toString();
+                setImageName(hello);
                 setImage(result.uri);
+                setImageObj(result);
+                //console.log(hello);
             }
-
         } catch (error) {
             console.log(error);
         }
     };
-    //console.log(image);
- 
+    //console.log(imageObj);
+
     const PostArticleButton = async () => {
         try {
-            const imageURL = new FormData();
-            imageURL.append('file', {
-                type: 'image/jpeg',
-                uri: image,
-            });
+            // const imageURL = new FormData();
+            // imageURL.append('imageURL', {
+            //     uri: imageObj.uri,
+            //     name: imageName,
+            //     type: 'image',
+            //     height: imageObj.height,
+            //     width: imageObj.width,
+            // });
+
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/community`,
                 {
-                    imageURL,
+                    //imageURL: imageURL,
                     userId: userInfo.userId,
                     name: 'trisha',
                     title,
@@ -89,33 +77,37 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 {
                     headers: {
                         authorization: resourceToken,
-                        "content-type": "multipart/form-data"
+                        // 'content-type':
+                        //     'multipart/form-data; boundary=<calculated when request is sent>',
                     },
                     withCredentials: true,
                 }
             );
-            //console.log(data);
-            // console.log(title);
-            // console.log(content);
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
     };
 
-
     useEffect(() => {
-        //requestCameraPermission();
         getPermissionAsync();
-        //requestRollPermission();
     }, []);
 
     return (
-        <View>
+        <View
+            style={{
+                flexDirection: 'column',
+                alignContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#ffffff',
+            }}
+        >
             <View>
                 <View style={styles.title}>
                     <TextInput
                         placeholder='제목을 입력하세요.'
                         value={title}
+                        style={{ fontSize: 20 }}
                         onChangeText={(text) => {
                             setTitle(text);
                         }}
@@ -123,8 +115,18 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 </View>
                 <View style={styles.text}>
                     <TextInput
-                        placeholder='내용을 입력하세요. (주의사항 들어갈 예정)'
+                        placeholder='내용을 입력하세요.'
+                        style={{
+                            width: 390,
+                            height: 280,
+                            justifyContent: 'flex-start',
+                            alignContent: 'flex-start',
+                            padding: 5,
+                            textAlignVertical: 'top',
+                            fontSize: 18,
+                        }}
                         value={content}
+                        multiline={true}
                         onChangeText={(text) => {
                             setContent(text);
                         }}
@@ -135,7 +137,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 {image && (
                     <Image
                         source={{ uri: image }}
-                        style={{ width: 200, height: 200 }}
+                        style={{ width: 200, height: 200, margin: 10 }}
                     />
                 )}
             </View>
@@ -145,7 +147,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     pickImage();
                 }}
             >
-                <Text>이미지 첨부하기</Text>
+                <Text style={{ color: '#ffffff' }}>이미지 첨부하기</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
@@ -154,7 +156,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     navigation.navigate('Community');
                 }}
             >
-                <Text>글쓰기</Text>
+                <Text style={{ color: '#ffffff' }}>글쓰기</Text>
             </TouchableOpacity>
         </View>
     );
@@ -162,25 +164,25 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
 
 const styles = StyleSheet.create({
     title: {
-        height: 40,
+        height: 50,
         width: 400,
-        backgroundColor: 'skyblue',
-        alignItems: 'flex-start',
+        backgroundColor: '#F1F2F6',
         justifyContent: 'center',
-        marginTop: 50,
+        marginTop: 20,
         padding: 10,
     },
     text: {
         height: 300,
         width: 400,
-        backgroundColor: 'olive',
-        alignItems: 'flex-start',
+        backgroundColor: '#F1F2F6',
+        alignContent: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
         padding: 10,
-        marginTop: 10,
+        marginTop: 5,
     },
     button: {
-        backgroundColor: 'pink',
+        backgroundColor: '#0066FF',
         width: 400,
         height: 50,
         alignItems: 'center',
