@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, ToastAndroid, Alert } from 'react-native';
 import { Card, List, ListItem } from 'native-base';
+import { connect } from 'react-redux';
+import { signOutSuccess } from '../../Actions/authActions';
 
-
-
-const MyPage = ({ navigation }) => {
-
-    // TODO: 유저 정보를 리덕스에 저장 => 이거는 로긴하자마자 할것입니다
-
+const MyPage = ({ navigation, signOutSuccess }) => {
     return (
         <View style={styles.container}>
             <Card style={styles.userCard}>
@@ -20,7 +17,6 @@ const MyPage = ({ navigation }) => {
                     <List>
                         <ListItem
                             onPress={() => {
-                                // TODO: 내 계획 네비게이션
                                 navigation.navigate('MyPlans');
                             }}
                         >
@@ -57,8 +53,38 @@ const MyPage = ({ navigation }) => {
                     <ListItem>
                         <Text>설정</Text>
                     </ListItem>
-                    <ListItem>
-                        <Text>리뷰쓰기</Text>
+                    <ListItem
+                        onPress={() => {
+                            Alert.alert(
+                                '로그아웃',
+                                '정말로 로그아웃하시겠습니까?',
+                                [
+                                    {
+                                        text: '로그아웃',
+                                        onPress: () => {
+                                            console.log('로그아웃');
+
+                                            signOutSuccess();
+                                            if (Platform.OS === 'android') {
+                                                ToastAndroid.show(
+                                                    '로그아웃되었습니다.',
+                                                    ToastAndroid.BOTTOM,
+                                                    ToastAndroid.LONG
+                                                );
+                                            }
+                                        },
+                                    },
+                                    {
+                                        text: '취소',
+                                        onPress: () => {
+                                            console.log('취소');
+                                        },
+                                    },
+                                ]
+                            );
+                        }}
+                    >
+                        <Text>로그아웃</Text>
                     </ListItem>
                 </Card>
             </View>
@@ -95,4 +121,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOutSuccess: () => dispatch(signOutSuccess()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(MyPage);

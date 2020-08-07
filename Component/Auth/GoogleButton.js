@@ -1,14 +1,14 @@
 import React from 'react';
 import * as Google from 'expo-google-app-auth';
-import { Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import axios from 'axios';
+
 import { connect } from 'react-redux';
 import {
     googleAuthStart,
     googleAuthSuccess,
     googleAuthFailure,
 } from '../../Actions/authActions';
-// 마무리 되면 axios 리팩토링!
 
 const GoogleButton = ({
     googleAuthStart,
@@ -22,65 +22,85 @@ const GoogleButton = ({
 
     const googleSignIn = async () => {
         try {
-            //* expo google package 사용
-            const userData = await Google.logInAsync({
+            googleAuthStart(true);
+            const data = await Google.logInAsync({
                 androidClientId: ANDROID_CLIENT_ID,
                 iosClientId: IOS_CLIENT_ID,
             });
 
-            if (userData.type === 'success') {
-                console.log(userData.accessToken);
-                console.log(userData);
-                const { data } = await axios.post(
-                    'http://172.30.1.17:5050/user/google',
+            if (data.type === 'success') {
+                const userData = await axios.post(
+                    'http://192.168.0.40:5050/user/google',
                     {
-                        google: userData.accessToken,
-                        googleName: userData.user.name,
+                        google: data.accessToken,
+                        googleName: data.user.name,
                     },
                     {
                         withCredentials: true,
                     }
                 );
+                // console.log('=============================================');
+                googleAuthSuccess(
+                    false,
+                    { name: data.user.name, userId: data.user.id },
+                    userData.data.token
+                );
+            } else {
+                googleAuthFailure(false);
+                alert('로그인에 실패했습니다.');
             }
-
-            //* 웹뷰 사용
-
-            // Linking.openURL('http://3.34.197.112:5050/user/google');
-            // const response = await axios.get(
-            //     'http://3.34.197.112:5050/user/google/callback'
-            // )
-            // console.log(response);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            googleAuthFailure(false);
+            alert(`Google Login Error: ${error}`);
         }
     };
 
     return (
-        <>
-            <Button
-                color='pink'
-                title='구글'
-                onPress={() => {
-                    googleSignIn();
-                }}
+        <TouchableOpacity
+            onPress={() => {
+                googleSignIn();
+            }}
+            style={styles.googleButton}
+        >
+            <Image
+                source={require('../../assets/google.png')}
+                style={styles.googleIcon}
             />
-        </>
+            <Text style={styles.googleTitle}>구글로 로그인하기</Text>
+        </TouchableOpacity>
     );
 };
 
+const styles = StyleSheet.create({
+    googleButton: {
+        width: 250,
+        paddingVertical: 10,
+        backgroundColor: '#F5F6F6',
+        marginVertical: 6,
+        borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    googleIcon: {
+        width: 22,
+        height: 22,
+    },
+    googleTitle: {
+        color: '#565656',
+        fontWeight: 'bold',
+        fontSize: 15,
+        marginLeft: 8,
+    },
+});
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        googleAuthStart: () => dispatch(googleAuthStart(isLoggingIn)),
-        googleAuthSuccess: () =>
-            dispatch(
-                googleAuthSuccess(
-                    isLoggingIn,
-                    userInfo,
-                    authToken,
-                    resourceToken
-                )
-            ),
-        googleAuthFailure: () =>
+        googleAuthStart: (isLoggingIn) =>
+            dispatch(googleAuthStart(isLoggingIn)),
+        googleAuthSuccess: (isLoggingIn, userInfo, resourceToken) =>
+            dispatch(googleAuthSuccess(isLoggingIn, userInfo, resourceToken)),
+        googleAuthFailure: (isLoggingIn, googleAuthError) =>
             dispatch(googleAuthFailure(isLoggingIn, googleAuthError)),
     };
 };
