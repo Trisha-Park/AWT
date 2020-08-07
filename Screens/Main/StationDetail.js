@@ -42,12 +42,17 @@ const StationDetail = ({ route }) => {
     ) : (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <View style={{ paddingRight: 20 }}>
+                <View style={{ paddingRight: 10 }}>
                     <Text style={styles.headerTitle}>
                         {stationData.station}
                     </Text>
                 </View>
-                <Image source={{ uri: weather }} style={styles.weatherIcon} />
+                <View style={styles.weatherContainer}>
+                    <Image
+                        source={{ uri: weather }}
+                        style={styles.weatherIcon}
+                    />
+                </View>
             </View>
             <StationDetailSlider detailInfo={food} title='맛집' />
             <StationDetailSlider detailInfo={tourism} title='관광지' />
@@ -64,14 +69,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     headerContainer: {
-        marginVertical: 30,
+        marginTop: 15,
+        marginBottom: 10,
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     },
     headerTitle: {
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 6,
+    },
+    weatherContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     viewPager: {
         marginHorizontal: 20,
@@ -83,8 +93,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
     },
     weatherIcon: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
     },
 });
 

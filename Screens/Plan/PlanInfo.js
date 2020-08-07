@@ -123,7 +123,7 @@ const PlanInfo = ({
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingTop: 40,
+        paddingTop: 30,
         paddingHorizontal: 30,
     },
     card: {

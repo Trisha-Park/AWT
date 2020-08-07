@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import CheckListContent from './CheckListContent';
 
-// 스탈수정..
 const CheckList = ({ planItem }) => {
     return (
         <View style={styles.card}>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#f1f2f6',
         borderRadius: 5,
-        paddingVertical: 13,
+        paddingVertical: 10,
         paddingHorizontal: 18,
     },
     titles: {
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     items: {
+        marginTop: 50,
         height: 100,
     },
 });

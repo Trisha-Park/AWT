@@ -180,7 +180,7 @@ const Search = ({ navigation, resourceToken }) => {
                             >
                                 <AntDesign
                                     name='star'
-                                    size={20}
+                                    size={28}
                                     color={
                                         toggleFavListStar[idx]
                                             ? '#FFC312'

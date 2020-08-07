@@ -14,14 +14,14 @@ import axios from 'axios';
 import LoadingScreen from '../Loading';
 import { connect } from 'react-redux';
 
-const MyPlans = ({ navigation, userInfo, resourceToken }) => {
+const MyPlans = ({ navigation, resourceToken }) => {
     const [myPlans, setMyPlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const getMyPlans = async () => {
         try {
             setIsLoading(true);
-            const { data } = await axios.get('http://192.168.0.40:5050/plan/', {
+            const { data } = await axios.get('http://192.168.0.40:5050/plan', {
                 headers: {
                     authorization: resourceToken,
                 },
@@ -55,8 +55,7 @@ const MyPlans = ({ navigation, userInfo, resourceToken }) => {
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('MyPlanDetail', {
-                        list: item.list,
-                        id: item._id,
+                        plans: item,
                     });
                 }}
                 style={styles.item}
@@ -104,7 +103,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        userInfo: state.authReducer.userInfo,
         resourceToken: state.authReducer.resourceToken,
     };
 };

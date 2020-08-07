@@ -8,17 +8,19 @@ const CheckListContent = ({ toDo }) => {
     return (
         <View style={styles.checkListContent}>
             <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                onValueChange={() =>
+                checked={toggleCheckBox}
+                onPress={() =>
                     toggleCheckBox
                         ? setToggleCheckBox(false)
                         : setToggleCheckBox(true)
                 }
+                color='#0066FF'
             />
             <Text
                 style={{
+                    marginLeft: 20,
                     fontSize: 17,
+                    marginBottom: 5,
                     color: !toggleCheckBox ? '#222f3e' : '#747d8c',
                     textDecorationLine: !toggleCheckBox
                         ? 'none'

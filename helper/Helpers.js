@@ -51,3 +51,11 @@ export const makeCurrentDate = () => {
               }`
     }`;
 };
+
+export const sliceTitle = (title) => {
+    return title.length <= 25 ? title : `${title.slice(0, 25)}...`;
+};
+
+export const sliceText = (text) => {
+    return text.length <= 80 ? text : `${text.slice(0, 80)}...`;
+};

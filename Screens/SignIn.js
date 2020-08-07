@@ -1,16 +1,34 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 
-import KaKaoButton from '../Component/Auth/KaKaoButton';
 import GoogleButton from '../Component/Auth/GoogleButton';
 import FaceBookButton from '../Component/Auth/FaceBookButton';
 
 const SignIn = () => {
     return (
         <View style={styles.container}>
-            <KaKaoButton />
-            <FaceBookButton />
-            <GoogleButton />
+            <View
+                style={{
+                    flex: 4,
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                }}
+            >
+                <Image
+                    source={require('../assets/logo.png')}
+                    style={{ width: 150, height: 150 }}
+                />
+            </View>
+            <View
+                style={{
+                    flex: 4,
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                }}
+            >
+                <GoogleButton />
+                <FaceBookButton />
+            </View>
         </View>
     );
 };
