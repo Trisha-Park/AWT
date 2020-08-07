@@ -112,7 +112,6 @@ const PlanEdit = ({
         <TouchableOpacity
             onPress={() => {
                 const index = Number(item.day.split('')[4]);
-                // console.log(plans[index - 1][`day0${index}`]['tasks']);
                 navigation.navigate('PlanEditDetail', {
                     day: item.day,
                     date: item.date,

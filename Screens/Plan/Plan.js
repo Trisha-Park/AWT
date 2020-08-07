@@ -10,7 +10,6 @@ dayjs.extend(UCT);
 import CalendarModal from '../../Component/Plan/CalendarModal';
 import { makeCurrentDate } from '../../helper/Helpers';
 
-// 기본값을 3으로 셋팅했음
 const days = [3, 5, 7];
 
 const Plan = ({ navigation }) => {

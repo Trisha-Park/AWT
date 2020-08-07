@@ -40,7 +40,6 @@ const MyPlanDetail = ({
     };
 
     const renderItem = ({ item, index }) => {
-        console.log(item[`day0${index + 1}`]);
         return (
             <View style={styles.dayCard}>
                 <View style={styles.cardHeader}>
@@ -103,16 +102,12 @@ const MyPlanDetail = ({
                             {
                                 text: '삭제',
                                 onPress: () => {
-                                    console.log('삭제');
                                     deletePlan();
                                     navigation.navigate('MyPage');
                                 },
                             },
                             {
                                 text: '취소',
-                                onPress: () => {
-                                    console.log('취소');
-                                },
                             },
                         ]);
                     }}

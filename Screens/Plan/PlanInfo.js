@@ -53,7 +53,6 @@ const PlanInfo = ({
                     withCredentials: true,
                 }
             );
-            console.log(data);
             storePlans(data);
             checkPlan(true);
         } catch (error) {
