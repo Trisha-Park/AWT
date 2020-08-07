@@ -11,10 +11,7 @@ import {
 const initialState = {
     isLoggingIn: false,
     userInfo: {},
-    authToken: null,
     resourceToken: null,
-    googleAuthError: '',
-    fbAuthError: '',
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -30,7 +27,6 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
                 userInfo: action.userInfo,
-                authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
         }
@@ -38,7 +34,6 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                fbAuthError: action.fbAuthError,
             };
         }
         case GOOGLE_AUTH_START: {
@@ -52,7 +47,6 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
                 userInfo: action.userInfo,
-                authToken: action.authToken,
                 resourceToken: action.resourceToken,
             };
         }
@@ -60,14 +54,12 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggingIn: action.isLoggingIn,
-                googleAuthError: action.googleAuthError,
             };
         }
         case SIGN_OUT_SUCCESS: {
             return {
                 ...state,
                 userInfo: {},
-                authToken: null,
                 resourceToken: null,
             };
         }
