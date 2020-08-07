@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
 
 import axios from 'axios';
+import Loading from '../Loading';
 
 const CommunitySearch = ({ route, navigation }) => {
     const [isSearchLoading, setIsSearchLoading] = useState(true);
@@ -37,11 +38,16 @@ const CommunitySearch = ({ route, navigation }) => {
     }, []);
 
     return isSearchLoading ? (
-        <View>
-            <Text>로딩 중</Text>
-        </View>
+        <Loading />
     ) : (
-        <View>
+        <View
+        style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: '#ffffff',
+            flex : 1
+        }}>
+            <ScrollView >
             {searchs.map((search, idx) => (
                 <TouchableOpacity
                     key={idx}
@@ -55,6 +61,7 @@ const CommunitySearch = ({ route, navigation }) => {
                     <Articles article={search} />
                 </TouchableOpacity>
             ))}
+            </ScrollView>
         </View>
     );
 };
