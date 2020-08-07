@@ -14,12 +14,13 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
-    // const [imageObj, setImageObj] = useState({});
+    const [imageObj, setImageObj] = useState({});
     const [image, setImage] = useState();
-    // const [imageName, setImageName] = useState('');
+    const [imageName, setImageName] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
+    //? 갤러리 권한 허용 함수
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
             const { statusios } = await Permissions.askAsync(
@@ -32,6 +33,8 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             );
         }
     };
+
+    //? 이미지 가져오는 함수
     const pickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,29 +59,28 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
 
     const PostArticleButton = async () => {
         try {
-            // const imageURL = new FormData();
-            // imageURL.append('imageURL', {
-            //     uri: imageObj.uri,
-            //     name: imageName,
-            //     type: 'image',
-            //     height: imageObj.height,
-            //     width: imageObj.width,
-            // });
+            const formData = new FormData();
+            formData.append('imageURL', {
+                uri: imageObj.uri,
+                name: imageName,
+                type: 'image/jpg',
+                height: imageObj.height,
+                width: imageObj.width,
+            });
+            formData.append('userId', userInfo.userId);
+            formData.append('name', userInfo.name);
+            formData.append('title', title);
+            formData.append('article', content);
+
+            //console.log(formData);
 
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/community`,
-                {
-                    //imageURL: imageURL,
-                    userId: userInfo.userId,
-                    name: 'trisha',
-                    title,
-                    article: content,
-                },
+                formData,
                 {
                     headers: {
                         authorization: resourceToken,
-                        // 'content-type':
-                        //     'multipart/form-data; boundary=<calculated when request is sent>',
+                        'content-type': 'multipart/form-data',
                     },
                     withCredentials: true,
                 }
