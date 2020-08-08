@@ -41,16 +41,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#f1f2f6',
         borderRadius: 5,
-        paddingVertical: 10,
-        paddingHorizontal: 18,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        opacity: 0.9,
     },
     titles: {
         flexDirection: 'column',
         alignItems: 'flex-start',
     },
     items: {
-        marginTop: 50,
-        height: 100,
+        marginTop: 55,
+        height: 130,
         width: '100%',
     },
 });

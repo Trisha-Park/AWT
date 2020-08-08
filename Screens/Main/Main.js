@@ -108,11 +108,12 @@ const Main = ({ navigation, plan }) => {
                     }}
                     style={styles.searchButton}
                 >
+                    <Text style={styles.searchText}>기차역 검색</Text>
                     <EvilIcons name='search' size={28} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.plans}>
-                <ViewPager style={styles.viewPager}>
+                <ViewPager style={styles.viewPager} pageMargin={10}>
                     {isPlanLoading ? (
                         <View>
                             <Text>로딩중</Text>
@@ -139,19 +140,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: 'white',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         paddingHorizontal: 15,
+        backgroundColor: '#fff',
     },
     searchBar: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'white',
         alignSelf: 'stretch',
         paddingHorizontal: 15,
-        paddingTop: 10,
+        marginVertical: 20,
     },
     logoTitle: {
         fontSize: 20,
@@ -159,28 +159,37 @@ const styles = StyleSheet.create({
     },
     searchButton: {
         backgroundColor: '#f1f2f6',
-        paddingLeft: 60,
+        paddingLeft: 20,
         paddingRight: 6,
         paddingVertical: 6,
         borderRadius: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    searchText: {
+        fontWeight: 'bold',
+        marginRight: 10,
     },
     plans: {
-        flex: 4,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
+        height: '35%',
+        marginBottom: 20,
     },
     regions: {
-        flex: 2,
-        paddingHorizontal: 15,
+        width: '90%',
+        height: '18%',
+        marginBottom: 10,
     },
     courses: {
-        flex: 3,
-        paddingHorizontal: 15,
+        width: '90%',
+        height: '32%',
     },
     viewPager: {
-        flex: 0.8,
-        alignSelf: 'stretch',
-        marginHorizontal: 10,
+        flex: 0.9,
+        width: '90%',
+        opacity: 0.9,
     },
 });
 

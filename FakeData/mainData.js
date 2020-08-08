@@ -74,8 +74,8 @@ export const plansData = {
 export const noPlanDummy = [
     {
         day: null,
-        region: '기차여행을 시작하세요',
-        toDos: ['계획을 설정해 보세요!'],
+        region: '기차여행을 시작하세요!',
+        toDos: ['카드를 옆으로 넘겨 계획을 설정해 보세요!'],
     },
 ];
 
