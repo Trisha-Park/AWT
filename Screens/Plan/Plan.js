@@ -48,7 +48,7 @@ const Plan = ({ navigation }) => {
         <View style={styles.container}>
             <View style={{ marginHorizontal: 15 }}>
                 <View style={styles.startContainer}>
-                    <Text style={styles.title}>내일로 시작하기</Text>
+                    <Text style={styles.title}>기차여행 시작하기</Text>
                     <View style={styles.startButtonContainer}>
                         {days.map((day, idx) => (
                             <TouchableOpacity
