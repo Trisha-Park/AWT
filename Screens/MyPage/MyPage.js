@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ToastAndroid, Alert } from 'react-native';
+import { StyleSheet, Text, View, ToastAndroid, Alert, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
 
@@ -20,38 +20,38 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
             </View>
             <View style={styles.allView}>
                 <View style={{ marginBottom: 20 }}>
-                    <View
+                    <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
                             navigation.navigate('MyPlans');
                         }}
                     >
                         <Text style={styles.fontInView}>내 계획</Text>
-                    </View>
-                    <View
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
                             navigation.navigate('MyArticle');
                         }}
                     >
                         <Text style={styles.fontInView}>내가 쓴 게시글</Text>
-                    </View>
-                    <View
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
                             navigation.navigate('MyScrap');
                         }}
                     >
                         <Text style={styles.fontInView}>스크랩한 게시글</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ marginBottom: 20 }}>
-                    <View style={styles.item}>
+                    <TouchableOpacity style={styles.item}>
                         <Text style={styles.fontInView}>공지사항</Text>
-                    </View>
-                    <View style={styles.item}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
                         <Text style={styles.fontInView}>커뮤니티 규칙</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.item}>
                         <Text style={styles.fontInView}>FAQ</Text>
                     </View>
@@ -60,7 +60,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                     <View style={styles.item}>
                         <Text style={styles.fontInView}>설정</Text>
                     </View>
-                    <View
+                    <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
                             Alert.alert(
@@ -93,7 +93,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                         }}
                     >
                         <Text style={styles.fontInView}>로그아웃</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
