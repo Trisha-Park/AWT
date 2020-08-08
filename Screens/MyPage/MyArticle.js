@@ -39,8 +39,7 @@ const MyArticle = ({ navigation, resourceToken, userInfo }) => {
     useEffect(() => {
         try {
             if (isFocused) {
-                getPostView();
-                getCommentView();
+                getMyArticle();
             }
         } catch (error) {
             console.log(error);
