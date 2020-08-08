@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
@@ -7,6 +8,8 @@ import Loading from '../Loading';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
+
+
 
 const MyArticle = ({ navigation, resourceToken, userInfo }) => {
     const [isMyArticleLoading, setIsMyArticleLoading] = useState(false);
@@ -32,6 +35,18 @@ const MyArticle = ({ navigation, resourceToken, userInfo }) => {
     useEffect(() => {
         getMyArticle();
     }, []);
+
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getPostView();
+                getCommentView();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
 
     return isMyArticleLoading ? (
         <Loading />
