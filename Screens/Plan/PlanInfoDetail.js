@@ -53,7 +53,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
-            <ViewPager style={styles.slider}>
+            <ViewPager style={styles.slider} pageMargin={10}>
                 {regions.map((regionInfo, idx) => (
                     <PlanRegionCard
                         key={idx}
@@ -104,8 +104,9 @@ const PlanInfoDetail = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         alignItems: 'center',
+        padding: 10,
     },
     slider: {
         flex: 0.95,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     },
     card: {
         flex: 0.95,
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
     },

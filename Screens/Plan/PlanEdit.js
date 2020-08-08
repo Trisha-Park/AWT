@@ -152,7 +152,7 @@ const PlanEdit = ({
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingTop: 40,
+        paddingTop: 60,
         paddingHorizontal: 30,
     },
     card: {
