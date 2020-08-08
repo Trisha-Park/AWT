@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
-
-import axios from 'axios';
 import Loading from '../Loading';
 
-const CommunitySearch = ({ route, navigation }) => {
+import axios from 'axios';
+import { connect } from 'react-redux';
+
+const CommunitySearch = ({ route, navigation, resourceToken }) => {
     const [isSearchLoading, setIsSearchLoading] = useState(true);
     const [searchs, setSearch] = useState([]);
 
@@ -14,7 +15,11 @@ const CommunitySearch = ({ route, navigation }) => {
         try {
             setIsSearchLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/search?content=${route.params.searchValue}`
+                `http://192.168.0.5:5050/community/search?content=${route.params.searchValue}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             const articleSearchDatas = data.map((articleSearchData) => {
                 return {
@@ -66,4 +71,11 @@ const CommunitySearch = ({ route, navigation }) => {
     );
 };
 
-export default CommunitySearch;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(CommunitySearch);
