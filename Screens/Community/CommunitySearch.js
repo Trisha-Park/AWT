@@ -44,8 +44,8 @@ const CommunitySearch = ({ route, navigation }) => {
         style={{
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#ffffff',
-            flex : 1
+            flex : 1,
+            marginTop : 5
         }}>
             <ScrollView >
             {searchs.map((search, idx) => (
