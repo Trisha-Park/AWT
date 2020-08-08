@@ -1,88 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Card } from 'native-base';
+import { useIsFocused } from '@react-navigation/native';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
+import Loading from '../Loading';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const MyScrap = ({ navigation, userInfo }) => {
+const MyScrap = ({ navigation }) => {
     const [isMyScrapLoading, setIsMyScrapLoading] = useState(false);
     const [myScraps, setMyScraps] = useState([]);
-    console.log('마이스크랩 진입 완료')
 
     const getMyScrap = async () => {
         try {
             setIsMyScrapLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/user/scrap/${userInfo.userId}`
+                `http://192.168.0.5:5050/user/scrap`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             setMyScraps([...data.scrapPosts]);
-            // console.log(data);
-            // console.log('=========================');
-            // console.log(data.scrapPosts);
             setIsMyScrapLoading(false);
         } catch (error) {
             console.log(error);
         }
     };
-    //console.log(myScraps);
+
     useEffect(() => {
         getMyScrap();
     }, []);
 
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getMyScrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
+
     return isMyScrapLoading ? (
         <View>
-            <Text>로딩중</Text>
+            <Loading />
         </View>
     ) : (
-        <View>
-            <View style={styles.myArticle}>
-                <Card style={styles.card}>
-                    <Text>스크랩한 게시글</Text>
-                </Card>
-            </View>
-            {myScraps.map((myScrap, idx) => (
-                <TouchableOpacity
-                    key={idx}
-                    style={styles.article}
-                    onPress={() => {
-                        navigation.navigate('MyScrapDetail', {
-                            id: myScrap._id,
-                        });
-                        //console.log(myScrap);
-                    }}
-                >
-                    <Articles article={myScrap} />
-                </TouchableOpacity>
-            ))}
+        <View
+            style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: '#F1F2F6',
+                flex: 1,
+                paddingTop: 5,
+            }}
+        >
+            <ScrollView>
+                {myScraps.map((myScrap, idx) => (
+                    <TouchableOpacity
+                        key={idx}
+                        onPress={() => {
+                            navigation.navigate('MyScrapDetail', {
+                                id: myScrap._id,
+                            });
+                        }}
+                    >
+                        <Articles article={myScrap} />
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
         </View>
     );
 };
 const styles = StyleSheet.create({
-    myArticle: {
-        position: 'relative',
-        marginTop: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    card: {
-        position: 'relative',
-        height: 80,
-        width: 150,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'yellowgreen',
-    },
-    article: {
-        position: 'relative',
-        marginTop: 10,
-    },
+
 });
 const mapStateToProps = (state) => {
     return {
-        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
     };
 };
 export default connect(mapStateToProps)(MyScrap);
