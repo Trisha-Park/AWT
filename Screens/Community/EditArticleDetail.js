@@ -10,6 +10,7 @@ import {
 
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Textarea } from 'native-base';
 
 const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const [articleDetailForEdit, setArticleDetailForEdit] = useState({
@@ -44,7 +45,7 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     withCredentials: true,
                 }
             );
-            console.log(data);
+            //console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -71,7 +72,7 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                 </View>
                 <View>
                     <View style={styles.text}>
-                        <TextInput
+                        <Textarea
                             value={contentEdit}
                             style={{
                                 width: 390,
@@ -85,7 +86,7 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             onChangeText={(text) => {
                                 setContentEdit(text);
                             }}
-                        ></TextInput>
+                        ></Textarea>
                     </View>
                 </View>
                 <View style={{alignItems : "center"}}>
