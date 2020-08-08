@@ -7,7 +7,6 @@ import {
     Text,
     View,
 } from 'react-native';
-import { Card, CardItem } from 'native-base';
 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -30,7 +29,12 @@ const PlanRegionCard = ({
     return (
         <View style={styles.card}>
             <TouchableOpacity
-                style={{ alignItems: 'flex-end', margin: 10 }}
+                style={{
+                    alignItems: 'flex-end',
+                    marginTop: 10,
+                    marginRight: 10,
+                    marginBottom: 30,
+                }}
                 disabled={true}
                 onPress={() => {
                     deleteRegionCard(index);
@@ -61,7 +65,7 @@ const PlanRegionCard = ({
                                 }}
                             >
                                 {regionValue === ''
-                                    ? '클릭해서 여행지를 편집해보세요!'
+                                    ? '터치해서 여행지를 편집해보세요!'
                                     : regionValue}
                             </Text>
                         </TouchableOpacity>
@@ -182,7 +186,11 @@ const PlanRegionCard = ({
                             ]);
                         }}
                     >
-                        <AntDesign name='pluscircleo' size={24} color='black' />
+                        <AntDesign
+                            name='pluscircleo'
+                            size={24}
+                            color='#0066FF'
+                        />
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -192,7 +200,7 @@ const PlanRegionCard = ({
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
     },
     cardScroll: {
         alignSelf: 'stretch',
@@ -214,8 +222,8 @@ const styles = StyleSheet.create({
     },
     regionText: {
         backgroundColor: '#fff',
-        width: 200,
-        height: 40,
+        width: 300,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 3,
@@ -226,8 +234,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#EBECF0',
         backgroundColor: '#fff',
-        width: 200,
-        height: 40,
+        width: 300,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'space-between',
         borderRadius: 3,
@@ -240,7 +248,7 @@ const styles = StyleSheet.create({
     },
     toDoInput: {
         height: 35,
-        width: 180,
+        width: 250,
         fontSize: 15,
         borderBottomColor: '#2c2c2c',
         borderBottomWidth: 1,

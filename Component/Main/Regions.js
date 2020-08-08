@@ -5,7 +5,7 @@ const Regions = ({ stations, navigation }) => {
     return (
         <>
             <Text
-                style={{ fontSize: 18, fontWeight: 'bold', color: '#222f3e' }}
+                style={{ fontSize: 20, fontWeight: 'bold', color: '#222f3e' }}
             >
                 추천 지역
             </Text>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 60,
         height: 60,
-        borderRadius: 30,
+        borderRadius: 10,
     },
 });
 
