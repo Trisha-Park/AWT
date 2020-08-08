@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const CourseCard = ({ course, navigation }) => {
     const { list, num } = course;
     return (
-        <TouchableOpacity
+        <View
             style={styles.cardContainer}
             onPress={() => {
                 navigation.navigate('CourseDetail', {
@@ -12,28 +12,35 @@ const CourseCard = ({ course, navigation }) => {
                 });
             }}
         >
-            <View style={styles.card}>
+            <TouchableOpacity style={styles.card}>
                 {list.map((tag, idx) => (
-                    <Text key={idx}>{tag} </Text>
+                    <Text key={idx} style={styles.tag}>
+                        {`${tag} `}
+                    </Text>
                 ))}
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     cardContainer: {
-        flex: 1,
         backgroundColor: '#f1f2f6',
         borderRadius: 5,
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
     },
     card: {
-        paddingTop: 45,
+        textAlign: 'center',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: '18%',
+    },
+    tag: {
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
