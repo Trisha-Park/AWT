@@ -1,51 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import {
     StyleSheet,
     Text,
     View,
     TouchableOpacity,
-    TextInput,
-    Alert
+    ScrollView,
 } from 'react-native';
-import { CardItem, Card } from 'native-base';
+import { Textarea } from 'native-base';
+
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import Comments from '../../Component/Community/Comments';
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
-const MyScrapDetail = ({ route, navigation, userInfo }) => {
+import Comments from '../../Component/Community/Comments';
+import Loading from '../Loading';
+
+const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const [isScrapDetailLoading, setIsScrapDetailLoading] = useState(false);
     const [scrapDetail, setScrapDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
-
-    console.log('마이 스크랩 디테일 진입');
-
-    //console.log(route);
-    //console.log('====================');
+    const [isUser, setIsUser] = useState(false);
 
     const getPostView = async () => {
         try {
             setIsScrapDetailLoading(false);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/${route.params.id}`
-                );
-            setScrapDetail({...data[0]});
-            //console.log(data);
+                `http://192.168.0.5:5050/community/${route.params.id}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
+            setScrapDetail({ ...data[0] });
+            setIsUser(data[0].userId === userInfo.userId ? true : false);
             setIsScrapDetailLoading(true);
         } catch (error) {
             console.log(error);
         }
     };
-    //console.log('스크랩 티데일')
-    //console.log(scrapDetail.article);
 
     const getCommentView = async () => {
         try {
             setIsScrapDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/comment/${route.params.id}`
+                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             setComment([...data]);
             setIsScrapDetailLoading(false);
@@ -63,6 +70,10 @@ const MyScrapDetail = ({ route, navigation, userInfo }) => {
                     name: 'trisha',
                     comment: commentValue,
                     secret: false,
+                },
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
                 }
             );
         } catch (error) {
@@ -73,7 +84,11 @@ const MyScrapDetail = ({ route, navigation, userInfo }) => {
     const communityDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/community/${route.params.id}/${userInfo.userId}`
+                `http://192.168.0.5:5050/community/${route.params.id}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
         } catch (error) {
             console.log(error);
@@ -83,7 +98,12 @@ const MyScrapDetail = ({ route, navigation, userInfo }) => {
     const scrapArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/user/scrap/${userInfo.userId}/${route.params.id}`
+                `http://192.168.0.5:5050/user/scrap`,
+                {},
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
         } catch (error) {
             console.log(error);
@@ -95,140 +115,246 @@ const MyScrapDetail = ({ route, navigation, userInfo }) => {
         getCommentView();
     }, []);
 
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getPostView();
+                getCommentView();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
+
     return isScrapDetailLoading ? (
-        <View ><Text>로딩 중</Text></View>
+        <Loading />
     ) : (
-        <View>
-            <Card style={styles.card}>
-                <CardItem style={styles.cardItem}>
-                    <Text>{scrapDetail.title}</Text>
-                    <CardItem style={styles.cardVisit}>
-                        <Text>{scrapDetail.view}</Text>
-                    </CardItem>
-                </CardItem>
-                <CardItem style={styles.cardAuthor}>
-                    <Text>{scrapDetail.name}</Text>
-                </CardItem>
-                <CardItem style={styles.cardItem}>
-                    <Text>{scrapDetail.article}</Text>
-                </CardItem>
-            </Card>
-            <View>
-                <TouchableOpacity onPress={() => {
-                    scrapArticle();
-                }}>
-                    <Text>스크랩하기</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        Alert.alert(
-                            '게시물을 삭제합니다.',
-                            '삭제한 게시물은 되돌릴 수 없습니다.',
-                            [
-                                {
-                                    text: '삭제',
-                                    onPress: () => {
-                                        console.log('Article Delete Success');
-                                        communityDelete();
-                                        navigation.navigate('Community');
-                                    },
-                                },
-                                {
-                                    text: '취소',
-                                    onPress: () => {
-                                        console.log('Delete Cancle');
-                                    },
-                                },
-                            ]
-                        );
+        <View
+            style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+            }}
+        >
+            <ScrollView
+                style={{
+                    width: '95%',
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: '#ffffff',
+                        justifyContent: 'center',
                     }}
                 >
-                    <Text>삭제하기</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                {comments.map((comment, idx) => (
-                    <TouchableOpacity key={idx}>
-                        <Comments
-                            comments={comment}
-                            route={route}
-                            navigation={navigation}
-                        />
+                    <View
+                        style={{
+                            backgroundColor: '#ffffff',
+                            paddingVertical: 10,
+                        }}
+                    >
+                        <View style={{ paddingLeft: 5 }}>
+                            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
+                                {scrapDetail.title}
+                            </Text>
+                        </View>
+                        <View
+                            style={{ alignSelf: 'flex-end', paddingRight: 10 }}
+                        >
+                            <Text>{scrapDetail.view}</Text>
+                        </View>
+                    </View>
+                    <View>
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                                marginBottom: 10,
+                            }}
+                        >
+                            <View>
+                                {articleDetail.imageURL && (
+                                    <Image
+                                        source={{ uri: articleDetail.imageURL }}
+                                        style={{
+                                            width: 380,
+                                            height: 380,
+                                            borderRadius: 20,
+                                        }}
+                                    />
+                                )}
+                            </View>
+                            <View
+                                style={{ marginTop: 5, alignItems: 'stretch' }}
+                            >
+                                <View
+                                    style={{
+                                        height: 34,
+                                        width: 380,
+                                        borderBottomWidth: 0.2,
+                                        borderBottomColor: '#DFE4EA',
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 24,
+                                            fontWeight: 'bold',
+                                            paddingLeft: 5,
+                                        }}
+                                    >
+                                        {scrapDetail.name}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            marginTop: 10,
+                                            paddingLeft: 5,
+                                        }}
+                                    >
+                                        {scrapDetail.article}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: '#ffffff',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                    }}
+                >
+                    {isUser ? (
+                        <>
+                            <TouchableOpacity
+                                stytle={{}}
+                                onPress={() => {
+                                    navigation.navigate('EditArticleDetail', {
+                                        articleDetail,
+                                    });
+                                }}
+                            >
+                                <Feather name='edit' size={34} color='blue' />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    Alert.alert(
+                                        '게시물을 삭제합니다.',
+                                        '삭제한 게시물은 되돌릴 수 없습니다.',
+                                        [
+                                            {
+                                                text: '삭제',
+                                                onPress: () => {
+                                                    console.log(
+                                                        'Article Delete Success'
+                                                    );
+                                                    communityDelete();
+                                                    navigation.navigate(
+                                                        'Community'
+                                                    );
+                                                },
+                                            },
+                                            {
+                                                text: '취소',
+                                                onPress: () => {
+                                                    console.log(
+                                                        'Delete Cancle'
+                                                    );
+                                                },
+                                            },
+                                        ]
+                                    );
+                                }}
+                            >
+                                <AntDesign
+                                    name='delete'
+                                    size={34}
+                                    color='black'
+                                />
+                            </TouchableOpacity>
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                    <TouchableOpacity
+                        style={{
+                            alignSelf: 'flex-end',
+                            paddingRight: 5,
+                        }}
+                        onPress={() => {
+                            scrapArticle();
+                        }}
+                    >
+                        <AntDesign name='star' size={34} color='#FFC312' />
                     </TouchableOpacity>
-                ))}
-            </View>
-            <View></View>
-            <View style={styles.input}>
-                <TextInput
-                    style={styles.inputText}
+                </View>
+                <View>
+                    <View>
+                        {comments.map((comment, idx) => (
+                            <View key={idx}>
+                                <Comments
+                                    comments={comment}
+                                    route={route}
+                                    navigation={navigation}
+                                    //isCommentUser={isCommentUser}
+                                />
+                            </View>
+                        ))}
+                    </View>
+                </View>
+            </ScrollView>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    padding: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#ffffff',
+                    height: 70,
+                }}
+            >
+                <Textarea
+                    style={{
+                        backgroundColor: '#F1F2F6',
+                        width: 340,
+                        height: 50,
+                        borderRadius: 20,
+                        marginRight: 10,
+                        padding: 15,
+                    }}
                     value={commentValue}
                     onChangeText={(text) => {
                         setCommentValue(text);
                     }}
-                ></TextInput>
+                ></Textarea>
                 <TouchableOpacity
-                    sytle={styles.button}
                     onPress={() => {
-                        commentCreate();
                         getCommentView();
+                        commentCreate();
                     }}
                 >
-                    <Text> 댓글쓰기</Text>
+                    <MaterialCommunityIcons
+                        name='comment-arrow-left-outline'
+                        size={34}
+                        color='black'
+                    />
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    card: {
-        position: 'relative',
-        marginTop: 30,
-        width: 395,
-        height: 300,
-    },
-    cardItem: {
-        height: 40,
-        position: 'relative',
-    },
-    cardVisit: {
-        height: 40,
-        position: 'relative',
-        marginLeft: 155,
-    },
-    cardAuthor: {
-        position: 'relative',
-        marginTop: -10,
-        marginLeft: 2,
-    },
-
-    input: {
-        position: 'relative',
-        flexDirection: 'row',
-        top: 280,
-        height: 60,
-        alignSelf: 'stretch',
-        backgroundColor: 'lavender',
-        padding: 10,
-    },
-    inputText: {
-        width: 340,
-        height: 40,
-        backgroundColor: 'lavender',
-    },
-    button: {
-        position: 'relative',
-        backgroundColor: 'lightgray',
-        justifyContent: 'center',
-        alignContent: 'center',
-        padding: 8,
-        borderRadius: 5,
-    },
-});
+const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
     return {
         userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
     };
 };
 
