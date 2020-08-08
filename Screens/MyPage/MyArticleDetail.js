@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import {
     StyleSheet,
     Text,
@@ -18,7 +19,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Comments from '../../Component/Community/Comments';
 import Loading from '../Loading';
 
-// TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
 const MyArticleDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
     const [articleDetail, setArticleDetail] = useState({});
@@ -89,6 +89,18 @@ const MyArticleDetail = ({ route, navigation, resourceToken, userInfo }) => {
         getPostView();
         getCommentView();
     }, []);
+
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getPostView();
+                getCommentView();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
 
     return isArticleDetailLoading ? (
         <Loading />
