@@ -308,7 +308,6 @@ const MyArticleDetail = ({ route, navigation, resourceToken, userInfo }) => {
                 }}
             ></Textarea>
             <TouchableOpacity
-                sytle={styles.button}
                 onPress={() => {
                     getCommentView();
                     commentCreate();
@@ -326,36 +325,7 @@ const MyArticleDetail = ({ route, navigation, resourceToken, userInfo }) => {
 };
 
 const styles = StyleSheet.create({
-ViewVisit: {
-    backgroundColor: 'pink',
-    height: 40,
-    marginLeft: 155,
-},
-ViewAuthor: {
-    marginTop: -10,
-    marginLeft: 2,
-},
 
-input: {
-    flexDirection: 'row',
-    top: 280,
-    height: 60,
-    alignSelf: 'stretch',
-    backgroundColor: 'lavender',
-    padding: 10,
-},
-inputText: {
-    width: 340,
-    height: 40,
-    backgroundColor: 'lavender',
-},
-button: {
-    backgroundColor: 'lightgray',
-    justifyContent: 'center',
-    alignContent: 'center',
-    padding: 8,
-    borderRadius: 5,
-},
 });
 
 const mapStateToProps = (state) => {
