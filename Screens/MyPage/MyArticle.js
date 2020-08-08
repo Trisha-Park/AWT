@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
-import { userArticles } from '../../FakeData/userData';
 import Loading from '../Loading';
 
 import axios from 'axios';
@@ -13,7 +12,7 @@ import { connect } from 'react-redux';
 
 const MyArticle = ({ navigation, resourceToken, userInfo }) => {
     const [isMyArticleLoading, setIsMyArticleLoading] = useState(false);
-    const [myArticles, setMyArticles] = useState([...userArticles]);
+    const [myArticles, setMyArticles] = useState([]);
 
     const getMyArticle = async () => {
         try {
