@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     headerContainer: {
-        marginTop: 15,
-        marginBottom: 10,
+        marginTop: 20,
+        marginBottom: 15,
         flexDirection: 'row',
         alignItems: 'center',
     },

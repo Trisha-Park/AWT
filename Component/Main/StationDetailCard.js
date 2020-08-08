@@ -20,10 +20,10 @@ const StationDetailCard = ({ data }) => {
                     <View style={styles.cardHeader}>
                         <Text style={styles.title}>{sliceTitle(title)}</Text>
                         <View style={styles.headerInfo}>
-                            <Text style={{ ...styles.infos, fontSize: 12 }}>
+                            <Text style={{ ...styles.infos, fontSize: 14 }}>
                                 {blogName}
                             </Text>
-                            <Text style={{ ...styles.infos, fontSize: 10 }}>
+                            <Text style={{ ...styles.infos, fontSize: 12 }}>
                                 {date}
                             </Text>
                         </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#f1f2f6',
         borderRadius: 8,
-        padding: 8,
+        padding: 15,
     },
     top: {
         flexDirection: 'row',
@@ -60,16 +60,17 @@ const styles = StyleSheet.create({
     headerInfo: {
         flexDirection: 'column',
         justifyContent: 'space-between',
+        marginBottom: 12,
     },
     image: {
-        width: 45,
-        height: 45,
+        width: 60,
+        height: 60,
         resizeMode: 'cover',
         borderRadius: 5,
         marginRight: 15,
     },
     title: {
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 3,
     },
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
         color: '#747d8c',
     },
     description: {
-        fontSize: 11,
+        fontSize: 12,
         color: '#747d8c',
     },
 });
