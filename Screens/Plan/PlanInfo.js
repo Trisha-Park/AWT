@@ -88,7 +88,7 @@ const PlanInfo = ({
                 style={{
                     ...styles.saveBtn,
                     backgroundColor:
-                        plans.indexOf('') !== -1 ? '#f1f2f6' : '#0066FF',
+                        plans.indexOf('') !== -1 ? '#fff' : '#0066FF',
                 }}
                 disabled={plans.indexOf('') !== -1 ? true : false}
                 onPress={() => {
@@ -121,12 +121,13 @@ const PlanInfo = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         paddingTop: 30,
         paddingHorizontal: 30,
+        marginBottom: 10,
     },
     card: {
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
@@ -139,6 +140,9 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10,
+        borderRadius: 20,
+        marginHorizontal: 20,
     },
     btnTitle: {
         fontWeight: 'bold',

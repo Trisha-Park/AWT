@@ -46,68 +46,62 @@ const Plan = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{ marginHorizontal: 15 }}>
-                <View style={styles.startContainer}>
-                    <Text style={styles.title}>기차여행 시작하기</Text>
-                    <View style={styles.startButtonContainer}>
-                        {days.map((day, idx) => (
-                            <TouchableOpacity
-                                key={idx}
-                                style={{
-                                    ...styles.startButton,
-                                    backgroundColor:
-                                        day === selectedDay
-                                            ? '#0066FF'
-                                            : '#f1f2f6',
-                                }}
-                                onPress={() => {
-                                    setSelectedDay(day);
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        ...styles.buttonText,
-                                        color:
-                                            day === selectedDay
-                                                ? '#fff'
-                                                : '#000',
-                                    }}
-                                >
-                                    {day}일
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
-                <View style={styles.dayContainer}>
-                    <Text style={styles.title}>출발 날짜</Text>
-                    <View
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
+            <View style={styles.startContainer}>
+                <Text style={styles.title}>기차여행 시작하기</Text>
+                <View style={styles.startButtonContainer}>
+                    {days.map((day, idx) => (
                         <TouchableOpacity
-                            style={styles.dateContainer}
+                            key={idx}
+                            style={{
+                                ...styles.startButton,
+                                backgroundColor:
+                                    day === selectedDay ? '#0066FF' : '#fff',
+                            }}
                             onPress={() => {
-                                setModalVisible(true);
+                                setSelectedDay(day);
                             }}
                         >
-                            <Text style={styles.date}>{startDate}</Text>
+                            <Text
+                                style={{
+                                    ...styles.buttonText,
+                                    color:
+                                        day === selectedDay ? '#fff' : '#000',
+                                }}
+                            >
+                                {day}일
+                            </Text>
                         </TouchableOpacity>
-                        <CalendarModal
-                            modalVisible={modalVisible}
-                            closeModal={closeModal}
-                            startDate={startDate}
-                            setDates={setDates}
-                        />
-                    </View>
+                    ))}
                 </View>
-                <View style={styles.dayContainer}>
-                    <Text style={styles.title}>도착 날짜</Text>
-                    <View style={styles.dateContainer}>
-                        <Text style={styles.date}>{endDate}</Text>
-                    </View>
+            </View>
+            <View style={styles.dayContainer}>
+                <Text style={styles.title}>출발 날짜</Text>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <TouchableOpacity
+                        style={styles.dateContainer}
+                        onPress={() => {
+                            setModalVisible(true);
+                        }}
+                    >
+                        <Text style={styles.date}>{startDate}</Text>
+                    </TouchableOpacity>
+                    <CalendarModal
+                        modalVisible={modalVisible}
+                        closeModal={closeModal}
+                        startDate={startDate}
+                        setDates={setDates}
+                    />
+                </View>
+            </View>
+            <View style={styles.dayContainer}>
+                <Text style={styles.title}>도착 날짜</Text>
+                <View style={styles.dateContainer}>
+                    <Text style={styles.date}>{endDate}</Text>
                 </View>
             </View>
             <TouchableOpacity
@@ -119,8 +113,7 @@ const Plan = ({ navigation }) => {
                 disabled={startDate === endDate ? true : false}
                 style={{
                     ...styles.passButton,
-                    backgroundColor:
-                        startDate === endDate ? '#f1f2f6' : '#0066FF',
+                    backgroundColor: startDate === endDate ? '#fff' : '#0066FF',
                 }}
             >
                 <Text
@@ -140,8 +133,9 @@ const Plan = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         paddingTop: 20,
+        marginHorizontal: 20,
     },
     startContainer: {
         alignSelf: 'stretch',
@@ -178,10 +172,10 @@ const styles = StyleSheet.create({
     dateContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         height: 50,
         alignSelf: 'stretch',
-        marginHorizontal: 20,
+        marginHorizontal: 15,
         borderRadius: 10,
     },
     date: {
@@ -194,7 +188,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        bottom: 0,
+        bottom: 10,
+        borderRadius: 20,
     },
 });
 

@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
     },
     saveBtn: {
         position: 'absolute',
-        bottom: 0,
+        bottom: 15,
         backgroundColor: '#0066FF',
-        width: '100%',
+        paddingHorizontal: 180,
         height: 50,
-        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: 20,
     },
     btnTitle: {
         fontWeight: 'bold',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     card: {
         flex: 0.95,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         justifyContent: 'center',
         alignItems: 'center',
     },

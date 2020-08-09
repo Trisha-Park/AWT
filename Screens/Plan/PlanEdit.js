@@ -151,12 +151,12 @@ const PlanEdit = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         paddingTop: 60,
         paddingHorizontal: 30,
     },
     card: {
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
@@ -171,6 +171,9 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10,
+        borderRadius: 20,
+        marginHorizontal: 20,
     },
     btnTitle: {
         fontWeight: 'bold',
