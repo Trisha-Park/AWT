@@ -4,15 +4,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const CourseCard = ({ course, navigation }) => {
     const { list, num } = course;
     return (
-        <View
-            style={styles.cardContainer}
-            onPress={() => {
-                navigation.navigate('CourseDetail', {
-                    num,
-                });
-            }}
-        >
-            <TouchableOpacity style={styles.card}>
+        <View style={styles.cardContainer}>
+            <TouchableOpacity
+                style={styles.card}
+                onPress={() => {
+                    navigation.navigate('코스 정보', {
+                        num,
+                    });
+                }}
+            >
                 {list.map((tag, idx) => (
                     <Text key={idx} style={styles.tag}>
                         {`${tag} `}

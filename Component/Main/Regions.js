@@ -15,7 +15,7 @@ const Regions = ({ stations, navigation }) => {
                         key={idx}
                         style={styles.card}
                         onPress={() => {
-                            navigation.navigate('StationDetail', {
+                            navigation.navigate('역 정보', {
                                 region: station.region,
                                 id: station.id,
                             });

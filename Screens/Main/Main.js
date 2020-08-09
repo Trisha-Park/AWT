@@ -104,7 +104,7 @@ const Main = ({ navigation, plan }) => {
                 <Text style={styles.logoTitle}>A WEEK TRIP</Text>
                 <TouchableOpacity
                     onPress={() => {
-                        navigation.navigate('Search');
+                        navigation.navigate('검색');
                     }}
                     style={styles.searchButton}
                 >

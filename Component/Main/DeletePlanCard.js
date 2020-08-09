@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { checkPlan, deletePlans } from '../../Actions/planActions';
 
@@ -34,7 +35,7 @@ const DeletePlanCard = ({
                         },
                     ]);
                 } else {
-                    navigation.navigate('Plan');
+                    navigation.navigate('계획');
                 }
             }}
         >
