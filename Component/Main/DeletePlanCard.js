@@ -47,19 +47,16 @@ const DeletePlanCard = ({
 
 const styles = StyleSheet.create({
     card: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: '28%',
         backgroundColor: '#f1f2f6',
         borderRadius: 5,
-        paddingVertical: 75,
-        paddingHorizontal: 18,
+        opacity: 0.9,
     },
     text: {
-        fontSize: 17,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#747D8C',
-        marginTop: 7,
+        alignSelf: 'center',
     },
 });
 

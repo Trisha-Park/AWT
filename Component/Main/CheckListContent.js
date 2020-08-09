@@ -36,9 +36,9 @@ const CheckListContent = ({ toDo }) => {
 const styles = StyleSheet.create({
     checkListContent: {
         flexDirection: 'row',
-        backgroundColor: '#f1f2f6',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        opacity: 0.9,
     },
 });
 

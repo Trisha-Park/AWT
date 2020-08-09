@@ -8,7 +8,7 @@ const StationDetailSlider = ({ detailInfo, title }) => {
     return (
         <View style={styles.cardsContainer}>
             <Text style={styles.title}>{title}</Text>
-            <ViewPager style={styles.viewPager}>
+            <ViewPager style={styles.viewPager} pageMargin={10}>
                 {detailInfo.map((info, idx) => (
                     <StationDetailCard key={idx} data={info} />
                 ))}
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
     },
     title: {
-        fontSize: 21,
+        fontSize: 23,
         fontWeight: 'bold',
         marginBottom: 10,
     },

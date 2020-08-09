@@ -8,7 +8,7 @@ const Courses = ({ courses, navigation }) => {
     return (
         <>
             <Text style={styles.title}>추천 코스</Text>
-            <ViewPager style={styles.viewPager}>
+            <ViewPager style={styles.viewPager} pageMargin={10}>
                 {courses.map((course) => (
                     <CourseCard
                         course={course}
@@ -23,15 +23,14 @@ const Courses = ({ courses, navigation }) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         marginTop: 5,
-        marginBottom: 10,
+        marginBottom: 20,
         color: '#222f3e',
     },
     viewPager: {
         flex: 0.8,
-        alignSelf: 'stretch',
     },
 });
 
