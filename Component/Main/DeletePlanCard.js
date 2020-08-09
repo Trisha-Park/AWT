@@ -22,8 +22,8 @@ const DeletePlanCard = ({
                                 console.log('삭제');
                                 deletePlans();
                                 checkPlan(false);
-                                navigation.navigate('MyPage', {
-                                    screen: 'MyPlans',
+                                navigation.navigate('마이페이지', {
+                                    screen: '내 계획',
                                 });
                             },
                         },

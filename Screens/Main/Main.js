@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    ImageBackground,
+} from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 import axios from 'axios';
 
@@ -99,7 +105,10 @@ const Main = ({ navigation, plan }) => {
     }, [isFocused]);
 
     return (
-        <View style={styles.container}>
+        <ImageBackground
+            source={require('../../assets/main/mainBg.png')}
+            style={styles.container}
+        >
             <View style={styles.searchBar}>
                 <Text style={styles.logoTitle}>A WEEK TRIP</Text>
                 <TouchableOpacity
@@ -132,7 +141,7 @@ const Main = ({ navigation, plan }) => {
             <View style={styles.courses}>
                 <Courses courses={courses} navigation={navigation} />
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -144,6 +153,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 15,
         backgroundColor: '#fff',
+        resizeMode: 'contain',
     },
     searchBar: {
         flexDirection: 'row',
@@ -152,6 +162,7 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         paddingHorizontal: 15,
         marginVertical: 20,
+        opacity: 0.7,
     },
     logoTitle: {
         fontSize: 20,

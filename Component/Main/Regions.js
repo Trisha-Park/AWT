@@ -21,7 +21,7 @@ const Regions = ({ stations, navigation }) => {
                             });
                         }}
                     >
-                        <Text style={{ color: '#222f3e', fontSize: 15 }}>
+                        <Text style={{ color: '#0066FF', fontSize: 15 }}>
                             {station.region}
                         </Text>
                     </TouchableOpacity>
@@ -39,12 +39,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     card: {
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         width: 60,
         height: 60,
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#0066FF',
     },
 });
 

@@ -1,10 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    ImageBackground,
+} from 'react-native';
 
-const CourseCard = ({ course, navigation }) => {
+const CourseCard = ({ course, navigation, index }) => {
     const { list, num } = course;
+
     return (
-        <View style={styles.cardContainer}>
+        <ImageBackground
+            source={require(`../../assets/main/course.png`)}
+            style={styles.cardContainer}
+        >
             <TouchableOpacity
                 style={styles.card}
                 onPress={() => {
@@ -13,13 +23,22 @@ const CourseCard = ({ course, navigation }) => {
                     });
                 }}
             >
-                {list.map((tag, idx) => (
-                    <Text key={idx} style={styles.tag}>
-                        {`${tag} `}
-                    </Text>
-                ))}
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    {list.slice(0, 2).map((tag, idx) => (
+                        <Text key={idx} style={styles.tag}>
+                            {`${tag} `}
+                        </Text>
+                    ))}
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    {list.slice(2, list.length).map((tag, idx) => (
+                        <Text key={idx} style={styles.tag}>
+                            {`${tag} `}
+                        </Text>
+                    ))}
+                </View>
             </TouchableOpacity>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -33,14 +52,15 @@ const styles = StyleSheet.create({
     },
     card: {
         textAlign: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: '18%',
+        paddingVertical: '15%',
     },
     tag: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: '#fff',
     },
 });
 
