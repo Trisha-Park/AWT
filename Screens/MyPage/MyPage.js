@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, ToastAndroid, Alert, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ToastAndroid,
+    Alert,
+    TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
 
@@ -12,11 +19,25 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                         fontSize: 40,
                         fontWeight: 'bold',
                         color: '#ffffff',
+                        alignSelf : "center"
                     }}
                 >
-                    {' '}
                     {userInfo.name} 님
                 </Text>
+                <View style={{
+                    marginTop : 5
+                    }}>
+                <Text
+                    style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: '#ffffff',
+                        alignSelf : "center"
+                    }}
+                >
+                    안녕하세요!
+                </Text>
+                </View>
             </View>
             <View style={styles.allView}>
                 <View style={{ marginBottom: 20 }}>
@@ -115,6 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0066FF',
         alignSelf: 'stretch',
         borderRadius: 20,
+        marginHorizontal : 5
     },
     allView: {
         marginTop: 10,
@@ -127,7 +149,7 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         paddingLeft: 10,
-        borderRadius : 5
+        borderRadius: 5,
     },
     fontInView: {
         fontSize: 26,
