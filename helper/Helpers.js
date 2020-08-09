@@ -42,10 +42,10 @@ export const transferMonth = (mon) => {
 
 export const makeCurrentDate = () => {
     return `${getCurrentYear()}-${
-        getCurrentMonth() > 10
+        getCurrentMonth() > 9
             ? getCurrentMonth()
             : `0${getCurrentMonth()}-${
-                  getCurrentDate() > 10
+                  getCurrentDate() > 9
                       ? getCurrentDate()
                       : `0${getCurrentDate()}`
               }`

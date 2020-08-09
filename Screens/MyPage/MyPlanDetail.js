@@ -77,7 +77,11 @@ const MyPlanDetail = ({
                     keyExtractor={(item, index) => String(index)}
                 />
             </SafeAreaView>
-            <View style={{ flexDirection: 'row' }}>
+            <View
+                style={{
+                    flexDirection: 'row',
+                }}
+            >
                 <TouchableOpacity
                     onPress={() => {
                         storePlans(plans);
@@ -111,9 +115,17 @@ const MyPlanDetail = ({
                             },
                         ]);
                     }}
-                    style={{ ...styles.button, backgroundColor: '#F1F2F6' }}
+                    style={{
+                        ...styles.button,
+                        backgroundColor: '#fff',
+                    }}
                 >
-                    <Text style={{ ...styles.buttonTitle, color: '#000' }}>
+                    <Text
+                        style={{
+                            ...styles.buttonTitle,
+                            color: '#000',
+                        }}
+                    >
                         계획 삭제하기
                     </Text>
                 </TouchableOpacity>
@@ -125,12 +137,11 @@ const MyPlanDetail = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         paddingVertical: 20,
         paddingHorizontal: 20,
     },
     dayCard: {
-        backgroundColor: '#f1f2f6',
         borderRadius: 5,
         paddingVertical: 13,
         paddingHorizontal: 18,
@@ -143,7 +154,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     headerDay: {
-        fontSize: 18,
+        color: '#0066FF',
+        fontSize: 21,
         fontWeight: 'bold',
     },
     headerDate: {
@@ -151,7 +163,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     cardBody: {
-        backgroundColor: '#dfe4ea',
+        backgroundColor: '#fff',
         marginBottom: 10,
         paddingHorizontal: 10,
         paddingVertical: 8,
@@ -161,15 +173,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 3,
+        color: '#0066FF',
     },
     toDoContainer: {
         marginBottom: 7,
     },
     button: {
         width: '50%',
-        paddingVertical: 15,
         alignItems: 'center',
         justifyContent: 'center',
+        height: 50,
     },
     buttonTitle: {
         fontWeight: 'bold',

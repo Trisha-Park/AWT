@@ -108,7 +108,6 @@ const PlanRegionCard = ({
                                 key={idx}
                                 style={{
                                     ...styles.regionInput,
-                                    ...styles.boxShadow,
                                 }}
                             >
                                 <TextInput
@@ -200,7 +199,7 @@ const PlanRegionCard = ({
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
     },
     cardScroll: {
         alignSelf: 'stretch',
