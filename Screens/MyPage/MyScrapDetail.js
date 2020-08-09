@@ -150,6 +150,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 flex: 1,
+                backgroundColor : "#ffffff"
             }}
         >
             <ScrollView
@@ -186,7 +187,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                 {dateForm.format('YYYY.MM.DD')}
                             </Text>
                             <Text style={{ color: '#787878' }}>
-                                {articleDetail.view}
+                            {`조회수 ${articleDetail.view}`}
                             </Text>
                         </View>
                     </View>
@@ -257,7 +258,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     {isUser ? (
                         <>
                             <TouchableOpacity
-                                stytle={{}}
+                                style={{ marginRight: 5 }}
                                 onPress={() => {
                                     navigation.navigate('고쳐쓰기', {
                                         articleDetail,
@@ -266,11 +267,12 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                             >
                                 <Feather
                                     name='edit'
-                                    size={34}
+                                    size={25}
                                     color='#787878'
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
+                            style={{ marginRight: 5 }}
                                 onPress={() => {
                                     Alert.alert(
                                         '게시물을 삭제합니다.',
@@ -302,7 +304,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                             >
                                 <AntDesign
                                     name='delete'
-                                    size={34}
+                                    size={25}
                                     color='#787878'
                                 />
                             </TouchableOpacity>
@@ -326,7 +328,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                             }
                         }}
                     >
-                        <AntDesign name='star' size={34} color='#FFC312' />
+                        <AntDesign name='heart' size={25} color='#f20045' />
                     </TouchableOpacity>
                 </View>
                 <View>

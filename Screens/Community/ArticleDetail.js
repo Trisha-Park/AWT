@@ -154,11 +154,13 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 flex: 1,
+                backgroundColor: '#ffffff',
             }}
         >
             <ScrollView
                 style={{
                     width: '95%',
+                    backgroundColor: '#ffffff',
                 }}
             >
                 <View
@@ -190,7 +192,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                 {dateForm.format('YYYY.MM.DD')}
                             </Text>
                             <Text style={{ color: '#787878' }}>
-                                {articleDetail.view}
+                                {`조회수 ${articleDetail.view}`}
                             </Text>
                         </View>
                     </View>
@@ -261,7 +263,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     {isUser ? (
                         <>
                             <TouchableOpacity
-                                stytle={{}}
+                                style={{ marginRight: 5 }}
                                 onPress={() => {
                                     navigation.navigate('고쳐쓰기', {
                                         articleDetail,
@@ -270,11 +272,12 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             >
                                 <Feather
                                     name='edit'
-                                    size={34}
+                                    size={25}
                                     color='#787878'
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
+                                style={{ marginRight: 5 }}
                                 onPress={() => {
                                     Alert.alert(
                                         '게시물을 삭제합니다.',
@@ -306,7 +309,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             >
                                 <AntDesign
                                     name='delete'
-                                    size={34}
+                                    size={25}
                                     color='#787878'
                                 />
                             </TouchableOpacity>
@@ -330,7 +333,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             }
                         }}
                     >
-                        <AntDesign name='star' size={34} color='#FFC312' />
+                        <AntDesign name='heart' size={25} color='#f20045' />
                     </TouchableOpacity>
                 </View>
                 <View>
