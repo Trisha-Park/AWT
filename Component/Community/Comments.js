@@ -11,7 +11,7 @@ const Comments = ({ comments, route, navigation, resourceToken}) => {
     const commentDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/comment/${comments._id}`,
+                `http://3.34.197.112:5050/comment/${comments._id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -42,7 +42,7 @@ const Comments = ({ comments, route, navigation, resourceToken}) => {
                     <TouchableOpacity
                         style={{ marginRight: 5 }}
                         onPress={() => {
-                            navigation.navigate('EditComment', {
+                            navigation.navigate('댓글 고쳐쓰기', {
                                 comments,
                                 communityId: route.params.id,
                                 commentId: comments._id,

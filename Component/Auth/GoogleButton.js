@@ -30,7 +30,7 @@ const GoogleButton = ({
 
             if (data.type === 'success') {
                 const userData = await axios.post(
-                    'http://192.168.0.40:5050/user/google',
+                    'http://3.34.197.112:5050/user/google',
                     {
                         google: data.accessToken,
                         googleName: data.user.name,
