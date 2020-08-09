@@ -21,31 +21,21 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
         articleDetailForEdit.article
     );
 
-    //console.log(articleDetailForEdit.imageURL);
-
     const editArticle = async () => {
         try {
-            // const formData = new FormData();
-            // formData.append('imageURL', route.params.articleDetail.imageURL);
-            // formData.append('userId', userInfo.userId);
-            // formData.append('name', userInfo.name);
-            // formData.append('title', titleEdit);
-            // formData.append('article', contentEdit);
-
             const { data } = await axios.put(
                 `http://192.168.0.5:5050/community/${articleDetailForEdit._id}`,
                 {
-                    userId : userInfo.userId,
-                    name : userInfo.name,
-                    title : titleEdit,
-                    article : contentEdit
+                    userId: userInfo.userId,
+                    name: userInfo.name,
+                    title: titleEdit,
+                    article: contentEdit,
                 },
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
                 }
             );
-            //console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -79,9 +69,8 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                 height: 280,
                                 justifyContent: 'flex-start',
                                 alignContent: 'flex-start',
-                                padding: 5,
                                 textAlignVertical: 'top',
-                                fontSize: 18,
+                                fontSize: 20,
                             }}
                             onChangeText={(text) => {
                                 setContentEdit(text);
@@ -89,11 +78,13 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                         ></Textarea>
                     </View>
                 </View>
-                <View style={{alignItems : "center"}}>
+                <View style={{ alignItems: 'center' }}>
+                   { articleDetailForEdit.imageURL &&
                     <Image
                         source={{ uri: articleDetailForEdit.imageURL }}
                         style={{ width: 200, height: 200, margin: 10 }}
                     />
+                   }
                 </View>
                 <TouchableOpacity
                     style={styles.button}
@@ -102,7 +93,15 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                         navigation.navigate('ArticleDetail');
                     }}
                 >
-                    <Text style={{ color: '#ffffff' }}>글쓰기</Text>
+                    <Text
+                        style={{
+                            color: '#ffffff',
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        글쓰기
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -117,6 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         padding: 10,
+        borderRadius : 20
     },
     text: {
         height: 300,
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
         marginTop: 5,
+        borderRadius : 20
     },
     button: {
         backgroundColor: '#0066FF',
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         marginTop: 3,
+        borderRadius : 20
     },
 });
 
