@@ -25,7 +25,7 @@ const Community = ({ navigation, resourceToken }) => {
         try {
             setIsArticleLoading(true);
             const { data } = await axios.get(
-                'http://192.168.0.5:5050/community',
+                'http://3.34.197.112:5050/community',
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -78,7 +78,7 @@ const Community = ({ navigation, resourceToken }) => {
                     <TextInput
                         style={styles.TextInput}
                         value={searchValue}
-                        placeholder='원하는 게시물을 찾아보세요 = ) '
+                        placeholder='원하는 게시물을 찾아보세요 = )'
                         onChangeText={(text) => {
                             setSearchValue(text);
                         }}
@@ -94,7 +94,7 @@ const Community = ({ navigation, resourceToken }) => {
                         marginTop: 5,
                     }}
                     onPress={() => {
-                        navigation.navigate('CommunitySearch', {
+                        navigation.navigate('검색 결과', {
                             searchValue: searchValue,
                             articles: articles,
                         });
@@ -108,7 +108,7 @@ const Community = ({ navigation, resourceToken }) => {
                     <TouchableOpacity
                         key={idx}
                         onPress={() => {
-                            navigation.navigate('ArticleDetail', {
+                            navigation.navigate('글 알아보기', {
                                 id: article._id,
                             });
                         }}
@@ -121,8 +121,7 @@ const Community = ({ navigation, resourceToken }) => {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        navigation.navigate('CreateArticle');
-                        navigation = { navigation };
+                        navigation.navigate('글쓰기');
                     }}
                 >
                     <Text style={{ color: '#ffffff',fontSize : 20, fontWeight : "bold" }}>글쓰기</Text>

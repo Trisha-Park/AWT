@@ -46,10 +46,11 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             });
             if (!result.cancelled) {
                 const splitName = result.uri.split('/');
-                const hello = splitName[splitName.length - 1].toString();
-                setImageName(hello);
+                const imageNameString = splitName[splitName.length - 1].toString();
+                setImageName(imageNameString);
                 setImage(result.uri);
                 setImageObj(result);
+                console.log("이미지가 찍힙니까?")
             }
         } catch (error) {
             console.log(error);
@@ -69,9 +70,10 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             formData.append('name', userInfo.name);
             formData.append('title', title);
             formData.append('article', content);
+            console.log("되나요?")
 
             const { data } = await axios.post(
-                `http://192.168.0.5:5050/community`,
+                `http://3.34.197.112:5050/community`,
                 formData,
                 {
                     headers: {
@@ -80,7 +82,8 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     },
                     withCredentials: true,
                 }
-            );
+                );
+                console.log("되길 바라요")
         } catch (error) {
             console.log(error);
         }
@@ -159,7 +162,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 style={styles.button}
                 onPress={() => {
                     PostArticleButton();
-                    navigation.navigate('Community');
+                    navigation.navigate('커뮤니티');
                 }}
             >
                 <Text
