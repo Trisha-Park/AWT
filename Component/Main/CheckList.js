@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     items: {
-        marginTop: 55,
         height: 130,
         width: '100%',
     },

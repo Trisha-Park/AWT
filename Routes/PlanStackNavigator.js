@@ -19,25 +19,25 @@ const PlanStackNavigator = ({ navigation, route, isPlanExist }) => {
     }
     return (
         <PlanStack.Navigator
-            initialRouteName={isPlanExist ? 'PlanEdit' : 'Plan'}
+            initialRouteName={isPlanExist ? '계획 수정하기' : '계획'}
         >
             <PlanStack.Screen
-                name='Plan'
+                name='계획'
                 component={Plan}
                 options={{ headerShown: false }}
             />
-            <PlanStack.Screen name='PlanInfo' component={PlanInfo} />
+            <PlanStack.Screen name='계획 만들기' component={PlanInfo} />
             <PlanStack.Screen
-                name='PlanInfoDetail'
+                name='상세 계획 만들기'
                 component={PlanInfoDetail}
             />
             <PlanStack.Screen
-                name='PlanEdit'
+                name='계획 수정하기'
                 component={PlanEdit}
                 options={{ headerShown: false }}
             />
             <PlanStack.Screen
-                name='PlanEditDetail'
+                name='상세 계획 수정하기'
                 component={PlanEditDetail}
             />
         </PlanStack.Navigator>

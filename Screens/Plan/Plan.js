@@ -112,7 +112,7 @@ const Plan = ({ navigation }) => {
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('PlanInfo', {
+                    navigation.navigate('계획 만들기', {
                         fullDates,
                     });
                 }}

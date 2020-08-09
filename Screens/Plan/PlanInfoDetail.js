@@ -30,7 +30,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
             ...prevState.slice(0, idx),
             ...prevState.slice(idx + 1),
         ]);
-        navigation.navigate('PlanInfoDetail');
+        navigation.navigate('상세 계획 만들기');
     };
 
     const setRegionPlan = (idx, region, toDos) => {
@@ -84,7 +84,7 @@ const PlanInfoDetail = ({ navigation, route }) => {
                             ToastAndroid.LONG
                         );
                     }
-                    navigation.navigate('PlanInfo', {
+                    navigation.navigate('계획 만들기', {
                         dailyPlan: {
                             [day]: {
                                 date: date,

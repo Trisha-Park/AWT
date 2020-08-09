@@ -160,7 +160,7 @@ const Search = ({ navigation, resourceToken }) => {
                         <View style={{ flexDirection: 'row' }} key={idx}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    navigation.navigate('StationDetail', {
+                                    navigation.navigate('역 정보', {
                                         id: region._id, // id로 변경하기
                                     });
                                 }}
@@ -207,7 +207,7 @@ const Search = ({ navigation, resourceToken }) => {
                             <View style={{ flexDirection: 'row' }} key={idx}>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        navigation.navigate('StationDetail', {
+                                        navigation.navigate('역 정보', {
                                             id: region._id,
                                         });
                                     }}

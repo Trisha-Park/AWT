@@ -84,7 +84,7 @@ const PlanEditDetail = ({ navigation, route }) => {
                             ToastAndroid.LONG
                         );
                     }
-                    navigation.navigate('PlanEdit', {
+                    navigation.navigate('계획 수정하기', {
                         dailyPlan: {
                             [day]: {
                                 date: date,

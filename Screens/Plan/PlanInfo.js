@@ -63,7 +63,7 @@ const PlanInfo = ({
     const renderItem = ({ item }) => (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate('PlanInfoDetail', {
+                navigation.navigate('상세 계획 만들기', {
                     day: item.day,
                     date: item.date,
                 });
@@ -101,9 +101,9 @@ const PlanInfo = ({
                         );
                     }
                     navigation.dispatch(
-                        StackActions.push('Main', { screen: 'MyPage' })
+                        StackActions.push('메인', { screen: 'MyPage' })
                     );
-                    navigation.dispatch(StackActions.replace('PlanEdit'));
+                    navigation.dispatch(StackActions.replace('계획 수정하기'));
                 }}
             >
                 <Text

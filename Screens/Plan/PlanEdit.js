@@ -112,7 +112,7 @@ const PlanEdit = ({
         <TouchableOpacity
             onPress={() => {
                 const index = Number(item.day.split('')[4]);
-                navigation.navigate('PlanEditDetail', {
+                navigation.navigate('상세 계획 수정하기', {
                     day: item.day,
                     date: item.date,
                     tasksInfo: plans[index - 1][`day0${index}`]['tasks'],
