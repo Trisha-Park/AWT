@@ -44,21 +44,17 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                 aspect: [1, 1],
                 quality: 1,
             });
-            //console.log(result);
             if (!result.cancelled) {
                 const splitName = result.uri.split('/');
                 const hello = splitName[splitName.length - 1].toString();
                 setImageName(hello);
                 setImage(result.uri);
                 setImageObj(result);
-                //console.log(hello);
             }
         } catch (error) {
             console.log(error);
         }
     };
-    //console.log(imageObj);
-
     const PostArticleButton = async () => {
         try {
             const formData = new FormData();
@@ -74,8 +70,6 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             formData.append('title', title);
             formData.append('article', content);
 
-            //console.log(formData);
-
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/community`,
                 formData,
@@ -87,7 +81,6 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     withCredentials: true,
                 }
             );
-            //console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -111,7 +104,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     <TextInput
                         placeholder='제목을 입력하세요.'
                         value={title}
-                        style={{ fontSize: 20, color : "grey"}}
+                        style={{ fontSize: 20}}
                         onChangeText={(text) => {
                             setTitle(text);
                         }}
@@ -128,7 +121,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                             padding: 5,
                             textAlignVertical: 'top',
                             fontSize: 20,
-                            color : "grey"
+                            color: 'grey',
                         }}
                         value={content}
                         multiline={true}
@@ -152,7 +145,15 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     pickImage();
                 }}
             >
-                <Text style={{ color: '#ffffff', fontSize : 20, fontWeight : "bold" }}>이미지 첨부하기</Text>
+                <Text
+                    style={{
+                        color: '#ffffff',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                    }}
+                >
+                    이미지 첨부하기
+                </Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
@@ -161,7 +162,15 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     navigation.navigate('Community');
                 }}
             >
-                <Text style={{ color: '#ffffff',fontSize : 20, fontWeight : "bold"}}>글쓰기</Text>
+                <Text
+                    style={{
+                        color: '#ffffff',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                    }}
+                >
+                    저장하기
+                </Text>
             </TouchableOpacity>
         </View>
     );
@@ -175,7 +184,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         padding: 10,
-        borderRadius : 20
+        borderRadius: 20,
     },
     text: {
         height: 300,
@@ -186,7 +195,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         marginTop: 5,
-        borderRadius : 20
+        borderRadius: 20,
     },
     button: {
         backgroundColor: '#0066FF',
@@ -196,8 +205,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         marginTop: 3,
-        borderRadius : 20,
-        
+        borderRadius: 20,
     },
 });
 
