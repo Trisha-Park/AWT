@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
+import Loading from '../Loading';
 
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-const CommunitySearch = ({ route, navigation }) => {
+const CommunitySearch = ({ route, navigation, resourceToken }) => {
     const [isSearchLoading, setIsSearchLoading] = useState(true);
     const [searchs, setSearch] = useState([]);
 
@@ -13,7 +15,11 @@ const CommunitySearch = ({ route, navigation }) => {
         try {
             setIsSearchLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/search?content=${route.params.searchValue}`
+                `http://192.168.0.5:5050/community/search?content=${route.params.searchValue}`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             const articleSearchDatas = data.map((articleSearchData) => {
                 return {
@@ -37,11 +43,16 @@ const CommunitySearch = ({ route, navigation }) => {
     }, []);
 
     return isSearchLoading ? (
-        <View>
-            <Text>로딩 중</Text>
-        </View>
+        <Loading />
     ) : (
-        <View>
+        <View
+        style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            flex : 1,
+            marginTop : 5
+        }}>
+            <ScrollView >
             {searchs.map((search, idx) => (
                 <TouchableOpacity
                     key={idx}
@@ -55,8 +66,16 @@ const CommunitySearch = ({ route, navigation }) => {
                     <Articles article={search} />
                 </TouchableOpacity>
             ))}
+            </ScrollView>
         </View>
     );
 };
 
-export default CommunitySearch;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(CommunitySearch);

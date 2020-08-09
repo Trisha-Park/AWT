@@ -12,14 +12,16 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Textarea } from 'native-base';
 
 const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
-    // const [imageObj, setImageObj] = useState({});
+    const [imageObj, setImageObj] = useState({});
     const [image, setImage] = useState();
-    // const [imageName, setImageName] = useState('');
+    const [imageName, setImageName] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
+    //? 갤러리 권한 허용 함수
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
             const { statusios } = await Permissions.askAsync(
@@ -32,11 +34,14 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             );
         }
     };
+
+    //? 이미지 가져오는 함수
     const pickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: false,
+                allowsEditing: true,
+                aspect: [1, 1],
                 quality: 1,
             });
             //console.log(result);
@@ -56,34 +61,33 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
 
     const PostArticleButton = async () => {
         try {
-            // const imageURL = new FormData();
-            // imageURL.append('imageURL', {
-            //     uri: imageObj.uri,
-            //     name: imageName,
-            //     type: 'image',
-            //     height: imageObj.height,
-            //     width: imageObj.width,
-            // });
+            const formData = new FormData();
+            formData.append('imageURL', {
+                uri: imageObj.uri,
+                name: imageName,
+                type: 'image/jpg',
+                height: imageObj.height,
+                width: imageObj.width,
+            });
+            formData.append('userId', userInfo.userId);
+            formData.append('name', userInfo.name);
+            formData.append('title', title);
+            formData.append('article', content);
+
+            //console.log(formData);
 
             const { data } = await axios.post(
                 `http://192.168.0.5:5050/community`,
-                {
-                    //imageURL: imageURL,
-                    userId: userInfo.userId,
-                    name: 'trisha',
-                    title,
-                    article: content,
-                },
+                formData,
                 {
                     headers: {
                         authorization: resourceToken,
-                        // 'content-type':
-                        //     'multipart/form-data; boundary=<calculated when request is sent>',
+                        'content-type': 'multipart/form-data',
                     },
                     withCredentials: true,
                 }
             );
-            console.log(data);
+            //console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -107,14 +111,14 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     <TextInput
                         placeholder='제목을 입력하세요.'
                         value={title}
-                        style={{ fontSize: 20 }}
+                        style={{ fontSize: 20, color : "grey"}}
                         onChangeText={(text) => {
                             setTitle(text);
                         }}
                     ></TextInput>
                 </View>
                 <View style={styles.text}>
-                    <TextInput
+                    <Textarea
                         placeholder='내용을 입력하세요.'
                         style={{
                             width: 390,
@@ -123,14 +127,15 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                             alignContent: 'flex-start',
                             padding: 5,
                             textAlignVertical: 'top',
-                            fontSize: 18,
+                            fontSize: 20,
+                            color : "grey"
                         }}
                         value={content}
                         multiline={true}
                         onChangeText={(text) => {
                             setContent(text);
                         }}
-                    ></TextInput>
+                    ></Textarea>
                 </View>
             </View>
             <View>
@@ -147,7 +152,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     pickImage();
                 }}
             >
-                <Text style={{ color: '#ffffff' }}>이미지 첨부하기</Text>
+                <Text style={{ color: '#ffffff', fontSize : 20, fontWeight : "bold" }}>이미지 첨부하기</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
@@ -156,7 +161,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     navigation.navigate('Community');
                 }}
             >
-                <Text style={{ color: '#ffffff' }}>글쓰기</Text>
+                <Text style={{ color: '#ffffff',fontSize : 20, fontWeight : "bold"}}>글쓰기</Text>
             </TouchableOpacity>
         </View>
     );
@@ -170,6 +175,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         padding: 10,
+        borderRadius : 20
     },
     text: {
         height: 300,
@@ -180,6 +186,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         marginTop: 5,
+        borderRadius : 20
     },
     button: {
         backgroundColor: '#0066FF',
@@ -189,6 +196,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         marginTop: 3,
+        borderRadius : 20,
+        
     },
 });
 
