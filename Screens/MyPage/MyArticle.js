@@ -18,7 +18,7 @@ const MyArticle = ({ navigation, resourceToken, userInfo }) => {
         try {
             setIsMyArticleLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/user/myPosts`,
+                `http://3.34.197.112:5050/user/myPosts`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -63,7 +63,7 @@ const MyArticle = ({ navigation, resourceToken, userInfo }) => {
                 <TouchableOpacity
                     key={idx}
                     onPress={() => {
-                        navigation.navigate('MyArticleDetail', {
+                        navigation.navigate('내가 쓴 글 알아보기', {
                             id: myArticle._id,
                         });
                         console.log(myArticle);

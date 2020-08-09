@@ -21,7 +21,7 @@ const MyPlans = ({ navigation, resourceToken, userInfo }) => {
     const getMyPlans = async () => {
         try {
             setIsLoading(true);
-            const { data } = await axios.get('http://192.168.0.40:5050/plan', {
+            const { data } = await axios.get('http://3.34.197.112:5050/plan', {
                 headers: {
                     authorization: resourceToken,
                 },
@@ -54,7 +54,7 @@ const MyPlans = ({ navigation, resourceToken, userInfo }) => {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('MyPlanDetail', {
+                    navigation.navigate('내 계획 알아보기', {
                         plans: item,
                     });
                 }}
