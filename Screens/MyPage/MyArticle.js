@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { List, Card } from 'native-base';
-import { StackActions } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 
 import Articles from '../../Component/Community/Articles';
-import { userArticles } from '../../FakeData/userData';
+import Loading from '../Loading';
 
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-const MyArticle = ({ navigation }) => {
+
+
+const MyArticle = ({ navigation, resourceToken, userInfo }) => {
     const [isMyArticleLoading, setIsMyArticleLoading] = useState(false);
-    const [myArticles, setMyArticles] = useState([...userArticles]);
+    const [myArticles, setMyArticles] = useState([]);
 
-    // TODO: 서버로부터 articles 정보를 props로 받아온 유저id, useEffect, setArticles, Axios를 이용해 받아와야 합니다.
     const getMyArticle = async () => {
         try {
             setIsMyArticleLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/user/myPosts/1`
+                `http://192.168.0.5:5050/user/myPosts`,
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
             );
             setMyArticles([...data]);
             setIsMyArticleLoading(false);
@@ -30,22 +35,33 @@ const MyArticle = ({ navigation }) => {
         getMyArticle();
     }, []);
 
-    return isMyArticleLoading ? (
-        <View>
-            <Text>로딩중</Text>
-        </View>
-    ) : (
-        <View>
-            <View style={styles.myArticle}>
-                <Card style={styles.card}>
-                    <Text>내가 쓴 게시글</Text>
-                </Card>
-            </View>
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        try {
+            if (isFocused) {
+                getMyArticle();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [isFocused]);
 
+    return isMyArticleLoading ? (
+        <Loading />
+    ) : (
+        <View
+        style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: '#F1F2F6',
+            flex: 1,
+            paddingTop : 5
+        }}>
+
+            <ScrollView>
             {myArticles.map((myArticle, idx) => (
                 <TouchableOpacity
                     key={idx}
-                    style={styles.article}
                     onPress={() => {
                         navigation.navigate('MyArticleDetail', {
                             id: myArticle._id,
@@ -56,29 +72,20 @@ const MyArticle = ({ navigation }) => {
                     <Articles article={myArticle} />
                 </TouchableOpacity>
             ))}
+            </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    myArticle: {
-        position: 'relative',
-        marginTop: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    card: {
-        position: 'relative',
-        height: 80,
-        width: 150,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'yellowgreen',
-    },
-    article: {
-        position: 'relative',
-        marginTop: 10,
-    },
+
 });
 
-export default MyArticle;
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
+    };
+};
+
+export default connect(mapStateToProps)(MyArticle);
