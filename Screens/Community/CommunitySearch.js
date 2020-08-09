@@ -15,7 +15,7 @@ const CommunitySearch = ({ route, navigation, resourceToken }) => {
         try {
             setIsSearchLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/search?content=${route.params.searchValue}`,
+                `http://3.34.197.112:5050/community/search?content=${route.params.searchValue}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -57,7 +57,7 @@ const CommunitySearch = ({ route, navigation, resourceToken }) => {
                 <TouchableOpacity
                     key={idx}
                     onPress={() => {
-                        navigation.navigate('ArticleDetail', {
+                        navigation.navigate('글 알아보기', {
                             id: search._id,
                         });
                         console.log(search);

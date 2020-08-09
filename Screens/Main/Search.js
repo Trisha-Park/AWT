@@ -27,7 +27,7 @@ const Search = ({ navigation, resourceToken }) => {
     const toggleFavStations = async (stationId, resourceToken) => {
         try {
             await axios.put(
-                `http://192.168.0.40:5050/user/favStation/${stationId}`,
+                `http://3.34.197.112:5050/user/favStation/${stationId}`,
                 {},
                 {
                     headers: { authorization: resourceToken },
@@ -42,7 +42,7 @@ const Search = ({ navigation, resourceToken }) => {
     const getAllStations = async () => {
         try {
             const { data } = await axios.get(
-                'http://192.168.0.40:5050/station'
+                'http://3.34.197.112:5050/station'
             );
             setStaions([...data]);
             getFavStations();
@@ -54,7 +54,7 @@ const Search = ({ navigation, resourceToken }) => {
     const getFavStations = async () => {
         try {
             const { data } = await axios.get(
-                'http://192.168.0.40:5050/user/favStationList',
+                'http://3.34.197.112:5050/user/favStationList',
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -96,7 +96,7 @@ const Search = ({ navigation, resourceToken }) => {
         try {
             setIsStationLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.40:5050/station/search?content=${searchValue}`
+                `http://3.34.197.112:5050/station/search?content=${searchValue}`
             );
             const stationDatas = data.map((stationData) => {
                 return {

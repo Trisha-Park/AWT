@@ -19,30 +19,30 @@ const CommunityStackNavigator = ({ navigation, route }) => {
     }
     return (
         <CommunityStack.Navigator
-            initialRouteName='Community'
+            initialRouteName='커뮤니티'
             screenOptions={({ route }) => {
-                if (route.name === 'Community') {
+                if (route.name === '커뮤니티') {
                     return {
                         headerShown: false,
                     };
                 }
             }}
         >
-            <CommunityStack.Screen name='Community' component={Community} />
+            <CommunityStack.Screen name='커뮤니티' component={Community} />
             <CommunityStack.Screen
-                name='ArticleDetail'
+                name='글 알아보기'
                 component={ArticleDetail}
             />
             <CommunityStack.Screen
-                name='CreateArticle'
+                name='글쓰기'
                 component={CreateArticle}
             />
             <CommunityStack.Screen
-                name='EditArticleDetail'
+                name='고쳐쓰기'
                 component={EditArticleDetail}
             />
-            <CommunityStack.Screen name='EditComment' component={EditComment} />
-            <CommunityStack.Screen name='CommunitySearch' component={CommunitySearch} />
+            <CommunityStack.Screen name='댓글 고쳐쓰기' component={EditComment} />
+            <CommunityStack.Screen name='검색 결과' component={CommunitySearch} />
         </CommunityStack.Navigator>
     );
 };

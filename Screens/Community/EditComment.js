@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import {
-    Text,
-    View,
-    TouchableOpacity,
-    StyleSheet,
-} from 'react-native';
-import {Textarea} from 'native-base';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Textarea } from 'native-base';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -14,12 +9,10 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
         route.params.comments.comment
     );
 
-    console.log(route.params.comments.comment);
-
     const editComment = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/comment/${route.params.communityId}/${route.params.commentId}`,
+                `http://3.34.197.112:5050/comment/${route.params.communityId}/${route.params.commentId}`,
                 {
                     userId: userInfo.userId,
                     name: userInfo.name,
@@ -64,7 +57,7 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
                 style={styles.button}
                 onPress={() => {
                     editComment();
-                    navigation.navigate('ArticleDetail');
+                    navigation.navigate('글 알아보기');
                 }}
             >
                 <Text

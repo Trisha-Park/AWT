@@ -24,7 +24,7 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const editArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/community/${articleDetailForEdit._id}`,
+                `http://3.34.197.112:5050/community/${articleDetailForEdit._id}`,
                 {
                     userId: userInfo.userId,
                     name: userInfo.name,
@@ -90,7 +90,7 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     style={styles.button}
                     onPress={() => {
                         editArticle();
-                        navigation.navigate('ArticleDetail');
+                        navigation.navigate('글 알아보기');
                     }}
                 >
                     <Text

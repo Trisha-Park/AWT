@@ -31,7 +31,7 @@ const MyPlanDetail = ({
             deletePlans();
             checkPlan(false);
         }
-        await axios.delete(`http://192.168.0.40:5050/plan/${plans._id}`, {
+        await axios.delete(`http://3.34.197.112:5050/plan/${plans._id}`, {
             headers: {
                 authorization: resourceToken,
             },
@@ -103,7 +103,7 @@ const MyPlanDetail = ({
                                 text: '삭제',
                                 onPress: () => {
                                     deletePlan();
-                                    navigation.navigate('MyPage');
+                                    navigation.navigate('마이페이지');
                                 },
                             },
                             {

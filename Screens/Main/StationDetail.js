@@ -20,7 +20,7 @@ const StationDetail = ({ route }) => {
         try {
             setIsStationDataLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.40:5050/station/${id}`
+                `http://3.34.197.112:5050/station/${id}`
             );
             setStationData({ ...data.stationDeatil[0] });
             setFood([...data.food]);

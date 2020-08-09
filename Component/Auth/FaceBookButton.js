@@ -25,7 +25,7 @@ const FaceBookButton = ({ FBAuthStart, FBAuthSuccess, FBAuthFailure }) => {
 
             if (data.type === 'success') {
                 const userData = await axios.post(
-                    'http://192.168.0.40:5050/user/facebook',
+                    'http://3.34.197.112:5050/user/facebook',
                     {
                         fbAccessToken: data.token,
                     },

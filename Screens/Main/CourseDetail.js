@@ -17,7 +17,7 @@ const CourseDetail = ({ route }) => {
         try {
             setIsLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.40:5050/bestplan/${num}`
+                `http://3.34.197.112:5050/bestplan/${num}`
             );
             setCourseDetail([...data[0].plan]);
             setIsLoading(false);

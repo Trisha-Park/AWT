@@ -43,7 +43,7 @@ const MainTabNavigator = ({ navigation, route }) => {
                                 color={color}
                             />
                         );
-                    } else if (route.name === 'Community') {
+                    } else if (route.name === '커뮤니티') {
                         return (
                             <MaterialIcons
                                 name='dashboard'
@@ -51,7 +51,7 @@ const MainTabNavigator = ({ navigation, route }) => {
                                 color={color}
                             />
                         );
-                    } else if (route.name === 'MyPage') {
+                    } else if (route.name === '마이페이지') {
                         return (
                             <FontAwesome name='user' size={24} color={color} />
                         );
@@ -65,13 +65,13 @@ const MainTabNavigator = ({ navigation, route }) => {
                     marginVertical: 4,
                 },
             }}
-            initialRouteName='Main'
+            initialRouteName='메인'
         >
             <MainTab.Screen name='메인' component={Main} />
             <MainTab.Screen name='지도' component={Station} />
             <MainTab.Screen name='계획' component={Plan} />
-            <MainTab.Screen name='Community' component={Community} />
-            <MainTab.Screen name='MyPage' component={MyPage} />
+            <MainTab.Screen name='커뮤니티' component={Community} />
+            <MainTab.Screen name='마이페이지' component={MyPage} />
         </MainTab.Navigator>
     );
 };

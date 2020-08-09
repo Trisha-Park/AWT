@@ -33,7 +33,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
         try {
             setIsScrapDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/${route.params.id}`,
+                `http://3.34.197.112:5050/community/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -52,7 +52,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
         try {
             setIsScrapDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                `http://3.34.197.112:5050/comment/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -77,7 +77,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const commentCreate = async () => {
         try {
             const { data } = await axios.post(
-                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                `http://3.34.197.112:5050/comment/${route.params.id}`,
                 {
                     userId: 1,
                     name: 'trisha',
@@ -97,7 +97,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const communityDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/community/${route.params.id}`,
+                `http://3.34.197.112:5050/community/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -111,7 +111,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const scrapArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/user/scrap`,
+                `http://3.34.197.112:5050/user/scrap`,
                 {},
                 {
                     headers: { authorization: resourceToken },
@@ -259,7 +259,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                             <TouchableOpacity
                                 stytle={{}}
                                 onPress={() => {
-                                    navigation.navigate('EditArticleDetail', {
+                                    navigation.navigate('고쳐쓰기', {
                                         articleDetail,
                                     });
                                 }}
@@ -284,7 +284,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                                     );
                                                     communityDelete();
                                                     navigation.navigate(
-                                                        'Community'
+                                                        '커뮤니티'
                                                     );
                                                 },
                                             },

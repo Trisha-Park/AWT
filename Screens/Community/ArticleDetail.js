@@ -35,7 +35,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
             setIsArticleDetailLoading(true);
 
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/community/${route.params.id}`,
+                `http://3.34.197.112:5050/community/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -54,7 +54,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
         try {
             setIsArticleDetailLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                `http://3.34.197.112:5050/comment/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -80,7 +80,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const commentCreate = async () => {
         try {
             const { data } = await axios.post(
-                `http://192.168.0.5:5050/comment/${route.params.id}`,
+                `http://3.34.197.112:5050/comment/${route.params.id}`,
                 {
                     userId: userInfo.userId,
                     name: userInfo.name,
@@ -100,7 +100,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const communityDelete = async () => {
         try {
             const { data } = await axios.delete(
-                `http://192.168.0.5:5050/community/${route.params.id}`,
+                `http://3.34.197.112:5050/community/${route.params.id}`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -114,7 +114,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const scrapArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://192.168.0.5:5050/user/scrap/${route.params.id}`,
+                `http://3.34.197.112:5050/user/scrap/${route.params.id}`,
                 {},
                 {
                     headers: { authorization: resourceToken },
@@ -263,7 +263,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             <TouchableOpacity
                                 stytle={{}}
                                 onPress={() => {
-                                    navigation.navigate('EditArticleDetail', {
+                                    navigation.navigate('고쳐쓰기', {
                                         articleDetail,
                                     });
                                 }}
@@ -288,7 +288,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                                     );
                                                     communityDelete();
                                                     navigation.navigate(
-                                                        'Community'
+                                                        '커뮤니티'
                                                     );
                                                 },
                                             },

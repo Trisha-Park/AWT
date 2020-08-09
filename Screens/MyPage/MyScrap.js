@@ -16,7 +16,7 @@ const MyScrap = ({ navigation, resourceToken }) => {
         try {
             setIsMyScrapLoading(true);
             const { data } = await axios.get(
-                `http://192.168.0.5:5050/user/scrap`,
+                `http://3.34.197.112:5050/user/scrap`,
                 {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
@@ -62,7 +62,7 @@ const MyScrap = ({ navigation, resourceToken }) => {
                     <TouchableOpacity
                         key={idx}
                         onPress={() => {
-                            navigation.navigate('MyScrapDetail', {
+                            navigation.navigate('글 알아보기', {
                                 id: myScrap._id,
                             });
                         }}

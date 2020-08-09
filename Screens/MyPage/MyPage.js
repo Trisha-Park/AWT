@@ -44,7 +44,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                     <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
-                            navigation.navigate('MyPlans');
+                            navigation.navigate('내 계획');
                         }}
                     >
                         <Text style={styles.fontInView}>내 계획</Text>
@@ -52,7 +52,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                     <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
-                            navigation.navigate('MyArticle');
+                            navigation.navigate('내가 쓴 게시글');
                         }}
                     >
                         <Text style={styles.fontInView}>내가 쓴 게시글</Text>
@@ -60,7 +60,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                     <TouchableOpacity
                         style={styles.item}
                         onPress={() => {
-                            navigation.navigate('MyScrap');
+                            navigation.navigate('스크랩한 게시글');
                         }}
                     >
                         <Text style={styles.fontInView}>스크랩한 게시글</Text>

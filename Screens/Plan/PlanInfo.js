@@ -43,7 +43,7 @@ const PlanInfo = ({
     const postPlanData = async () => {
         try {
             const { data } = await axios.post(
-                'http://192.168.0.40:5050/plan',
+                'http://3.34.197.112:5050/plan',
                 {
                     userId: userInfo.userId,
                     list: plans,
