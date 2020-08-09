@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,Alert} from 'react-native';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-const Comments = ({ comments, route, navigation, resourceToken, isCommentUser}) => {
+const Comments = ({ comments, route, navigation, resourceToken}) => {
 
     const commentDelete = async () => {
         try {
@@ -22,7 +22,6 @@ const Comments = ({ comments, route, navigation, resourceToken, isCommentUser}) 
         }
     };
 
-  
 
     return (
         <View>
@@ -35,13 +34,13 @@ const Comments = ({ comments, route, navigation, resourceToken, isCommentUser}) 
                 <View>
                     <Text style={{ fontSize: 16 }}>{comments.comment}</Text>
                 </View>
-{/* 
-                { isCommentUser ? ( */}
+
+                { comments.isCommentUser ? (
                 <View
                     style={{ flexDirection: 'row', justifyContent: 'flex-end' }}
                 >
                     <TouchableOpacity
-                        style={{ marginRight: 10 }}
+                        style={{ marginRight: 5 }}
                         onPress={() => {
                             navigation.navigate('EditComment', {
                                 comments,
@@ -50,18 +49,41 @@ const Comments = ({ comments, route, navigation, resourceToken, isCommentUser}) 
                             });
                         }}
                     >
-                        <Feather name='edit' size={24} color='black' />
+                        <Feather name='edit' size={24} color='#787878' />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{ marginRight: 5 }}
                         onPress={() => {
-                            commentDelete();
+                            Alert.alert(
+                                '댓글을 삭제합니다.',
+                                '삭제한 댓글은 되돌릴 수 없습니다.',
+                                [
+                                    {
+                                        text: '삭제',
+                                        onPress: () => {
+                                            console.log(
+                                                'Delete Success'
+                                            );
+                                            commentDelete();
+                                        },
+                                    },
+                                    {
+                                        text: '취소',
+                                        onPress: () => {
+                                            console.log(
+                                                'Delete Cancle'
+                                            );
+                                        },
+                                    },
+                                ]
+                            );
+                            
                         }}
                     >
-                        <AntDesign name='delete' size={24} color='black' />
+                        <AntDesign name='delete' size={24} color='#787878' />
                     </TouchableOpacity>
                 </View>
-                {/* //  ) : (<></>) }  */}
+                  ) : (<></>) } 
             </View>
         </View>
     );
