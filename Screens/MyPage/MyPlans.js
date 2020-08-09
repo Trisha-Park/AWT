@@ -85,12 +85,12 @@ const MyPlans = ({ navigation, resourceToken, userInfo }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f2f6',
         paddingVertical: 20,
         paddingHorizontal: 25,
     },
     item: {
-        backgroundColor: '#f1f2f6',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 25,
