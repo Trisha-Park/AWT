@@ -6,8 +6,11 @@ import {
     View,
     TouchableOpacity,
     ScrollView,
+    Image,
+    ToastAndroid,
 } from 'react-native';
 import { Textarea } from 'native-base';
+import dayjs from 'dayjs';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -21,14 +24,14 @@ import Loading from '../Loading';
 
 const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const [isScrapDetailLoading, setIsScrapDetailLoading] = useState(false);
-    const [scrapDetail, setScrapDetail] = useState({});
+    const [articleDetail, setArticleDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
     const [isUser, setIsUser] = useState(false);
 
     const getPostView = async () => {
         try {
-            setIsScrapDetailLoading(false);
+            setIsScrapDetailLoading(true);
             const { data } = await axios.get(
                 `http://192.168.0.5:5050/community/${route.params.id}`,
                 {
@@ -36,9 +39,10 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     withCredentials: true,
                 }
             );
-            setScrapDetail({ ...data[0] });
+            console.log(route.params.id);
+            setArticleDetail({ ...data[0] });
             setIsUser(data[0].userId === userInfo.userId ? true : false);
-            setIsScrapDetailLoading(true);
+            setIsScrapDetailLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -54,7 +58,16 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     withCredentials: true,
                 }
             );
-            setComment([...data]);
+            setComment([
+                ...data.map((comment) => {
+                    if (comment.userId === userInfo.userId) {
+                        comment.isCommentUser = true;
+                    } else {
+                        comment.isCommentUser = false;
+                    }
+                    return comment;
+                }),
+            ]);
             setIsScrapDetailLoading(false);
         } catch (error) {
             console.log(error);
@@ -127,6 +140,8 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
         }
     }, [isFocused]);
 
+    let dateForm = dayjs(articleDetail.updatedAt);
+
     return isScrapDetailLoading ? (
         <Loading />
     ) : (
@@ -156,13 +171,23 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     >
                         <View style={{ paddingLeft: 5 }}>
                             <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
-                                {scrapDetail.title}
+                                {articleDetail.title}
                             </Text>
                         </View>
                         <View
-                            style={{ alignSelf: 'flex-end', paddingRight: 10 }}
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'stretch',
+                                paddingHorizontal: 8,
+                            }}
                         >
-                            <Text>{scrapDetail.view}</Text>
+                            <Text style={{ color: '#787878' }}>
+                                {dateForm.format('YYYY.MM.DD')}
+                            </Text>
+                            <Text style={{ color: '#787878' }}>
+                                {articleDetail.view}
+                            </Text>
                         </View>
                     </View>
                     <View>
@@ -204,7 +229,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                             paddingLeft: 5,
                                         }}
                                     >
-                                        {scrapDetail.name}
+                                        {articleDetail.name}
                                     </Text>
                                 </View>
                                 <View>
@@ -215,7 +240,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                             paddingLeft: 5,
                                         }}
                                     >
-                                        {scrapDetail.article}
+                                        {articleDetail.article}
                                     </Text>
                                 </View>
                             </View>
@@ -239,7 +264,11 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                     });
                                 }}
                             >
-                                <Feather name='edit' size={34} color='blue' />
+                                <Feather
+                                    name='edit'
+                                    size={34}
+                                    color='#787878'
+                                />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
@@ -274,7 +303,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                 <AntDesign
                                     name='delete'
                                     size={34}
-                                    color='black'
+                                    color='#787878'
                                 />
                             </TouchableOpacity>
                         </>
@@ -288,6 +317,13 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                         }}
                         onPress={() => {
                             scrapArticle();
+                            if (Platform.OS === 'android') {
+                                ToastAndroid.show(
+                                    '스크랩',
+                                    ToastAndroid.BOTTOM,
+                                    ToastAndroid.LONG
+                                );
+                            }
                         }}
                     >
                         <AntDesign name='star' size={34} color='#FFC312' />
@@ -301,7 +337,6 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                     comments={comment}
                                     route={route}
                                     navigation={navigation}
-                                    //isCommentUser={isCommentUser}
                                 />
                             </View>
                         ))}
@@ -341,7 +376,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     <MaterialCommunityIcons
                         name='comment-arrow-left-outline'
                         size={34}
-                        color='black'
+                        color='#787878'
                     />
                 </TouchableOpacity>
             </View>
