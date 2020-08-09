@@ -23,7 +23,7 @@ const Main = ({ navigation, plan }) => {
     const getStationLists = async () => {
         try {
             const { data } = await axios.get(
-                'http://192.168.0.40:5050/station/random'
+                'http://3.34.197.112:5050/station/random'
             );
             setStations([...data]);
         } catch (error) {
@@ -34,7 +34,7 @@ const Main = ({ navigation, plan }) => {
     const getCourseLists = async () => {
         try {
             const { data } = await axios.get(
-                'http://192.168.0.40:5050/bestplan'
+                'http://3.34.197.112:5050/bestplan'
             );
             setCourses(
                 data.map((item) => {
