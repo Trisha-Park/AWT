@@ -89,7 +89,7 @@ const PlanEdit = ({
     const editPlanData = async () => {
         try {
             await axios.put(
-                `http://192.168.0.40:5050/plan/${plan._id}`,
+                `http://3.34.197.112:5050/plan/${plan._id}`,
                 {
                     list: plans,
                 },
