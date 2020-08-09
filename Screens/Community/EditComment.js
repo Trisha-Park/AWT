@@ -3,9 +3,9 @@ import {
     Text,
     View,
     TouchableOpacity,
-    TextInput,
     StyleSheet,
 } from 'react-native';
+import {Textarea} from 'native-base';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -25,7 +25,8 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
                     name: userInfo.name,
                     comment: commentEdit,
                     secret: false,
-                },                {
+                },
+                {
                     headers: { authorization: resourceToken },
                     withCredentials: true,
                 }
@@ -46,7 +47,7 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
             }}
         >
             <View style={styles.text}>
-                <TextInput
+                <Textarea
                     value={commentEdit}
                     style={{
                         width: 390,
@@ -54,11 +55,10 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
                         justifyContent: 'flex-start',
                         alignContent: 'flex-start',
                         padding: 5,
-                        textAlignVertical: 'top',
-                        fontSize: 18,
+                        fontSize: 20,
                     }}
                     onChangeText={(text) => setCommentEdit(text)}
-                ></TextInput>
+                ></Textarea>
             </View>
             <TouchableOpacity
                 style={styles.button}
@@ -67,7 +67,15 @@ const EditComment = ({ route, navigation, userInfo, resourceToken }) => {
                     navigation.navigate('ArticleDetail');
                 }}
             >
-                <Text style={{ color: '#ffffff' }}>저장</Text>
+                <Text
+                    style={{
+                        color: '#ffffff',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                    }}
+                >
+                    댓글 저장
+                </Text>
             </TouchableOpacity>
         </View>
     );
@@ -91,6 +99,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         marginTop: 5,
+        borderRadius: 20,
     },
     button: {
         backgroundColor: '#0066FF',
@@ -100,6 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         marginTop: 3,
+        borderRadius: 20,
     },
 });
 
