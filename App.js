@@ -21,22 +21,22 @@ const App = ({ resourceToken }) => {
             <StatusBar backgroundColor='black' />
             <MainStack.Navigator>
                 <MainStack.Screen
-                    name='Main'
+                    name='메인'
                     component={Main}
                     options={{ headerShown: false }}
                 />
                 <MainStack.Screen
-                    name='CourseDetail'
+                    name='코스 정보'
                     component={CourseDetail}
                     options={{ headerShown: true }}
                 />
                 <MainStack.Screen
-                    name='Search'
+                    name='검색'
                     component={Search}
                     options={{ headerShown: true }}
                 />
                 <MainStack.Screen
-                    name='StationDetail'
+                    name='역 정보'
                     component={StationDetail}
                     options={{ headerShown: true }}
                 />

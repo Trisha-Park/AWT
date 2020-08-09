@@ -19,7 +19,7 @@ const MainTabNavigator = ({ navigation, route }) => {
         <MainTab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, size }) => {
-                    if (route.name === 'Main') {
+                    if (route.name === '메인') {
                         return (
                             <Fontisto
                                 name='train-ticket'
@@ -27,7 +27,7 @@ const MainTabNavigator = ({ navigation, route }) => {
                                 color={color}
                             />
                         );
-                    } else if (route.name === 'Station') {
+                    } else if (route.name === '지도') {
                         return (
                             <Ionicons
                                 name='ios-train'
@@ -35,7 +35,7 @@ const MainTabNavigator = ({ navigation, route }) => {
                                 color={color}
                             />
                         );
-                    } else if (route.name === 'Plan') {
+                    } else if (route.name === '계획') {
                         return (
                             <MaterialIcons
                                 name='event-note'
@@ -67,9 +67,9 @@ const MainTabNavigator = ({ navigation, route }) => {
             }}
             initialRouteName='Main'
         >
-            <MainTab.Screen name='Main' component={Main} />
-            <MainTab.Screen name='Station' component={Station} />
-            <MainTab.Screen name='Plan' component={Plan} />
+            <MainTab.Screen name='메인' component={Main} />
+            <MainTab.Screen name='지도' component={Station} />
+            <MainTab.Screen name='계획' component={Plan} />
             <MainTab.Screen name='Community' component={Community} />
             <MainTab.Screen name='MyPage' component={MyPage} />
         </MainTab.Navigator>
