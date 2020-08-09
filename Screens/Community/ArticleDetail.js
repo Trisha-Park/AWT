@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useFocusEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
@@ -7,7 +7,10 @@ import {
     Alert,
     Image,
     ScrollView,
+    ToastAndroid,
 } from 'react-native';
+import { Textarea } from 'native-base';
+import dayjs from 'dayjs';
 
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -19,16 +22,13 @@ import { useIsFocused } from '@react-navigation/native';
 
 import Comments from '../../Component/Community/Comments';
 import Loading from '../../Screens/Loading';
-import { Textarea } from 'native-base';
 
-// TODO: props로 받은 route의 params에서 받아온 정보들을 뿌려주세요
 const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     const [isArticleDetailLoading, setIsArticleDetailLoading] = useState(false);
     const [articleDetail, setArticleDetail] = useState({});
     const [comments, setComment] = useState([]);
     const [commentValue, setCommentValue] = useState('');
     const [isUser, setIsUser] = useState(false);
-    const [isCommentUser, setIsCommentUser] = useState(false);
 
     const getPostView = async () => {
         try {
@@ -43,7 +43,6 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
             );
 
             setArticleDetail({ ...data[0] });
-            //console.log(data);
             setIsArticleDetailLoading(false);
             setIsUser(data[0].userId === userInfo.userId ? true : false);
         } catch (error) {
@@ -61,15 +60,17 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     withCredentials: true,
                 }
             );
-            //console.log(data);
-            setComment([...data]);
-            //console.log(data[0]);
-            for (let i = 0; i <= data.length-1; i++) {
-                if (data[i].userId === userInfo.userId) {
-                    data[i] = setIsCommentUser(true);
-                }
-            }
-            //setIsCommentUser(data.userId === userInfo.userId ? true : false);
+            setComment([
+                ...data.map((comment) => {
+                    if (comment.userId === userInfo.userId) {
+                        comment.isCommentUser = true;
+                    } else {
+                        comment.isCommentUser = false;
+                    }
+                    return comment;
+                }),
+            ]);
+
             setIsArticleDetailLoading(false);
         } catch (error) {
             console.log(error);
@@ -143,6 +144,8 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
         }
     }, [isFocused]);
 
+    let dateForm = dayjs(articleDetail.updatedAt);
+
     return isArticleDetailLoading ? (
         <Loading />
     ) : (
@@ -176,9 +179,19 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                             </Text>
                         </View>
                         <View
-                            style={{ alignSelf: 'flex-end', paddingRight: 10 }}
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'stretch',
+                                paddingHorizontal: 8,
+                            }}
                         >
-                            <Text>{articleDetail.view}</Text>
+                            <Text style={{ color: '#787878' }}>
+                                {dateForm.format('YYYY.MM.DD')}
+                            </Text>
+                            <Text style={{ color: '#787878' }}>
+                                {articleDetail.view}
+                            </Text>
                         </View>
                     </View>
                     <View>
@@ -255,7 +268,11 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                     });
                                 }}
                             >
-                                <Feather name='edit' size={34} color='blue' />
+                                <Feather
+                                    name='edit'
+                                    size={34}
+                                    color='#787878'
+                                />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
@@ -290,7 +307,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                 <AntDesign
                                     name='delete'
                                     size={34}
-                                    color='black'
+                                    color='#787878'
                                 />
                             </TouchableOpacity>
                         </>
@@ -304,6 +321,13 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                         }}
                         onPress={() => {
                             scrapArticle();
+                            if (Platform.OS === 'android') {
+                                ToastAndroid.show(
+                                    '스크랩',
+                                    ToastAndroid.BOTTOM,
+                                    ToastAndroid.LONG
+                                );
+                            }
                         }}
                     >
                         <AntDesign name='star' size={34} color='#FFC312' />
@@ -317,7 +341,6 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                                     comments={comment}
                                     route={route}
                                     navigation={navigation}
-                                    isCommentUser={isCommentUser}
                                 />
                             </View>
                         ))}
@@ -358,7 +381,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     <MaterialCommunityIcons
                         name='comment-arrow-left-outline'
                         size={34}
-                        color='black'
+                        color='#787878'
                     />
                 </TouchableOpacity>
             </View>
@@ -366,38 +389,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    ViewVisit: {
-        backgroundColor: 'pink',
-        height: 40,
-        marginLeft: 155,
-    },
-    ViewAuthor: {
-        marginTop: -10,
-        marginLeft: 2,
-    },
-
-    input: {
-        flexDirection: 'row',
-        top: 280,
-        height: 60,
-        alignSelf: 'stretch',
-        backgroundColor: 'lavender',
-        padding: 10,
-    },
-    inputText: {
-        width: 340,
-        height: 40,
-        backgroundColor: 'lavender',
-    },
-    button: {
-        backgroundColor: 'lightgray',
-        justifyContent: 'center',
-        alignContent: 'center',
-        padding: 8,
-        borderRadius: 5,
-    },
-});
+const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
     return {

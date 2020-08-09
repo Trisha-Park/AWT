@@ -8,7 +8,7 @@ import Loading from '../Loading';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const MyScrap = ({ navigation }) => {
+const MyScrap = ({ navigation, resourceToken }) => {
     const [isMyScrapLoading, setIsMyScrapLoading] = useState(false);
     const [myScraps, setMyScraps] = useState([]);
 
@@ -46,9 +46,7 @@ const MyScrap = ({ navigation }) => {
     }, [isFocused]);
 
     return isMyScrapLoading ? (
-        <View>
-            <Loading />
-        </View>
+        <Loading />
     ) : (
         <View
             style={{
@@ -76,9 +74,7 @@ const MyScrap = ({ navigation }) => {
         </View>
     );
 };
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const mapStateToProps = (state) => {
     return {
         resourceToken: state.authReducer.resourceToken,

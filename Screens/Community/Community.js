@@ -37,7 +37,6 @@ const Community = ({ navigation, resourceToken }) => {
             console.log(error);
         }
     };
-    //console.log(articles);
 
     useEffect(() => {
         getPostData();
@@ -126,7 +125,7 @@ const Community = ({ navigation, resourceToken }) => {
                         navigation = { navigation };
                     }}
                 >
-                    <Text style={{ color: '#ffffff' }}>글쓰기</Text>
+                    <Text style={{ color: '#ffffff',fontSize : 20, fontWeight : "bold" }}>글쓰기</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -168,12 +167,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         padding: 8,
-        borderRadius: 10,
+        borderRadius: 20,
         bottom: 10,
     },
     article: {
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 65,
     },
 });
 
