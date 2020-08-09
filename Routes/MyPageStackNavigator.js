@@ -21,26 +21,26 @@ const MyPageStackNavigator = ({ navigation, route }) => {
     }
     return (
         <MyPageStack.Navigator
-            initialRouteName='MyPage'
+            initialRouteName='마이페이지'
             screenOptions={({ route }) => {
-                if (route.name === 'MyPage') {
+                if (route.name === '마이페이지') {
                     return {
                         headerShown: false,
                     };
                 }
             }}
         >
-            <MyPageStack.Screen name='MyPage' component={MyPage} />
-            <MyPageStack.Screen name='MyArticle' component={MyArticle} />
-            <MyPageStack.Screen name='MyPlans' component={MyPlans} />
-            <MyPageStack.Screen name='MyPlanDetail' component={MyPlanDetail} />
+            <MyPageStack.Screen name='마이페이지' component={MyPage} />
+            <MyPageStack.Screen name='내가 쓴 게시글' component={MyArticle} />
+            <MyPageStack.Screen name='내 계획' component={MyPlans} />
+            <MyPageStack.Screen name='내 계획 알아보기' component={MyPlanDetail} />
             <MyPageStack.Screen
-                name='MyArticleDetail'
+                name='내가 쓴 글 알아보기'
                 component={MyArticleDetail}
             />
-            <MyPageStack.Screen name='MyScrap' component={MyScrap} />
+            <MyPageStack.Screen name='스크랩한 게시글' component={MyScrap} />
             <MyPageStack.Screen
-                name='MyScrapDetail'
+                name='글 알아보기'
                 component={MyScrapDetail}
             />
         </MyPageStack.Navigator>
