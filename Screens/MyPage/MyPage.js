@@ -7,10 +7,35 @@ import {
     Alert,
     TouchableOpacity,
 } from 'react-native';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
 
-const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
+const MyPage = ({ navigation, signOutSuccess, userInfo, resourceToken }) => {
+    const signOut = async () => {
+        try {
+            await axios.post(
+                `http://3.34.197.112:5050/user/logout`,
+                {},
+                {
+                    headers: { authorization: resourceToken },
+                    withCredentials: true,
+                }
+            );
+
+            signOutSuccess();
+            if (Platform.OS === 'android') {
+                ToastAndroid.show(
+                    '로그아웃되었습니다.',
+                    ToastAndroid.BOTTOM,
+                    ToastAndroid.LONG
+                );
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.userView}>
@@ -19,24 +44,26 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                         fontSize: 40,
                         fontWeight: 'bold',
                         color: '#ffffff',
-                        alignSelf : "center"
+                        alignSelf: 'center',
                     }}
                 >
                     {userInfo.name} 님
                 </Text>
-                <View style={{
-                    marginTop : 5
-                    }}>
-                <Text
+                <View
                     style={{
-                        fontSize: 30,
-                        fontWeight: 'bold',
-                        color: '#ffffff',
-                        alignSelf : "center"
+                        marginTop: 5,
                     }}
                 >
-                    안녕하세요!
-                </Text>
+                    <Text
+                        style={{
+                            fontSize: 30,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            alignSelf: 'center',
+                        }}
+                    >
+                        안녕하세요!
+                    </Text>
                 </View>
             </View>
             <View style={styles.allView}>
@@ -92,15 +119,7 @@ const MyPage = ({ navigation, signOutSuccess, userInfo }) => {
                                         text: '로그아웃',
                                         onPress: () => {
                                             console.log('로그아웃');
-
-                                            signOutSuccess();
-                                            if (Platform.OS === 'android') {
-                                                ToastAndroid.show(
-                                                    '로그아웃되었습니다.',
-                                                    ToastAndroid.BOTTOM,
-                                                    ToastAndroid.LONG
-                                                );
-                                            }
+                                            signOut();
                                         },
                                     },
                                     {
@@ -136,7 +155,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0066FF',
         alignSelf: 'stretch',
         borderRadius: 20,
-        marginHorizontal : 5
+        marginHorizontal: 5,
     },
     allView: {
         marginTop: 10,
@@ -159,6 +178,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         userInfo: state.authReducer.userInfo,
+        resourceToken: state.authReducer.resourceToken,
     };
 };
 
