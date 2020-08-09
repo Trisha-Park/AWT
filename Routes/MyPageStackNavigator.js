@@ -33,16 +33,16 @@ const MyPageStackNavigator = ({ navigation, route }) => {
             <MyPageStack.Screen name='마이페이지' component={MyPage} />
             <MyPageStack.Screen name='내가 쓴 게시글' component={MyArticle} />
             <MyPageStack.Screen name='내 계획' component={MyPlans} />
-            <MyPageStack.Screen name='내 계획 알아보기' component={MyPlanDetail} />
+            <MyPageStack.Screen
+                name='내 계획 알아보기'
+                component={MyPlanDetail}
+            />
             <MyPageStack.Screen
                 name='내가 쓴 글 알아보기'
                 component={MyArticleDetail}
             />
             <MyPageStack.Screen name='스크랩한 게시글' component={MyScrap} />
-            <MyPageStack.Screen
-                name='글 알아보기'
-                component={MyScrapDetail}
-            />
+            <MyPageStack.Screen name='글 알아보기' component={MyScrapDetail} />
         </MyPageStack.Navigator>
     );
 };
