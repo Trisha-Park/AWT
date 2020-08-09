@@ -111,7 +111,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
     const scrapArticle = async () => {
         try {
             const { data } = await axios.put(
-                `http://3.34.197.112:5050/user/scrap`,
+                `http://3.34.197.112:5050/user/scrap/${route.params.id}`,
                 {},
                 {
                     headers: { authorization: resourceToken },
