@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     fontInView: {
-        fontSize: 26,
+        fontSize: 24,
     },
 });
 

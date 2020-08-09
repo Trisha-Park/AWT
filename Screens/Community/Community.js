@@ -78,7 +78,7 @@ const Community = ({ navigation, resourceToken }) => {
                     <TextInput
                         style={styles.TextInput}
                         value={searchValue}
-                        placeholder='원하는 게시물을 찾아보세요 = )'
+                        placeholder='원하는 게시물을 찾아보세요 😍'
                         onChangeText={(text) => {
                             setSearchValue(text);
                         }}
