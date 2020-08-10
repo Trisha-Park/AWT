@@ -98,6 +98,7 @@ const Community = ({ navigation, resourceToken }) => {
                             searchValue: searchValue,
                             articles: articles,
                         });
+                        setSearchValue('');
                     }}
                 >
                     <EvilIcons name='search' size={35} color='#0066FF' />
@@ -124,7 +125,15 @@ const Community = ({ navigation, resourceToken }) => {
                         navigation.navigate('글쓰기');
                     }}
                 >
-                    <Text style={{ color: '#ffffff',fontSize : 20, fontWeight : "bold" }}>글쓰기</Text>
+                    <Text
+                        style={{
+                            color: '#ffffff',
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        글쓰기
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>

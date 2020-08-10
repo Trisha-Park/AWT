@@ -21,7 +21,6 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
-    //? 갤러리 권한 허용 함수
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
             const { statusios } = await Permissions.askAsync(
@@ -35,7 +34,6 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
         }
     };
 
-    //? 이미지 가져오는 함수
     const pickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,11 +44,12 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             });
             if (!result.cancelled) {
                 const splitName = result.uri.split('/');
-                const imageNameString = splitName[splitName.length - 1].toString();
+                const imageNameString = splitName[
+                    splitName.length - 1
+                ].toString();
                 setImageName(imageNameString);
                 setImage(result.uri);
                 setImageObj(result);
-                console.log("이미지가 찍힙니까?")
             }
         } catch (error) {
             console.log(error);
@@ -70,7 +69,6 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
             formData.append('name', userInfo.name);
             formData.append('title', title);
             formData.append('article', content);
-            console.log("되나요?")
 
             const { data } = await axios.post(
                 `http://3.34.197.112:5050/community`,
@@ -82,8 +80,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     },
                     withCredentials: true,
                 }
-                );
-                console.log("되길 바라요")
+            );
         } catch (error) {
             console.log(error);
         }
@@ -107,7 +104,7 @@ const CreateArticle = ({ navigation, userInfo, resourceToken }) => {
                     <TextInput
                         placeholder='제목을 입력하세요.'
                         value={title}
-                        style={{ fontSize: 20}}
+                        style={{ fontSize: 20 }}
                         onChangeText={(text) => {
                             setTitle(text);
                         }}

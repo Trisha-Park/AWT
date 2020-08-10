@@ -379,6 +379,7 @@ const ArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     onPress={() => {
                         getCommentView();
                         commentCreate();
+                        setCommentValue('');
                     }}
                 >
                     <MaterialCommunityIcons

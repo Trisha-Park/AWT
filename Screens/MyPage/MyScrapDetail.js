@@ -150,7 +150,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 flex: 1,
-                backgroundColor : "#ffffff"
+                backgroundColor: '#ffffff',
             }}
         >
             <ScrollView
@@ -187,7 +187,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                 {dateForm.format('YYYY.MM.DD')}
                             </Text>
                             <Text style={{ color: '#787878' }}>
-                            {`조회수 ${articleDetail.view}`}
+                                {`조회수 ${articleDetail.view}`}
                             </Text>
                         </View>
                     </View>
@@ -272,7 +272,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                            style={{ marginRight: 5 }}
+                                style={{ marginRight: 5 }}
                                 onPress={() => {
                                     Alert.alert(
                                         '게시물을 삭제합니다.',
@@ -373,6 +373,7 @@ const MyScrapDetail = ({ route, navigation, resourceToken, userInfo }) => {
                     onPress={() => {
                         getCommentView();
                         commentCreate();
+                        setCommentValue('');
                     }}
                 >
                     <MaterialCommunityIcons
