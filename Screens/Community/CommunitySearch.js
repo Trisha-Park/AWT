@@ -46,26 +46,26 @@ const CommunitySearch = ({ route, navigation, resourceToken }) => {
         <Loading />
     ) : (
         <View
-        style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            flex : 1,
-            marginTop : 5
-        }}>
-            <ScrollView >
-            {searchs.map((search, idx) => (
-                <TouchableOpacity
-                    key={idx}
-                    onPress={() => {
-                        navigation.navigate('글 알아보기', {
-                            id: search._id,
-                        });
-                        console.log(search);
-                    }}
-                >
-                    <Articles article={search} />
-                </TouchableOpacity>
-            ))}
+            style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                flex: 1,
+                marginTop: 5,
+            }}
+        >
+            <ScrollView>
+                {searchs.map((search, idx) => (
+                    <TouchableOpacity
+                        key={idx}
+                        onPress={() => {
+                            navigation.navigate('글 알아보기', {
+                                id: search._id,
+                            });
+                        }}
+                    >
+                        <Articles article={search} />
+                    </TouchableOpacity>
+                ))}
             </ScrollView>
         </View>
     );

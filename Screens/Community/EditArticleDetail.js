@@ -79,12 +79,12 @@ const EditArticleDetail = ({ route, navigation, userInfo, resourceToken }) => {
                     </View>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                   { articleDetailForEdit.imageURL &&
-                    <Image
-                        source={{ uri: articleDetailForEdit.imageURL }}
-                        style={{ width: 200, height: 200, margin: 10 }}
-                    />
-                   }
+                    {articleDetailForEdit.imageURL && (
+                        <Image
+                            source={{ uri: articleDetailForEdit.imageURL }}
+                            style={{ width: 200, height: 200, margin: 10 }}
+                        />
+                    )}
                 </View>
                 <TouchableOpacity
                     style={styles.button}
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         padding: 10,
-        borderRadius : 20
+        borderRadius: 20,
     },
     text: {
         height: 300,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 5,
-        borderRadius : 20
+        borderRadius: 20,
     },
     button: {
         backgroundColor: '#0066FF',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         marginTop: 3,
-        borderRadius : 20
+        borderRadius: 20,
     },
 });
 
