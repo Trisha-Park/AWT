@@ -100,10 +100,9 @@ const PlanInfo = ({
                             ToastAndroid.LONG
                         );
                     }
-                    navigation.dispatch(
-                        StackActions.push('메인', { screen: 'MyPage' })
-                    );
-                    navigation.dispatch(StackActions.replace('계획 수정하기'));
+                    navigation.navigate('마이페이지', {
+                        screen: '내 계획 알아보기',
+                    });
                 }}
             >
                 <Text

@@ -11,8 +11,10 @@ import ViewPager from '@react-native-community/viewpager';
 import { Entypo } from '@expo/vector-icons';
 
 import PlanRegionCard from '../../Component/Plan/PlanRegionCard';
+import { connect } from 'react-redux';
+import { storeEditingPlan } from '../../Actions/planActions';
 
-const PlanEditDetail = ({ navigation, route }) => {
+const MyPlanEditDetail = ({ navigation, route }) => {
     const {
         params: { date, day, tasksInfo },
     } = route;
@@ -84,7 +86,7 @@ const PlanEditDetail = ({ navigation, route }) => {
                             ToastAndroid.LONG
                         );
                     }
-                    navigation.navigate('계획 수정하기', {
+                    navigation.navigate('내 계획 수정', {
                         dailyPlan: {
                             [day]: {
                                 date: date,
@@ -137,4 +139,18 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlanEditDetail;
+const mapStateToProps = (state) => {
+    return {
+        editingPlan: state.planReducer.editingPlan,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeEditingPlan: (editingPlan) => {
+            dispatch(storeEditingPlan(editingPlan));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPlanEditDetail);
