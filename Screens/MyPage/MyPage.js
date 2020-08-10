@@ -10,8 +10,16 @@ import {
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { signOutSuccess } from '../../Actions/authActions';
+import { checkPlan, deletePlans } from '../../Actions/planActions';
 
-const MyPage = ({ navigation, signOutSuccess, userInfo, resourceToken }) => {
+const MyPage = ({
+    navigation,
+    signOutSuccess,
+    userInfo,
+    resourceToken,
+    checkPlan,
+    deletePlans,
+}) => {
     const signOut = async () => {
         try {
             await axios.post(
@@ -24,6 +32,8 @@ const MyPage = ({ navigation, signOutSuccess, userInfo, resourceToken }) => {
             );
 
             signOutSuccess();
+            checkPlan();
+            deletePlans();
             if (Platform.OS === 'android') {
                 ToastAndroid.show(
                     '로그아웃되었습니다.',
@@ -185,6 +195,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         signOutSuccess: () => dispatch(signOutSuccess()),
+        checkPlan: () => dispatch(checkPlan()),
+        deletePlans: () => dispatch(deletePlans()),
     };
 };
 
