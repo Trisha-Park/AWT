@@ -12,34 +12,44 @@ import axios from 'axios';
 
 import { fullPlan, dateDummy } from '../../FakeData/planData';
 
-import { connect } from 'react-redux';
-import { storePlans } from '../../Actions/planActions';
+import Loading from '../Loading';
 
-const PlanEdit = ({
+import { connect } from 'react-redux';
+import {
+    storePlans,
+    storeEditingPlan,
+    deleteEditingPlan,
+} from '../../Actions/planActions';
+
+const MyPlanEdit = ({
     route,
     navigation,
     plan,
+    editingPlan,
     storePlans,
+    deleteEditingPlan,
+    storeEditingPlan,
     resourceToken,
     userInfo,
 }) => {
-    const [plans, setPlans] = useState([...fullPlan]);
+    const [plans, setPlans] = useState([]);
     const [fullDates, setFullDates] = useState([...dateDummy]);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [isLoading, setIsLoading] = useState(true);
 
     // 이미 계획 있는 상태
     useEffect(() => {
-        if (plan._id) {
-            setPlans([...plan.list]);
+        if (editingPlan._id) {
+            // setIsLoading(true);
+            setPlans([...editingPlan.list]);
             setFullDates([
-                ...plan.list.map((toDo, idx) => {
+                ...editingPlan.list.map((toDo, idx) => {
                     return {
                         date: toDo[`day0${idx + 1}`]['date'],
                         day: `day0${idx + 1}`,
                     };
                 }),
             ]);
-            setIsLoading(false);
+            // setIsLoading(false);
         }
     }, []);
 
@@ -58,18 +68,18 @@ const PlanEdit = ({
     useEffect(() => {
         if (isFocused) {
             // 플랜 만들고 planedit에 처음 진입할때
-            if (plan.list) {
-                setIsLoading(true);
-                setPlans([...plan.list]);
+            if (editingPlan.list) {
+                // setIsLoading(true);
+                setPlans([...editingPlan.list]);
                 setFullDates([
-                    ...plan.list.map((toDo, idx) => {
+                    ...editingPlan.list.map((toDo, idx) => {
                         return {
                             date: toDo[`day0${idx + 1}`]['date'],
                             day: `day0${idx + 1}`,
                         };
                     }),
                 ]);
-                setIsLoading(false);
+                // setIsLoading(false);
             }
 
             // 하나하나 태스크카드 추가할때
@@ -82,6 +92,14 @@ const PlanEdit = ({
                     dailyPlan,
                     ...prevState.slice(index + 1),
                 ]);
+                storeEditingPlan({
+                    ...editingPlan,
+                    list: [
+                        ...editingPlan.list.slice(0, index),
+                        dailyPlan,
+                        ...editingPlan.list.slice(index + 1),
+                    ],
+                });
             }
         }
     }, [isFocused]);
@@ -89,7 +107,7 @@ const PlanEdit = ({
     const editPlanData = async () => {
         try {
             await axios.put(
-                `http://3.34.197.112:5050/plan/${plan._id}`,
+                `http://3.34.197.112:5050/plan/${editingPlan._id}`,
                 {
                     list: plans,
                 },
@@ -98,11 +116,15 @@ const PlanEdit = ({
                     withCredentials: true,
                 }
             );
-            storePlans({
-                _id: plan._id,
-                userId: userInfo.userId,
-                list: plans,
-            });
+            if (plan._id === editingPlan._id) {
+                storePlans({
+                    _id: editingPlan._id,
+                    userId: userInfo.userId,
+                    list: plans,
+                });
+            }
+            navigation.navigate('마이페이지');
+            deleteEditingPlan();
         } catch (error) {
             console.log(error);
         }
@@ -112,7 +134,7 @@ const PlanEdit = ({
         <TouchableOpacity
             onPress={() => {
                 const index = Number(item.day.split('')[4]);
-                navigation.navigate('상세 계획 수정하기', {
+                navigation.navigate('내 계획 상세 수정', {
                     day: item.day,
                     date: item.date,
                     tasksInfo: plans[index - 1][`day0${index}`]['tasks'],
@@ -126,9 +148,7 @@ const PlanEdit = ({
         </TouchableOpacity>
     );
 
-    return isLoading ? (
-        <View />
-    ) : (
+    return (
         <>
             <FlatList
                 data={fullDates}
@@ -196,13 +216,17 @@ const mapStateToProps = (state) => {
         plan: state.planReducer.plan,
         resourceToken: state.authReducer.resourceToken,
         userInfo: state.authReducer.userInfo,
+        editingPlan: state.planReducer.editingPlan,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         storePlans: (plan) => dispatch(storePlans(plan)),
+        deleteEditingPlan: () => dispatch(deleteEditingPlan()),
+        storeEditingPlan: (editingPlan) =>
+            dispatch(storeEditingPlan(editingPlan)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlanEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(MyPlanEdit);

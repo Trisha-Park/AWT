@@ -1,8 +1,15 @@
-import { STORE_PLANS, CHECK_PLAN, DELETE_PLANS } from '../Actions/planActions';
+import {
+    STORE_PLANS,
+    CHECK_PLAN,
+    DELETE_PLANS,
+    STORE_EDITING_PLAN,
+    DELETE_EDITING_PLAN,
+} from '../Actions/planActions';
 
 const initialState = {
     isPlanLoading: false,
     plan: {},
+    editingPlan: {},
     isPlanExist: false,
     isEditPlanLoading: true,
 };
@@ -25,6 +32,18 @@ export const planReducer = (state = initialState, action) => {
             return {
                 ...state,
                 plan: {},
+            };
+        }
+        case STORE_EDITING_PLAN: {
+            return {
+                ...state,
+                editingPlan: { ...action.editingPlan },
+            };
+        }
+        case DELETE_EDITING_PLAN: {
+            return {
+                ...state,
+                editingPlan: {},
             };
         }
 

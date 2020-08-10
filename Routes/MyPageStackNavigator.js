@@ -8,6 +8,8 @@ import MyPlanDetail from '../Screens/MyPage/MyPlanDetail';
 import MyArticleDetail from '../Screens/MyPage/MyArticleDetail';
 import MyScrap from '../Screens/MyPage/MyScrap';
 import MyScrapDetail from '../Screens/MyPage/MyScrapDetail';
+import MyPlanEdit from '../Screens/MyPage/MyPlanEdit';
+import MyPlanEditDetail from '../Screens/MyPage/MyPlanEditDetail';
 
 const MyPageStack = createStackNavigator();
 
@@ -43,6 +45,11 @@ const MyPageStackNavigator = ({ navigation, route }) => {
             />
             <MyPageStack.Screen name='스크랩한 게시글' component={MyScrap} />
             <MyPageStack.Screen name='글 알아보기' component={MyScrapDetail} />
+            <MyPageStack.Screen name='내 계획 수정' component={MyPlanEdit} />
+            <MyPageStack.Screen
+                name='내 계획 상세 수정'
+                component={MyPlanEditDetail}
+            />
         </MyPageStack.Navigator>
     );
 };

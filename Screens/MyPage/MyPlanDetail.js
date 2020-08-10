@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     SafeAreaView,
     FlatList,
     Alert,
     ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
+
+import { FAB, Portal, Provider } from 'react-native-paper';
+
 import { connect } from 'react-redux';
-import { deletePlans, checkPlan, storePlans } from '../../Actions/planActions';
+import {
+    deletePlans,
+    checkPlan,
+    storePlans,
+    storeEditingPlan,
+} from '../../Actions/planActions';
 
 const MyPlanDetail = ({
     route,
@@ -21,10 +28,13 @@ const MyPlanDetail = ({
     checkPlan,
     deletePlans,
     storePlans,
+    storeEditingPlan,
 }) => {
     const {
         params: { plans },
     } = route;
+
+    const [active, setActive] = useState(false);
 
     const deletePlan = async () => {
         if (plan._id === plans._id) {
@@ -37,6 +47,9 @@ const MyPlanDetail = ({
             },
             withCredentials: true,
         });
+    };
+    const toggleFav = () => {
+        setActive((prevState) => !prevState);
     };
 
     const renderItem = ({ item, index }) => {
@@ -76,60 +89,75 @@ const MyPlanDetail = ({
                     renderItem={renderItem}
                     keyExtractor={(item, index) => String(index)}
                 />
-            </SafeAreaView>
-            <View
-                style={{
-                    flexDirection: 'row',
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => {
-                        storePlans(plans);
-                        checkPlan(true);
-                        if (Platform.OS === 'android') {
-                            ToastAndroid.show(
-                                '계획이 저장되었습니다.',
-                                ToastAndroid.BOTTOM,
-                                ToastAndroid.LONG
-                            );
-                        }
-                    }}
-                    style={{ ...styles.button, backgroundColor: '#0066FF' }}
-                >
-                    <Text style={{ ...styles.buttonTitle, color: '#fff' }}>
-                        메인에 추가하기
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        Alert.alert('계획 삭제', '정말로 삭제하시겠습니까?', [
-                            {
-                                text: '삭제',
-                                onPress: () => {
-                                    deletePlan();
-                                    navigation.navigate('마이페이지');
+                <Provider>
+                    <Portal>
+                        <FAB.Group
+                            open={active}
+                            icon='menu'
+                            color='#fff'
+                            style={{ backgroundColor: 'transparent' }}
+                            fabStyle={{
+                                backgroundColor: '#0066FF',
+                                shadowOffset: 0,
+                                elevation: 0,
+                            }}
+                            actions={[
+                                {
+                                    icon: 'plus',
+                                    label: '메인에 계획 추가하기',
+                                    style: { elevation: 0, shadowOffset: 0 },
+                                    onPress: () => {
+                                        storePlans(plans);
+                                        checkPlan(true);
+                                        if (Platform.OS === 'android') {
+                                            ToastAndroid.show(
+                                                '계획이 저장되었습니다.',
+                                                ToastAndroid.BOTTOM,
+                                                ToastAndroid.LONG
+                                            );
+                                        }
+                                    },
                                 },
-                            },
-                            {
-                                text: '취소',
-                            },
-                        ]);
-                    }}
-                    style={{
-                        ...styles.button,
-                        backgroundColor: '#fff',
-                    }}
-                >
-                    <Text
-                        style={{
-                            ...styles.buttonTitle,
-                            color: '#000',
-                        }}
-                    >
-                        계획 삭제하기
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                                {
+                                    icon: 'calendar-edit',
+                                    label: '계획 수정하기',
+                                    style: { elevation: 0, shadowOffset: 0 },
+                                    onPress: () => {
+                                        storeEditingPlan(plans);
+                                        navigation.navigate('내 계획 수정');
+                                    },
+                                },
+                                {
+                                    icon: 'delete',
+                                    label: '계획 삭제하기',
+                                    style: { elevation: 0, shadowOffset: 0 },
+                                    onPress: () => {
+                                        Alert.alert(
+                                            '계획 삭제',
+                                            '정말로 삭제하시겠습니까?',
+                                            [
+                                                {
+                                                    text: '삭제',
+                                                    onPress: () => {
+                                                        deletePlan();
+                                                        navigation.navigate(
+                                                            '마이페이지'
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    text: '취소',
+                                                },
+                                            ]
+                                        );
+                                    },
+                                },
+                            ]}
+                            onStateChange={toggleFav}
+                        ></FAB.Group>
+                    </Portal>
+                </Provider>
+            </SafeAreaView>
         </>
     );
 };
@@ -179,10 +207,9 @@ const styles = StyleSheet.create({
         marginBottom: 7,
     },
     button: {
-        width: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 50,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
     },
     buttonTitle: {
         fontWeight: 'bold',
@@ -202,6 +229,8 @@ const mapDispatchToProps = (dispatch) => {
         checkPlan: (isPlanExist) => dispatch(checkPlan(isPlanExist)),
         deletePlans: () => dispatch(deletePlans()),
         storePlans: (plan) => dispatch(storePlans(plan)),
+        storeEditingPlan: (editingPlan) =>
+            dispatch(storeEditingPlan(editingPlan)),
     };
 };
 
