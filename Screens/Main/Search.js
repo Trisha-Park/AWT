@@ -11,20 +11,18 @@ import {
 import axios from 'axios';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 
 const Search = ({ navigation, resourceToken }) => {
     const [stations, setStaions] = useState([]);
-    const [favStations, setFavStations] = useState([]);
-
     const [isStationLoading, setIsStationLoading] = useState(true);
     const [searchValue, setSearchValue] = useState('');
-
-    const [toggleFavListStar, setToggleFavListStar] = useState([]);
     const [toggleAllListStar, setToggleAllListStar] = useState([]);
+    const [isSearch, setIsSearch] = useState(false);
 
-    const toggleFavStations = async (stationId, resourceToken) => {
+    const toggleFavStations = async (stationId, resourceToken, idx) => {
         try {
             await axios.put(
                 `http://3.34.197.112:5050/user/favStation/${stationId}`,
@@ -34,6 +32,11 @@ const Search = ({ navigation, resourceToken }) => {
                     withCredentials: true,
                 }
             );
+            setToggleAllListStar((prevState) => [
+                ...prevState.slice(0, idx),
+                !prevState[idx],
+                ...prevState.slice(idx + 1),
+            ]);
         } catch (error) {
             console.log(error);
         }
@@ -45,13 +48,13 @@ const Search = ({ navigation, resourceToken }) => {
                 'http://3.34.197.112:5050/station'
             );
             setStaions([...data]);
-            getFavStations();
+            getFavStations(data);
         } catch (error) {
             console.log(error());
         }
     };
 
-    const getFavStations = async () => {
+    const getFavStations = async (stationsData) => {
         try {
             const { data } = await axios.get(
                 'http://3.34.197.112:5050/user/favStationList',
@@ -61,32 +64,26 @@ const Search = ({ navigation, resourceToken }) => {
                 }
             );
 
-            if (data.favStation.length === 0) {
-                setToggleFavListStar([]);
-                setFavStations([
-                    { _id: 1, station: '즐겨찾기된 역이 없습니다.' },
-                ]);
+            if (!data.favStation.length === 0) {
+                setToggleAllListStar([...Array(stations.length).fill(false)]);
             } else {
-                setToggleFavListStar([
-                    ...Array(data.favStation.length).fill(true),
+                const allStationsIds = stationsData.map(
+                    (station) => station._id
+                );
+                const favStationsIds = data.favStation.map(
+                    (station) => station._id
+                );
+
+                setToggleAllListStar([
+                    ...allStationsIds.map((station) => {
+                        let isStationExist = false;
+                        if (favStationsIds.indexOf(station) !== -1) {
+                            isStationExist = true;
+                        }
+                        return isStationExist;
+                    }),
                 ]);
-                setFavStations([...data.favStation]);
             }
-
-            const allStationsIds = stations.map((station) => station._id);
-            const favStationsIds = data.favStation.map(
-                (station) => station._id
-            );
-
-            setToggleAllListStar([
-                ...allStationsIds.map((station) => {
-                    let isStationExist = false;
-                    if (favStationsIds.indexOf(station) !== -1) {
-                        isStationExist = true;
-                    }
-                    return isStationExist;
-                }),
-            ]);
         } catch (error) {
             console.log(error);
         }
@@ -107,11 +104,25 @@ const Search = ({ navigation, resourceToken }) => {
             });
 
             setStaions([...stationDatas]);
+            getFavStations(stationDatas);
+            setIsSearch(true);
             setIsStationLoading(false);
         } catch (error) {
             console.log(error);
         }
     };
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        if (isFocused) {
+            if (stations.length !== 0) {
+                setIsStationLoading(true);
+                getAllStations();
+                setIsStationLoading(false);
+            }
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         setIsStationLoading(true);
@@ -154,89 +165,77 @@ const Search = ({ navigation, resourceToken }) => {
                 </View>
             </View>
             <View style={styles.currentSelected}>
-                <Text style={styles.currentSelectedText}>즐겨찾기</Text>
-                {favStations.map((region, idx) =>
-                    favStations[0].stationNumber ? (
-                        <View style={{ flexDirection: 'row' }} key={idx}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    navigation.navigate('역 정보', {
-                                        id: region._id, // id로 변경하기
-                                    });
-                                }}
-                            >
-                                <Text style={styles.stationText}>
-                                    {region.station}
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    toggleFavStations(
-                                        region._id,
-                                        resourceToken
-                                    );
-                                    getAllStations();
-                                }}
-                            >
-                                <AntDesign
-                                    name='star'
-                                    size={28}
-                                    color={
-                                        toggleFavListStar[idx]
-                                            ? '#FFC312'
-                                            : '#dfe4ea'
-                                    }
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <View key={idx}>
-                            <Text style={styles.stationText}>
-                                {favStations[0].station}
-                            </Text>
-                        </View>
-                    )
-                )}
+                <TouchableOpacity
+                    style={styles.favButton}
+                    onPress={() => {
+                        navigation.navigate('즐겨찾기한 역');
+                    }}
+                >
+                    <Text style={styles.favText}>즐겨찾기한 역 보기</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.allResult}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ScrollView
+                    style={{ height: 450 }}
+                    contentContainerStyle={{ flexGrow: 1 }}
+                >
                     {isStationLoading ? (
                         <View />
                     ) : (
-                        stations.map((region, idx) => (
-                            <View style={{ flexDirection: 'row' }} key={idx}>
+                        <View>
+                            {isSearch ? (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        navigation.navigate('역 정보', {
-                                            id: region._id,
-                                        });
-                                    }}
-                                >
-                                    <Text style={styles.stationText}>
-                                        {region.station}
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        toggleFavStations(
-                                            region._id,
-                                            resourceToken
-                                        );
+                                        setIsSearch(false);
                                         getAllStations();
                                     }}
+                                    style={styles.button}
                                 >
-                                    <AntDesign
-                                        name='star'
-                                        size={28}
-                                        color={
-                                            toggleAllListStar[idx]
-                                                ? '#FFC312'
-                                                : '#dfe4ea'
-                                        }
-                                    />
+                                    <Text style={styles.currentSelectedText}>
+                                        전체 역 보기
+                                    </Text>
                                 </TouchableOpacity>
-                            </View>
-                        ))
+                            ) : (
+                                <></>
+                            )}
+                            {stations.map((region, idx) => (
+                                <View
+                                    style={{ flexDirection: 'row' }}
+                                    key={idx}
+                                >
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate('역 정보', {
+                                                id: region._id,
+                                            });
+                                        }}
+                                    >
+                                        <Text style={styles.stationText}>
+                                            {region.station}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            toggleFavStations(
+                                                region._id,
+                                                resourceToken,
+                                                idx
+                                            );
+                                        }}
+                                    >
+                                        <AntDesign
+                                            name='star'
+                                            size={28}
+                                            color={
+                                                toggleAllListStar[idx]
+                                                    ? '#FFC312'
+                                                    : '#dfe4ea'
+                                            }
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
+                        </View>
                     )}
                 </ScrollView>
             </View>
@@ -272,7 +271,28 @@ const styles = StyleSheet.create({
     currentSelectedText: {
         fontSize: 20,
         fontWeight: 'bold',
-        paddingBottom: 15,
+        color: '#fff',
+    },
+    button: {
+        marginBottom: 15,
+        paddingVertical: 10,
+        backgroundColor: '#0066FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    favButton: {
+        marginBottom: 15,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    favText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#0066FF',
     },
     stationText: {
         fontSize: 28,

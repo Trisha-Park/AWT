@@ -7,9 +7,11 @@ import Main from './Routes/MainTabNavigator';
 import SignIn from './Screens/SignIn';
 
 import { createStackNavigator } from '@react-navigation/stack';
+
 import CourseDetail from './Screens/Main/CourseDetail';
 import Search from './Screens/Main/Search';
 import StationDetail from './Screens/Main/StationDetail';
+import FavStations from './Screens/Main/FabStations';
 
 import { connect } from 'react-redux';
 
@@ -39,6 +41,10 @@ const App = ({ resourceToken }) => {
                     name='역 정보'
                     component={StationDetail}
                     options={{ headerShown: true }}
+                />
+                <MainStack.Screen
+                    name='즐겨찾기한 역'
+                    component={FavStations}
                 />
             </MainStack.Navigator>
         </NavigationContainer>
