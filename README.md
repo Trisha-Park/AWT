@@ -131,7 +131,7 @@
 <details>
 <summary>API Flow 펼쳐보기</summary>
 <div markdown="1">
-  <img src="/Users/trisha/Desktop/Untitled Diagram.png">
+  <img src="https://user-images.githubusercontent.com/61039975/90049341-a292d080-dd0f-11ea-95fc-adfc87c52965.png">
 </div>
 </details>
 </div>
