@@ -55,7 +55,7 @@
    <img src="https://user-images.githubusercontent.com/61039975/89789611-c9100a80-db5b-11ea-89bb-4a311522defb.png" />
 <div>
 
-
+<div align="left">
 
 # 4. Flow Work
 
@@ -131,7 +131,7 @@
 <details>
 <summary>API Flow 펼쳐보기</summary>
 <div markdown="1">
-  <img src="/Users/trisha/Desktop/Untitled Diagram.png">
+  <img src="https://user-images.githubusercontent.com/61039975/90049341-a292d080-dd0f-11ea-95fc-adfc87c52965.png">
 </div>
 </details>
 </div>
@@ -306,6 +306,7 @@
   9. RDS 사용하지 않고 AWS EC2에 Database(MongoDB) 설치 및 구동
   10. API Docs 생성
 
+</div>
   
 
 # 9. License
